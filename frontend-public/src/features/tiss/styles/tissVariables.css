@@ -1,0 +1,19 @@
+.tissPage {
+  --gti-page-bg: #f8faf7;
+
+  --gti-brand-green-light: #d3ecdd;
+  --gti-brand-green-border: #b7d9c6;
+
+  --gti-brand-green-dark: #12bd64;
+  --gti-brand-green-dark-hover: #0fa958;
+
+  --gti-brand-green-deepest: #0f2f22;
+
+  --gti-text: #0f172a;
+  --gti-text-muted: #475569;
+
+  width: 100%;
+
+  background-color: var(--gti-page-bg);
+  color: var(--gti-text);
+}

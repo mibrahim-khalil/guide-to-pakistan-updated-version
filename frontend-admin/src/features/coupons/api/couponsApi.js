@@ -1,0 +1,1 @@
+﻿import api from '../../../shared/lib/axios'; export const couponsApi = { list: async () => (await api.get('/coupons')).data.data, create: async (payload) => (await api.post('/coupons', payload)).data.data, remove: async (id) => await api.delete(/coupons/) };

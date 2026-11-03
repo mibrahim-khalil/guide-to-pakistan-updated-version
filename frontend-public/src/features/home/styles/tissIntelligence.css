@@ -1,0 +1,558 @@
+/* =========================================
+   HOME — TISS TRAVEL INTELLIGENCE
+========================================= */
+
+.homeTiss {
+  position: relative;
+
+  padding: 72px 0;
+
+  background:
+    radial-gradient(
+      circle at 8% 85%,
+      rgba(57, 181, 116, 0.08) 0,
+      rgba(57, 181, 116, 0.08) 110px,
+      transparent 111px
+    ),
+    radial-gradient(
+      circle at 78% 8%,
+      rgba(57, 181, 116, 0.06) 0,
+      rgba(57, 181, 116, 0.06) 125px,
+      transparent 126px
+    ),
+    #edf8f2;
+
+  border-top: 1px solid rgba(18, 101, 67, 0.06);
+  border-bottom: 1px solid rgba(18, 101, 67, 0.06);
+}
+
+.homeTiss__panel {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+
+  padding: 20px 0 10px;
+
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* decorative background circles */
+
+.homeTiss__glow {
+  position: absolute;
+  z-index: -1;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(2px);
+}
+
+.homeTiss__glow--one {
+  width: 360px;
+  height: 360px;
+
+  top: -230px;
+  right: 8%;
+
+  background: rgba(81, 224, 157, 0.1);
+}
+
+.homeTiss__glow--two {
+  width: 260px;
+  height: 260px;
+
+  left: -150px;
+  bottom: -150px;
+
+  background: rgba(105, 234, 177, 0.07);
+}
+
+/* =========================================
+   HEADER
+========================================= */
+
+.homeTiss__header {
+  position: relative;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  gap: 50px;
+
+  padding: 42px 46px;
+  margin-bottom: 24px;
+
+  border-radius: 26px;
+
+  background:
+    radial-gradient(
+      circle at 88% 5%,
+      rgba(84, 222, 156, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(
+      135deg,
+      #07251a 0%,
+      #0a3927 100%
+    );
+
+  box-shadow: 0 18px 45px rgba(8, 50, 34, 0.12);
+}
+
+.homeTiss__intro {
+  max-width: 680px;
+}
+
+.homeTiss__eyebrow {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  margin-bottom: 20px;
+
+  padding: 8px 13px;
+
+  border-radius: 999px;
+
+  border: 1px solid rgba(130, 240, 190, 0.22);
+
+  background: rgba(255, 255, 255, 0.07);
+
+  color: #a9efcb;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+
+  backdrop-filter: blur(8px);
+}
+
+.homeTiss__eyebrow svg {
+  color: #49d592;
+}
+
+.homeTiss__title {
+  margin: 0;
+
+  color: #f7f4eb;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(48px, 5vw, 76px);
+
+  line-height: 0.93;
+
+  font-weight: 500;
+
+  letter-spacing: -2px;
+}
+
+.homeTiss__title span {
+  color: #67dfa4;
+}
+
+.homeTiss__description {
+  max-width: 620px;
+
+  margin: 23px 0 0;
+
+  color: rgba(255, 255, 255, 0.67);
+
+  font-size: 14px;
+
+  line-height: 1.75;
+}
+
+/* =========================================
+   MAIN CTA
+========================================= */
+
+.homeTiss__mainCta {
+  flex-shrink: 0;
+
+  min-height: 58px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 7px 8px 7px 23px;
+
+  border-radius: 999px;
+
+  background: #f7f5ef;
+
+  color: #0b3927;
+
+  text-decoration: none;
+
+  font-size: 13px;
+  font-weight: 800;
+
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.18);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.homeTiss__mainCtaIcon {
+  width: 43px;
+  height: 43px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #1bbb70;
+
+  color: #ffffff;
+
+  transition:
+    transform 220ms ease,
+    background 220ms ease;
+}
+
+.homeTiss__mainCta:hover {
+  transform: translateY(-3px);
+
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.25);
+}
+
+.homeTiss__mainCta:hover .homeTiss__mainCtaIcon {
+  transform: rotate(45deg);
+
+  background: #12955a;
+}
+
+/* =========================================
+   INTELLIGENCE CARDS
+========================================= */
+
+.homeTiss__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 16px;
+
+  padding: 0;
+}
+
+.homeTissCard {
+  position: relative;
+
+  min-height: 230px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 24px;
+
+  border-radius: 20px;
+
+  text-decoration: none;
+
+  background: #0b3a29;
+
+  border: 1px solid rgba(86, 210, 151, 0.22);
+
+  box-shadow:
+    0 12px 30px rgba(10, 55, 38, 0.12);
+
+  transition:
+    transform 220ms ease,
+    background 220ms ease,
+    border-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+.homeTissCard:hover {
+  transform: translateY(-6px);
+
+  background: #0d4631;
+
+  border-color: rgba(92, 224, 161, 0.5);
+
+  box-shadow:
+    0 18px 38px rgba(7, 45, 30, 0.2);
+}
+
+.homeTissCard__top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 28px;
+}
+
+.homeTissCard__icon {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 13px;
+
+  background: rgba(91, 224, 157, 0.12);
+
+  border: 1px solid rgba(104, 229, 167, 0.17);
+
+  color: #70e0a8;
+}
+
+.homeTissCard__arrow {
+  color: rgba(255, 255, 255, 0.38);
+
+  transition:
+    transform 220ms ease,
+    color 220ms ease;
+}
+
+.homeTissCard:hover .homeTissCard__arrow {
+  transform: translate(3px, -3px);
+
+  color: #72e3aa;
+}
+
+.homeTissCard__label {
+  margin-bottom: 8px;
+
+  color: rgba(116, 226, 172, 0.75);
+
+  font-size: 9px;
+  font-weight: 800;
+
+  letter-spacing: 1.3px;
+}
+
+.homeTissCard h3 {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: 20px;
+
+  line-height: 1.2;
+
+  font-weight: 750;
+}
+
+.homeTissCard p {
+  margin: 11px 0 22px;
+
+  color: rgba(255, 255, 255, 0.56);
+
+  font-size: 12px;
+
+  line-height: 1.65;
+}
+
+.homeTissCard__action {
+  margin-top: auto;
+
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  color: #a7edca;
+
+  font-size: 11px;
+
+  font-weight: 750;
+}
+
+.homeTissCard__action span {
+  transition: transform 180ms ease;
+}
+
+.homeTissCard:hover .homeTissCard__action span {
+  transform: translateX(4px);
+}
+
+/* =========================================
+   BOTTOM STATUS BAR
+========================================= */
+
+.homeTiss__footer {
+  margin-top: 26px;
+
+  padding-top: 22px;
+
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+.homeTiss__live {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  color: rgba(255, 255, 255, 0.58);
+
+  font-size: 11px;
+}
+
+.homeTiss__liveDot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #4bdd94;
+
+  box-shadow: 0 0 0 5px rgba(75, 221, 148, 0.1);
+
+  animation: homeTissPulse 2s ease-in-out infinite;
+}
+
+.homeTiss__powered {
+  color: rgba(255, 255, 255, 0.3);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+@keyframes homeTissPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (max-width: 1000px) {
+  .homeTiss {
+    padding: 60px 0;
+  }
+
+  .homeTiss__panel {
+    padding: 42px 34px;
+  }
+
+  .homeTiss__header {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 28px;
+  }
+
+  .homeTiss__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .homeTiss__mainCta {
+    align-self: flex-start;
+  }
+}
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 640px) {
+  .homeTiss {
+    padding: 42px 0;
+  }
+
+  .homeTiss__panel {
+    padding: 30px 20px;
+
+    border-radius: 23px;
+  }
+
+  .homeTiss__header {
+    margin-bottom: 30px;
+  }
+
+  .homeTiss__eyebrow {
+    font-size: 9px;
+
+    letter-spacing: 1px;
+  }
+
+  .homeTiss__title {
+    font-size: 46px;
+
+    letter-spacing: -1.3px;
+  }
+
+  .homeTiss__description {
+    font-size: 13px;
+  }
+
+  .homeTiss__mainCta {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+
+  .homeTiss__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .homeTissCard {
+    min-height: 220px;
+  }
+
+  .homeTiss__footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+/* =========================================
+   ACCESSIBILITY
+========================================= */
+
+.homeTissCard:focus-visible,
+.homeTiss__mainCta:focus-visible {
+  outline: 2px solid #77e6ae;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .homeTissCard,
+  .homeTissCard__arrow,
+  .homeTissCard__action span,
+  .homeTiss__mainCta,
+  .homeTiss__mainCtaIcon {
+    transition: none;
+  }
+
+  .homeTiss__liveDot {
+    animation: none;
+  }
+}
+.homeTiss__footer {
+  display: none;
+}

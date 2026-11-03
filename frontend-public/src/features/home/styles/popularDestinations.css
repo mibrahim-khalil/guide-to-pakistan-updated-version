@@ -1,0 +1,208 @@
+/* =========================
+   Popular Destinations (Coverflow Carousel)
+   Inspired by your 2nd ss "stacked/coverflow" effect
+========================= */
+
+.pdSection {
+  background: #f6f2ea;
+  padding: 70px 0 80px;
+}
+
+.pdHead {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.pdKicker {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c98b2f;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.pdTitle {
+  margin: 0;
+  font-size: clamp(28px, 3.2vw, 46px);
+  line-height: 1.1;
+  font-weight: 800;
+  color: #1d1d1d;
+}
+
+/* Wrap */
+.pdCoverflow {
+  position: relative;
+}
+
+/* arrows */
+.pdArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 20;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(15, 42, 31, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  color: #123326;
+
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.14);
+}
+
+.pdArrow--left {
+  left: -18px;
+}
+.pdArrow--right {
+  right: -18px;
+}
+
+/* stage */
+.pdStage {
+  position: relative;
+  height: 260px; /* controls carousel height */
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+/* card base */
+.pdCard {
+  position: absolute;
+  top: 0;
+  left: 50%;
+
+  width: 240px;
+  height: 240px;
+  border-radius: 22px;
+  overflow: hidden;
+
+  border: 1px solid rgba(15, 42, 31, 0.08);
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.10);
+  background: #ddd;
+
+  transform-style: preserve-3d;
+
+  /* coverflow transforms controlled by CSS vars */
+  transform:
+    translateX(calc(-50% + (var(--offset) * 210px)))
+    translateZ(calc((4 - var(--abs)) * 55px))
+    rotateY(calc(var(--offset) * -14deg))
+    scale(calc(1 - (var(--abs) * 0.08)));
+
+  opacity: calc(1 - (var(--abs) * 0.12));
+  transition: transform 420ms ease, opacity 420ms ease;
+  z-index: calc(10 - var(--abs));
+
+  cursor: pointer;
+}
+
+.pdCard.isHidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pdCard.isActive {
+  box-shadow: 0 18px 34px rgba(15, 23, 42, 0.16);
+}
+
+.pdCard:focus-visible {
+  outline: 2px solid rgba(24, 178, 106, 0.35);
+  outline-offset: 3px;
+}
+
+.pdCard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pdCard__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.00) 45%,
+    rgba(0, 0, 0, 0.65) 100%
+  );
+}
+
+.pdCard__text {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  color: #fff;
+}
+
+.pdCard__title {
+  font-weight: 800;
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.pdCard__sub {
+  font-size: 12px;
+  opacity: 0.9;
+  font-weight: 600;
+}
+
+.pdFooter {
+  text-align: center;
+  margin-top: 22px;
+}
+
+.pdAllLink {
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+  text-decoration: none;
+  color: #164d35;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.pdAllLink:hover {
+  text-decoration: underline;
+}
+
+.pdAllLink__arrow {
+  font-weight: 900;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .pdArrow--left { left: -10px; }
+  .pdArrow--right { right: -10px; }
+
+  .pdStage { height: 240px; }
+
+  .pdCard {
+    width: 220px;
+    height: 220px;
+    transform:
+      translateX(calc(-50% + (var(--offset) * 185px)))
+      translateZ(calc((4 - var(--abs)) * 45px))
+      rotateY(calc(var(--offset) * -14deg))
+      scale(calc(1 - (var(--abs) * 0.09)));
+  }
+}
+
+@media (max-width: 640px) {
+  .pdArrow { display: none; }
+
+  .pdStage { height: 230px; }
+
+  .pdCard {
+    width: 78vw;
+    height: 220px;
+    transform:
+      translateX(calc(-50% + (var(--offset) * 70vw)))
+      translateZ(calc((4 - var(--abs)) * 35px))
+      rotateY(calc(var(--offset) * -10deg))
+      scale(calc(1 - (var(--abs) * 0.10)));
+  }
+}

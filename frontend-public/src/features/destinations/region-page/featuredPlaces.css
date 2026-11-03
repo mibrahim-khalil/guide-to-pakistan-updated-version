@@ -1,0 +1,1074 @@
+
+
+/* =========================================================
+   FEATURED PLACES START
+========================================================= */
+
+.regionPlaces {
+  padding: 24px 18px 72px;
+  background: #e8f5ec;
+  font-family: "Poppins", sans-serif;
+}
+
+.regionPlaces,
+.regionPlaces * {
+  box-sizing: border-box;
+}
+
+/* =========================
+   Main glass container
+========================= */
+
+.regionPlaces__inner {
+  width: min(100%, 1280px);
+  margin: 0 auto;
+  padding: 42px 34px 46px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.52),
+    rgba(220, 243, 231, 0.42)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 28px;
+
+  backdrop-filter: blur(24px) saturate(145%);
+  -webkit-backdrop-filter: blur(24px) saturate(145%);
+
+  box-shadow:
+    0 22px 55px rgba(15, 42, 31, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 0 0 1px rgba(19, 189, 109, 0.06);
+
+  overflow: visible;
+}
+
+/* =========================
+   Heading row
+========================= */
+
+.regionPlaces__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 18px;
+}
+
+.regionPlaces__title {
+  margin: 0;
+  color: #003d2a;
+  font-family: "Poppins", sans-serif;
+  font-size: clamp(24px, 2.1vw, 30px);
+  font-weight: 800;
+  line-height: 1.18;
+  letter-spacing: -0.035em;
+}
+
+.regionPlaces__viewAllWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
+.regionPlaces__more {
+  color: #53665f;
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.regionPlaces__viewAll {
+  min-height: 42px;
+  padding: 0 20px;
+
+  border: 1px solid #e3e7eb;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #10243a;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+
+  box-shadow: 0 4px 12px rgba(15, 42, 31, 0.045);
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.regionPlaces__viewAll:hover {
+  transform: translateY(-1px);
+  border-color: #13bd6d;
+  background: #13bd6d;
+  color: #ffffff;
+  box-shadow: 0 8px 20px rgba(19, 189, 109, 0.2);
+}
+
+/* =========================
+   Sort information pill
+========================= */
+
+.regionPlaces__sortBar {
+  width: fit-content;
+  max-width: 100%;
+  min-height: 48px;
+  margin-bottom: 28px;
+  padding: 11px 21px;
+
+  border: 1px solid #dfe4ea;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #24364d;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.35;
+  letter-spacing: 0;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+
+  box-shadow: 0 3px 9px rgba(15, 42, 31, 0.065);
+}
+
+.regionPlaces__sortLabel {
+  color: #24364d;
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+}
+
+.regionPlaces__riskArrow {
+  margin: 0 1px;
+  color: #24364d;
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.regionPlaces__riskWord {
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+
+.regionPlaces__riskWord--notSafe {
+  color: #ee1d2d;
+}
+
+.regionPlaces__riskWord--high {
+  color: #e52b48;
+}
+
+.regionPlaces__riskWord--moderate {
+  color: #dc8b00;
+}
+
+.regionPlaces__riskWord--low {
+  color: #008e58;
+}
+
+.regionPlaces__riskWord--unknown {
+  color: #34445c;
+}
+
+/* =========================
+   Filter pills
+========================= */
+
+.regionPlaces__filters {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 11px;
+  margin-bottom: 27px;
+}
+
+.regionPlaces__chip {
+  min-height: 46px;
+  padding: 0 22px;
+
+  border: 1px solid #e2e7ed;
+  border-radius: 999px;
+
+  background: #ffffff;
+  color: #23344b;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+
+  cursor: pointer;
+  box-shadow: none;
+
+  transition:
+    transform 160ms ease,
+    border-color 160ms ease,
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.regionPlaces__chip:hover {
+  transform: translateY(-1px);
+  border-color: rgba(16, 189, 108, 0.38);
+  box-shadow: 0 6px 14px rgba(15, 42, 31, 0.055);
+}
+
+.regionPlaces__chip.isActive {
+  border-color: #13bd6d;
+  background: #13bd6d;
+  color: #ffffff;
+  font-weight: 600;
+  box-shadow: none;
+}
+
+/* =========================
+   Empty filter result
+========================= */
+
+.regionPlaces__empty {
+  padding: 42px 20px;
+
+  border: 1px dashed rgba(15, 42, 31, 0.18);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.55);
+  color: #52655d;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* =========================
+   Carousel shell
+========================= */
+
+.regionPlaces .placesCarousel {
+  position: relative;
+  width: 100%;
+  padding: 0;
+}
+
+.regionPlaces .placesCarousel__viewport {
+  width: 100%;
+  overflow: hidden;
+  padding: 0 34px;
+  border-radius: 18px;
+  box-shadow: none;
+}
+
+.regionPlaces .placesCarousel__track {
+  width: 100%;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0;
+
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 18px;
+
+  animation: regionPlacesSetEnter 320ms ease both;
+}
+
+@keyframes regionPlacesSetEnter {
+  from {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* =========================
+   Carousel arrows
+========================= */
+
+.regionPlaces .placesCarousel__arrow {
+  position: absolute;
+  top: 48%;
+  z-index: 20;
+
+  width: 42px;
+  height: 42px;
+  padding: 0;
+
+  border: 1px solid rgba(15, 42, 31, 0.1);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.97);
+  color: #163b2c;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+
+  transform: translateY(-50%);
+
+  box-shadow: 0 8px 22px rgba(15, 42, 31, 0.12);
+
+  transition:
+    transform 170ms ease,
+    border-color 170ms ease,
+    background-color 170ms ease,
+    color 170ms ease,
+    opacity 170ms ease,
+    box-shadow 170ms ease;
+}
+
+.regionPlaces .placesCarousel__arrow svg {
+  width: 21px;
+  height: 21px;
+  stroke-width: 2;
+}
+
+.regionPlaces .placesCarousel__arrow:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.07);
+  border-color: #13bd6d;
+  background: #13bd6d;
+  color: #ffffff;
+  box-shadow: 0 11px 25px rgba(19, 189, 109, 0.24);
+}
+
+.regionPlaces .placesCarousel__arrow:disabled {
+  opacity: 0.38;
+  cursor: not-allowed;
+}
+
+.regionPlaces .placesCarousel__arrow--prev {
+  left: -21px;
+}
+
+.regionPlaces .placesCarousel__arrow--next {
+  right: -21px;
+}
+
+/* =========================
+   Carousel pagination
+========================= */
+
+.regionPlaces .placesCarousel__pagination {
+  margin-top: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+}
+
+.regionPlaces .placesCarousel__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: rgba(15, 42, 31, 0.18);
+
+  cursor: pointer;
+
+  transition:
+    width 180ms ease,
+    background-color 180ms ease,
+    transform 180ms ease;
+}
+
+.regionPlaces .placesCarousel__dot:hover {
+  transform: scale(1.14);
+  background: rgba(19, 189, 109, 0.48);
+}
+
+.regionPlaces .placesCarousel__dot.isActive {
+  width: 22px;
+  background: #13bd6d;
+}
+
+/* =========================
+   Destination card
+========================= */
+
+.regionPlaces .placeCard {
+  width: 100%;
+  min-width: 0;
+  max-width: 348px;
+  margin: 0 auto;
+
+  border: 1px solid rgba(214, 226, 220, 0.95);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 8px 22px rgba(15, 42, 31, 0.075),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+
+  transition:
+    transform 200ms ease,
+    border-color 200ms ease,
+    box-shadow 200ms ease;
+}
+
+.regionPlaces .placeCard::after {
+  display: none;
+  content: none;
+}
+
+.regionPlaces .placeCard:hover {
+  transform: translateY(-3px);
+  border-color: rgba(19, 189, 109, 0.28);
+
+  box-shadow:
+    0 14px 30px rgba(15, 42, 31, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* =========================
+   Card image
+========================= */
+
+.regionPlaces .placeCard__media {
+  position: relative;
+  width: 100%;
+  height: 285px;
+  min-height: 285px;
+  flex-shrink: 0;
+
+  overflow: hidden;
+
+  background: #dce8e1;
+}
+
+.regionPlaces .placeCard__media img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 450ms ease;
+}
+
+.regionPlaces .placeCard:hover .placeCard__media img {
+  transform: scale(1.025);
+}
+
+.regionPlaces .placeCard__namePill {
+  position: absolute;
+  left: 12px;
+  bottom: 11px;
+  z-index: 2;
+
+  max-width: calc(100% - 72px);
+  padding: 6px 11px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.96);
+  color: #172c25;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  box-shadow: 0 4px 13px rgba(15, 42, 31, 0.11);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.regionPlaces .placeCard__save {
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  z-index: 2;
+
+  width: 34px;
+  height: 34px;
+  padding: 0;
+
+  border: 1px solid rgba(255, 255, 255, 0.34);
+  border-radius: 50%;
+
+  background: rgba(83, 88, 178, 0.86);
+  color: #ffffff;
+
+  cursor: pointer;
+
+  display: grid;
+  place-items: center;
+
+  box-shadow: 0 6px 16px rgba(15, 42, 31, 0.17);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  transition:
+    transform 170ms ease,
+    background-color 170ms ease;
+}
+
+.regionPlaces .placeCard__save:hover {
+  transform: scale(1.07);
+  background: #4d53a8;
+}
+
+.regionPlaces .placeCard__save svg {
+  width: 15px;
+  height: 15px;
+  stroke-width: 2;
+}
+
+/* =========================
+   Card body
+========================= */
+
+.regionPlaces .placeCard__body {
+  flex: 1;
+  min-height: 282px;
+  padding: 14px 15px 15px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+
+  background: #ffffff;
+}
+
+.regionPlaces .placeCard__row {
+  width: 100%;
+  min-width: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.regionPlaces .placeCard__regionPill {
+  max-width: 58%;
+  min-height: 30px;
+  padding: 0 12px;
+
+  border: 1px solid #dce3ea;
+  border-radius: 999px;
+
+  background: #f4f7fa;
+  color: #43526a;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+
+  display: inline-flex;
+  align-items: center;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.regionPlaces .placeCard__meta,
+.regionPlaces .placeCard__temperature,
+.regionPlaces .placeCard__status {
+  min-width: 0;
+
+  color: #66758c;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: 0;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.regionPlaces .placeCard__meta,
+.regionPlaces .placeCard__status {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.regionPlaces .placeCard__temperature {
+  color: #173d2d;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.regionPlaces .placeCard__metaIcon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 15px;
+
+  color: #718096;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.regionPlaces .placeCard__metaIcon svg {
+  width: 15px;
+  height: 15px;
+  display: block;
+  stroke-width: 1.9;
+}
+
+/* =========================
+   Risk pills
+========================= */
+
+.regionPlaces .placeCard__riskPill {
+  min-height: 28px;
+  padding: 0 11px;
+
+  border-radius: 999px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+
+  display: inline-flex;
+  align-items: center;
+
+  white-space: nowrap;
+}
+
+.regionPlaces .placeCard__riskPill--notSafe {
+  background: #ffe2e4;
+  color: #b62332;
+}
+
+.regionPlaces .placeCard__riskPill--high {
+  background: #ffeadf;
+  color: #b54718;
+}
+
+.regionPlaces .placeCard__riskPill--moderate {
+  background: #fff0c2;
+  color: #986200;
+}
+
+.regionPlaces .placeCard__riskPill--low {
+  background: #dff5e9;
+  color: #087346;
+}
+
+.regionPlaces .placeCard__riskPill--unknown {
+  background: #e8edf4;
+  color: #46566d;
+}
+
+/* =========================
+   Card description
+========================= */
+
+.regionPlaces .placeCard__desc {
+  margin: 0;
+
+  color: #46566d;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 11.5px;
+  font-weight: 400;
+  line-height: 1.6;
+  letter-spacing: 0;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+
+  overflow: hidden;
+}
+
+/* =========================
+   Card buttons
+========================= */
+
+.regionPlaces .placeCard__actions {
+  width: 100%;
+  margin-top: auto;
+  padding-top: 6px;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.regionPlaces .placeCard__btn {
+  min-height: 44px;
+  padding: 0 18px;
+
+  border-radius: 999px;
+
+  font-family: "Poppins", sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0;
+
+  text-decoration: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  white-space: nowrap;
+
+  transition:
+    transform 170ms ease,
+    border-color 170ms ease,
+    background-color 170ms ease,
+    color 170ms ease,
+    box-shadow 170ms ease;
+}
+
+.regionPlaces .placeCard__btn:hover {
+  transform: translateY(-1px);
+}
+
+.regionPlaces .placeCard__btn--primary {
+  border: 1px solid #13bd6d;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    180deg,
+    #19c976 0%,
+    #10b967 100%
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 7px 16px rgba(19, 189, 109, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+}
+
+.regionPlaces .placeCard__btn--primary:hover {
+  border-color: #0c9f59;
+
+  background: linear-gradient(
+    180deg,
+    #14ba6b 0%,
+    #0c9f59 100%
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 10px 20px rgba(19, 189, 109, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.regionPlaces .placeCard__btn--ghost {
+  border: 1px solid #d9e1ea;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #071a33;
+
+  box-shadow:
+    0 3px 9px rgba(15, 42, 31, 0.035),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.regionPlaces .placeCard__btn--ghost:hover {
+  border-color: rgba(19, 189, 109, 0.5);
+  background: #ffffff;
+  color: #078c50;
+
+  box-shadow:
+    0 7px 16px rgba(15, 42, 31, 0.065),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+/* =========================================================
+   FEATURED PLACES RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+  .regionPlaces {
+    padding: 58px 16px;
+  }
+
+  .regionPlaces__inner {
+    padding: 36px 28px 42px;
+  }
+
+  .regionPlaces .placesCarousel__viewport {
+    padding: 0 18px;
+  }
+
+  .regionPlaces .placesCarousel__track {
+    max-width: 760px;
+    margin: 0 auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .regionPlaces .placeCard {
+    max-width: 360px;
+  }
+
+  .regionPlaces .placeCard__media {
+    height: 255px;
+    min-height: 255px;
+  }
+
+  .regionPlaces .placeCard__body {
+    flex: 1;
+    min-height: 270px;
+    padding: 14px 15px 15px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    background: rgba(255, 255, 255, 0.96);
+  }
+}
+
+@media (max-width: 760px) {
+  .regionPlaces {
+    padding: 42px 12px;
+  }
+
+  .regionPlaces__inner {
+    padding: 28px 18px 34px;
+    border-radius: 20px;
+  }
+
+  .regionPlaces__head {
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .regionPlaces__title {
+    font-size: 22px;
+  }
+
+  .regionPlaces__viewAllWrap {
+    gap: 8px;
+  }
+
+  .regionPlaces__more {
+    display: none;
+  }
+
+  .regionPlaces__viewAll {
+    min-height: 36px;
+    padding: 0 14px;
+    font-size: 11px;
+  }
+
+  .regionPlaces__sortBar {
+    min-height: 42px;
+    padding: 10px 15px;
+    border-radius: 16px;
+    font-size: 12px;
+  }
+
+  .regionPlaces__sortLabel,
+  .regionPlaces__riskWord {
+    font-size: 12px;
+  }
+
+  .regionPlaces__filters {
+    gap: 8px;
+  }
+
+  .regionPlaces__chip {
+    min-height: 38px;
+    padding: 0 16px;
+    font-size: 12px;
+  }
+
+  .regionPlaces .placesCarousel__viewport {
+    padding: 0 10px;
+  }
+
+  .regionPlaces .placesCarousel__track {
+    max-width: 360px;
+    margin: 0 auto;
+    grid-template-columns: 1fr;
+  }
+
+  .regionPlaces .placeCard {
+    max-width: 340px;
+  }
+
+  .regionPlaces .placeCard__media {
+    height: 235px;
+    min-height: 235px;
+  }
+
+  .regionPlaces .placeCard__body {
+    min-height: 278px;
+  }
+
+  .regionPlaces .placesCarousel__arrow {
+    width: 38px;
+    height: 38px;
+  }
+
+  .regionPlaces .placesCarousel__arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .regionPlaces .placesCarousel__arrow--prev {
+    left: -18px;
+  }
+
+  .regionPlaces .placesCarousel__arrow--next {
+    right: -18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .regionPlaces {
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+
+  .regionPlaces__inner {
+    padding: 24px 14px 30px;
+  }
+
+  .regionPlaces__head {
+    gap: 10px;
+  }
+
+  .regionPlaces__title {
+    font-size: 19px;
+  }
+
+  .regionPlaces__viewAll {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 10px;
+  }
+
+  .regionPlaces__filters {
+    gap: 7px;
+  }
+
+  .regionPlaces__chip {
+    min-height: 34px;
+    padding: 0 12px;
+    font-size: 10px;
+  }
+
+  .regionPlaces .placeCard__media {
+    height: 220px;
+    min-height: 220px;
+  }
+
+  .regionPlaces .placeCard__body {
+    min-height: 270px;
+    padding: 13px;
+  }
+
+  .regionPlaces .placeCard__row {
+    gap: 8px;
+  }
+
+  .regionPlaces .placeCard__regionPill {
+    max-width: 55%;
+    min-height: 27px;
+    padding: 0 9px;
+    font-size: 9.5px;
+  }
+
+  .regionPlaces .placeCard__meta,
+  .regionPlaces .placeCard__temperature,
+  .regionPlaces .placeCard__status {
+    font-size: 9.5px;
+    gap: 5px;
+  }
+
+  .regionPlaces .placeCard__temperature {
+    font-size: 10.5px;
+  }
+
+  .regionPlaces .placeCard__riskPill {
+    min-height: 25px;
+    padding: 0 9px;
+    font-size: 9.5px;
+  }
+
+  .regionPlaces .placeCard__desc {
+    font-size: 10.5px;
+  }
+
+  .regionPlaces .placeCard__actions {
+    gap: 8px;
+  }
+
+  .regionPlaces .placeCard__btn {
+    min-height: 38px;
+    padding: 0 8px;
+    font-size: 10.5px;
+  }
+}
+
+/* =========================================================
+   FEATURED PLACES END
+========================================================= */

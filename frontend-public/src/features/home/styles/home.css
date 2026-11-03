@@ -1,0 +1,1385 @@
+/* =========================
+   HERO
+========================= */
+
+.homeHero {
+  position: relative;
+
+  /* Taller, more cinematic hero */
+  min-height: 700px;
+  height: calc(100vh - 90px);
+
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* =========================
+   DARK CINEMATIC OVERLAY
+========================= */
+
+.homeHero__overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(2, 18, 12, 0.64) 0%,
+      rgba(4, 20, 15, 0.43) 42%,
+      rgba(8, 13, 11, 0.31) 70%,
+      rgba(5, 10, 8, 0.42) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(0, 0, 0, 0.16) 0%,
+      rgba(0, 0, 0, 0.05) 45%,
+      rgba(0, 0, 0, 0.38) 100%
+    );
+}
+
+/* =========================
+   HERO CONTENT
+========================= */
+
+.homeHero__content {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+  color: #fff;
+
+  padding-top: 90px;
+  padding-bottom: 100px;
+}
+
+/* =========================
+   TOP BADGE / PILL
+========================= */
+
+.homeHero__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 42px;
+
+  padding: 0 24px;
+  margin-bottom: 28px;
+
+  border-radius: 999px;
+
+  background: rgba(18, 39, 30, 0.58);
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  color: rgba(255, 255, 255, 0.92);
+
+  font-size: 12px;
+  font-weight: 700;
+
+  letter-spacing: 1.7px;
+
+  text-transform: uppercase;
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.14),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+/* =========================
+   MAIN TITLE
+========================= */
+
+.homeHero__title {
+  margin: 0;
+
+  max-width: 1150px;
+
+  color: #f8f5ed;
+
+  font-family: Georgia, "Times New Roman", serif;
+
+  font-size: clamp(54px, 6vw, 96px);
+
+  line-height: 0.95;
+
+  font-weight: 500;
+
+  letter-spacing: -2.5px;
+
+  text-wrap: balance;
+
+  text-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.18),
+    0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================
+   SUBTITLE
+========================= */
+
+.homeHero__subtitle {
+  margin: 28px auto 0;
+
+  max-width: 780px;
+
+  color: rgba(255, 255, 255, 0.86);
+
+  font-size: clamp(15px, 1.15vw, 18px);
+
+  line-height: 1.7;
+
+  font-weight: 400;
+
+  letter-spacing: 0;
+
+  text-shadow: 0 4px 18px rgba(0, 0, 0, 0.38);
+}
+
+/* =========================
+   HERO SCROLL BUTTON
+========================= */
+
+.homeHero__scrollBtn {
+  margin-top: 38px;
+
+  width: 68px;
+  height: 68px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  border: 1px solid rgba(255, 255, 255, 0.42);
+
+  background: rgba(73, 61, 55, 0.55);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  color: #fff;
+
+  cursor: pointer;
+
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.22);
+
+  transition:
+    transform 250ms ease,
+    background 250ms ease,
+    border-color 250ms ease,
+    box-shadow 250ms ease;
+}
+
+/* Hover */
+
+.homeHero__scrollBtn:hover {
+  transform: translateY(-3px);
+
+  background: rgba(73, 61, 55, 0.78);
+
+  border-color: rgba(255, 255, 255, 0.65);
+
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.3);
+}
+
+/* Arrow animation */
+
+.homeHero__scrollBtn svg {
+  animation: homeHeroArrowFloat 1.8s ease-in-out infinite;
+}
+
+@keyframes homeHeroArrowFloat {
+  0%,
+  100% {
+    transform: translateY(-4px);
+  }
+
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* Keyboard accessibility */
+
+.homeHero__scrollBtn:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 5px;
+}
+
+/* Mobile */
+
+@media (max-width: 640px) {
+  .homeHero__scrollBtn {
+    margin-top: 30px;
+
+    width: 58px;
+    height: 58px;
+  }
+}
+
+/* Accessibility */
+
+@media (prefers-reduced-motion: reduce) {
+  .homeHero__scrollBtn svg {
+    animation: none;
+  }
+
+  .homeHero__scrollBtn {
+    position: absolute;
+
+    /* Stack directly above WhatsApp button */
+    right: 26px;
+    bottom: 108px;
+
+    z-index: 20;
+
+    margin-top: 0;
+
+    width: 68px;
+    height: 68px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.42);
+
+    background: rgba(73, 61, 55, 0.55);
+
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+
+    color: #fff;
+
+    cursor: pointer;
+
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.22);
+
+    transition:
+      transform 250ms ease,
+      background 250ms ease,
+      border-color 250ms ease,
+      box-shadow 250ms ease;
+  }
+}
+
+@keyframes homeHeroArrowFloat {
+  0%,
+  100% {
+    transform: translateY(-3px);
+  }
+
+  50% {
+    transform: translateY(4px);
+  }
+}
+
+/* =========================
+   KEYBOARD FOCUS
+========================= */
+
+.homeHero__cta:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.9);
+  outline-offset: 5px;
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 980px) {
+  .homeHero {
+    min-height: 650px;
+    height: auto;
+  }
+
+  .homeHero__content {
+    padding-top: 110px;
+    padding-bottom: 110px;
+  }
+
+  .homeHero__title {
+    max-width: 850px;
+
+    font-size: clamp(50px, 8vw, 74px);
+
+    letter-spacing: -1.8px;
+  }
+
+  .homeHero__subtitle {
+    max-width: 650px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+  .homeHero {
+    min-height: 610px;
+
+    background-position: center center;
+  }
+
+  .homeHero__content {
+    padding-top: 85px;
+    padding-bottom: 85px;
+  }
+
+  .homeHero__badge {
+    min-height: 36px;
+
+    padding: 0 18px;
+
+    margin-bottom: 22px;
+
+    font-size: 10px;
+
+    letter-spacing: 1.3px;
+  }
+
+  .homeHero__title {
+    max-width: 95%;
+
+    font-size: clamp(42px, 13vw, 58px);
+
+    line-height: 0.98;
+
+    letter-spacing: -1.3px;
+  }
+
+  .homeHero__subtitle {
+    max-width: 92%;
+
+    margin-top: 22px;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+  }
+
+  .homeHero__cta {
+    margin-top: 30px;
+
+    min-width: 250px;
+    min-height: 68px;
+
+    padding-left: 25px;
+
+    font-size: 14px;
+  }
+
+  .homeHero__ctaIcon {
+    width: 48px;
+    height: 48px;
+
+    flex-basis: 48px;
+  }
+}
+
+/* =========================
+   REDUCED MOTION
+========================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .homeHero__ctaIcon svg {
+    animation: none;
+  }
+
+  .homeHero__cta,
+  .homeHero__ctaIcon {
+    transition: none;
+  }
+}
+
+/* WhatsApp floating button */
+.waFloat {
+  position: fixed;
+  right: 22px;
+  bottom: 24px;
+  z-index: 80;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+  background: #25d366;
+  color: #fff;
+  text-decoration: none;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.28);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    background 160ms ease;
+}
+
+.waFloat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.32);
+  background: #1fb85a;
+}
+
+.waFloat:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.8);
+  outline-offset: 3px;
+}
+
+.waFloat__icon {
+  display: block;
+}
+
+/* =========================
+   BOOK YOUR JOURNEY CTA
+========================= */
+
+.bookJourney {
+  padding: 38px 0;
+  background: #eaf7f1;
+}
+
+.journeyCta {
+  position: relative;
+
+  max-width: 1180px;
+  margin: 0 auto;
+
+  min-height: 220px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 50px;
+
+  padding: 42px 50px;
+
+  border-radius: 26px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 90% 10%,
+      rgba(80, 220, 157, 0.24),
+      transparent 35%
+    ),
+    linear-gradient(
+      120deg,
+      #0b3525 0%,
+      #0d4a32 52%,
+      #126844 100%
+    );
+
+  border: 1px solid rgba(255, 255, 255, 0.12);
+
+  box-shadow:
+    0 20px 50px rgba(7, 45, 30, 0.16);
+}
+
+
+/* subtle decorative glow */
+
+.journeyCta::before {
+  content: "";
+
+  position: absolute;
+
+  width: 260px;
+  height: 260px;
+
+  right: 8%;
+  top: -180px;
+
+  border-radius: 50%;
+
+  background: rgba(100, 235, 175, 0.13);
+
+  filter: blur(2px);
+
+  pointer-events: none;
+}
+
+
+.journeyCta__content {
+  position: relative;
+  z-index: 2;
+
+  max-width: 690px;
+}
+
+
+/* SMALL PILL */
+
+.journeyCta__eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  margin-bottom: 13px;
+
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.09);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  color: #b9f4d6;
+
+  font-size: 10px;
+  font-weight: 800;
+
+  letter-spacing: 1.5px;
+}
+
+
+/* HEADING */
+
+.journeyCta__title {
+  margin: 0;
+
+  color: #ffffff;
+
+  font-size: clamp(34px, 3.4vw, 52px);
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: -1.2px;
+}
+
+
+/* DESCRIPTION */
+
+.journeyCta__text {
+  max-width: 610px;
+
+  margin: 15px 0 0;
+
+  color: rgba(255, 255, 255, 0.72);
+
+  font-size: 14px;
+
+  line-height: 1.65;
+}
+
+
+/* CTA BUTTON */
+
+.journeyCta__button {
+  position: relative;
+  z-index: 2;
+
+  flex-shrink: 0;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 18px;
+
+  min-height: 58px;
+
+  padding: 7px 8px 7px 23px;
+
+  border-radius: 999px;
+
+  background: #ffffff;
+
+  color: #103d2c;
+
+  font-size: 14px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 14px 30px rgba(0, 0, 0, 0.16);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease;
+}
+
+
+.journeyCta__buttonIcon {
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  background: #19b86d;
+
+  color: #ffffff;
+
+  transition:
+    transform 220ms ease,
+    background 220ms ease;
+}
+
+
+.journeyCta__button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 18px 38px rgba(0, 0, 0, 0.20);
+}
+
+
+.journeyCta__button:hover .journeyCta__buttonIcon {
+  transform: rotate(45deg);
+
+  background: #0d8f54;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .journeyCta {
+    padding: 36px;
+
+    gap: 30px;
+  }
+
+  .journeyCta__title {
+    font-size: 38px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+  .bookJourney {
+    padding: 26px 0;
+  }
+
+  .journeyCta {
+    min-height: auto;
+
+    flex-direction: column;
+    align-items: flex-start;
+
+    gap: 25px;
+
+    padding: 30px 24px;
+
+    border-radius: 22px;
+  }
+
+  .journeyCta__title {
+    font-size: 34px;
+  }
+
+  .journeyCta__text {
+    font-size: 13px;
+  }
+
+  .journeyCta__button {
+    width: 100%;
+
+    justify-content: space-between;
+  }
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+
+  .bookJourney {
+    padding: 30px 0 34px;
+  }
+
+  .journeyCard {
+    padding: 26px 24px 24px;
+  }
+
+  .journeyGrid {
+    padding: 15px;
+  }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+
+  .bookJourney {
+    padding: 24px 0 30px;
+  }
+
+  .journeyCard {
+    border-radius: 20px;
+
+    padding: 24px 16px 20px;
+  }
+
+  .journeyCard::before {
+    margin-bottom: 7px;
+  }
+
+  .journeyCard__title {
+    margin-bottom: 18px;
+
+    font-size: 27px;
+  }
+
+  .journeyGrid {
+    grid-template-columns: 1fr;
+
+    gap: 13px;
+
+    padding: 14px;
+  }
+
+  .formInput {
+    height: 44px;
+  }
+
+  .journeyActions .bookBtn {
+    width: 100%;
+    min-height: 44px;
+  }
+}
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 900px) {
+  .journeyCard {
+    padding: 42px 28px 34px;
+  }
+
+  .journeyGrid {
+    padding: 20px;
+  }
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 640px) {
+  .bookJourney {
+    padding: 48px 0 58px;
+  }
+
+  .journeyCard {
+    border-radius: 22px;
+
+    padding: 34px 18px 26px;
+  }
+
+  .journeyCard__title {
+    margin-bottom: 26px;
+
+    font-size: 30px;
+  }
+
+  .journeyGrid {
+    grid-template-columns: 1fr;
+
+    gap: 16px;
+
+    padding: 16px;
+  }
+
+  .formInput {
+    height: 50px;
+  }
+
+  .journeyActions .bookBtn {
+    width: 100%;
+  }
+}
+
+/* =========================
+   EXPLORE PAKISTAN
+========================= */
+.explorePakistan {
+  background: #f6f2ea;
+  padding: 38px 0 70px;
+}
+
+.homeSearchStrip {
+  background: transparent;
+  border: 0;
+}
+
+.homeSearchStrip__inner {
+  padding: 0 0 26px;
+}
+
+.homeSearchForm {
+  display: grid;
+  grid-template-columns: 1fr 140px;
+  gap: 14px;
+  align-items: center;
+}
+
+.homeSearchInput {
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  border: 1px solid rgba(15, 42, 31, 0.12);
+  background: #fbfaf7;
+  padding: 0 14px;
+  outline: none;
+  color: var(--color-text);
+}
+
+.homeSearchInput::placeholder {
+  color: rgba(15, 42, 31, 0.4);
+}
+
+.homeSearchInput:focus {
+  border-color: rgba(24, 178, 106, 0.55);
+  box-shadow: 0 0 0 4px rgba(24, 178, 106, 0.12);
+  background: #fff;
+}
+
+.homeSearchBtn {
+  height: 44px;
+  border-radius: 12px;
+  border: 0;
+  cursor: pointer;
+  background: #164d35;
+  color: #fff;
+  font-weight: 700;
+}
+
+.homeSearchBtn:hover {
+  background: #0f3f2a;
+}
+
+.homeSearchBtn:focus-visible {
+  outline: 2px solid rgba(15, 42, 31, 0.35);
+  outline-offset: 3px;
+}
+
+.explorePakistan__inner {
+  padding-top: 18px;
+  display: grid;
+  grid-template-columns: 1.05fr 1.55fr;
+  gap: 42px;
+  align-items: start;
+}
+
+.explorePakistan__kicker {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c98b2f;
+  font-weight: 800;
+  margin-bottom: 12px;
+}
+
+.explorePakistan__title {
+  margin: 0 0 14px;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.12;
+  font-weight: 800;
+  color: #1d1d1d;
+}
+
+.explorePakistan__text {
+  margin: 0 0 18px;
+  color: rgba(15, 42, 31, 0.72);
+  line-height: 1.75;
+  font-size: 14px;
+  max-width: 420px;
+}
+
+.explorePakistan__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #164d35;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.explorePakistan__link:hover {
+  text-decoration: underline;
+}
+
+.explorePakistan__arrow {
+  font-weight: 900;
+}
+
+.categoryGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.categoryCard {
+  border: 1px solid rgba(15, 42, 31, 0.1);
+  background: #fff;
+  border-radius: 16px;
+  padding: 18px;
+  text-align: left;
+  cursor: pointer;
+  box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+  transition:
+    transform 140ms ease,
+    box-shadow 140ms ease,
+    border-color 140ms ease;
+}
+
+.categoryCard:hover {
+  transform: translateY(-2px);
+  border-color: rgba(24, 178, 106, 0.22);
+  box-shadow: 0 16px 30px rgba(15, 23, 42, 0.1);
+}
+
+.categoryCard__icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(15, 42, 31, 0.06);
+  margin-bottom: 12px;
+  font-size: 18px;
+}
+
+.categoryCard__title {
+  font-weight: 800;
+  color: #1d1d1d;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.categoryCard__count {
+  color: rgba(15, 42, 31, 0.55);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* =========================
+   FEATURED TOURS
+========================= */
+.featuredToursSection {
+  background: #fff;
+  padding: 70px 0;
+}
+
+.featuredToursPanel {
+  background: var(--color-header);
+  border: 1px solid var(--color-border);
+  border-radius: 26px;
+  padding: 34px 26px 26px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.1);
+}
+
+.homeSectionHead {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.homeSectionKicker {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #c98b2f;
+  font-weight: 800;
+  margin-bottom: 10px;
+}
+
+.homeSectionTitle {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.1;
+  font-weight: 800;
+  color: #1d1d1d;
+}
+
+.homeSectionLink {
+  text-decoration: none;
+  color: #164d35;
+  font-weight: 700;
+  font-size: 14px;
+  display: inline-flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.homeSectionLink:hover {
+  text-decoration: underline;
+}
+
+.homeSectionLink__arrow {
+  font-weight: 900;
+}
+
+/* Carousel */
+.carouselWrap {
+  position: relative;
+}
+
+.ftRow {
+  display: grid;
+  grid-auto-flow: column;
+
+  /* ✅ 3 cards visible on desktop */
+  grid-auto-columns: calc((100% - 32px) / 3);
+
+  gap: 16px;
+  overflow-x: auto;
+
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  padding: 10px 0 4px;
+
+  /* ✅ hide scrollbar completely (removes the bottom box) */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* old Edge/IE */
+}
+
+/* Chrome / Edge / Safari */
+.ftRow::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  display: none;
+}
+
+/* Arrows */
+.carouselArrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
+
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(15, 42, 31, 0.16);
+  background: rgba(255, 255, 255, 0.95);
+  color: #123326;
+
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(15, 23, 42, 0.12);
+}
+
+.carouselArrow--left {
+  left: -48px;
+}
+
+.carouselArrow--right {
+  right: -48px;
+}
+
+/* Card */
+.ftCard {
+  scroll-snap-align: start;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(15, 42, 31, 0.1);
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.ftCard__media {
+  position: relative;
+  height: 210px;
+  background: #dbe7df;
+}
+
+.ftCard__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ftCard__namePill {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f2a1f;
+  font-weight: 800;
+  font-size: 13px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  max-width: calc(100% - 28px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftCard__badge {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+
+  display: grid;
+  place-items: center;
+
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.95);
+  color: #0f2a1f;
+}
+
+.ftCard__body {
+  padding: 14px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.ftCard__metaTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.ftCard__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eef3fb;
+  color: #1a2b4b;
+  font-weight: 700;
+  font-size: 12px;
+  max-width: 62%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftCard__time {
+  color: rgba(15, 42, 31, 0.55);
+  font-size: 12px;
+  font-weight: 600;
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  white-space: nowrap;
+}
+
+.ftCard__timeIcon {
+  font-size: 12px;
+}
+
+.ftCard__stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px 14px;
+  margin-bottom: 10px;
+}
+
+.ftStat {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 12px;
+  min-width: 0;
+}
+
+.ftStat--right {
+  justify-content: flex-end;
+}
+
+.ftStat__icon {
+  width: 18px;
+  display: inline-grid;
+  place-items: center;
+  opacity: 0.9;
+  flex-shrink: 0;
+}
+
+.ftStat__text {
+  color: rgba(15, 42, 31, 0.85);
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ftPill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 800;
+  font-size: 12px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.ftPill--warning {
+  background: #fff3d6;
+  color: #a15c00;
+}
+
+.ftPill--ok {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.ftCard__desc {
+  margin: 0 0 14px;
+  color: rgba(15, 42, 31, 0.7);
+  font-size: 13px;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.ftCard__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.ftBtn {
+  height: 38px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-weight: 800;
+  font-size: 13px;
+  border: 0;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ftBtn--primary {
+  background: var(--color-primary);
+  color: #fff;
+}
+
+.ftBtn--primary:hover {
+  background: var(--color-primary-hover);
+}
+
+.ftBtn--outline {
+  border: 1px solid rgba(15, 42, 31, 0.18);
+  color: #0f2a1f;
+  background: #fff;
+}
+
+.ftBtn--outline:hover {
+  background: rgba(15, 42, 31, 0.05);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .carouselArrow--left {
+    left: 8px;
+  }
+  .carouselArrow--right {
+    right: 8px;
+  }
+}
+
+@media (max-width: 980px) {
+  .explorePakistan__inner {
+    grid-template-columns: 1fr;
+  }
+
+  .categoryGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .homeSearchForm {
+    grid-template-columns: 1fr;
+  }
+
+  .homeSearchBtn {
+    width: 100%;
+  }
+
+  .carouselArrow {
+    display: none;
+  }
+
+  .ftRow {
+    grid-auto-columns: calc((100% - 16px) / 2);
+  }
+}
+
+@media (max-width: 640px) {
+  .journeyCard {
+    padding: 24px 18px 18px;
+  }
+
+  .journeyGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .categoryGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .featuredToursPanel {
+    padding: 26px 16px 18px;
+  }
+
+  .ftRow {
+    grid-auto-columns: 90%;
+  }
+}

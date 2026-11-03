@@ -1,0 +1,1 @@
+﻿import api from '../../../shared/lib/axios'; export const pagesApi = { get: async (name) => (await api.get(/pages/)).data.data, update: async (name, payload) => (await api.put(/pages/, payload)).data.data };

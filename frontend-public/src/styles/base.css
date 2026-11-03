@@ -1,0 +1,37 @@
+/* ===== Reset / Base ===== */
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: #fff;
+}
+
+/* Headings font (global) */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+.container {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+}
+
+/* App shell layout */
+.appShell {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.appMain {
+  flex: 1;
+  padding: 0;
+}
+
+/* Generic page spacing helper */
+.page { padding: 24px 0; }
+.page h1 { margin: 0 0 10px; }

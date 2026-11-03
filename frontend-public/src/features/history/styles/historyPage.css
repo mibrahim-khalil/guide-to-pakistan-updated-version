@@ -1,0 +1,6147 @@
+/* =========================================================
+   HISTORY PAGE
+========================================================= */
+
+.historyPage {
+  width: 100%;
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+  background: #f4f0e7;
+  color: #17382c;
+}
+
+
+/* =========================================================
+   HISTORY HERO
+========================================================= */
+
+.historyHero {
+  position: relative;
+
+  width: 100%;
+  height: 680px;
+
+  overflow: hidden;
+  isolation: isolate;
+
+  background: #17130d;
+}
+
+
+/* =========================================================
+   HERO IMAGE
+========================================================= */
+
+.historyHero__image {
+  position: absolute;
+  inset: 0;
+
+  z-index: -4;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+  object-position: center;
+
+  transform: scale(1.02);
+
+  filter:
+    saturate(0.78)
+    contrast(1.05)
+    brightness(0.8);
+}
+
+
+/* =========================================================
+   HERO OVERLAY
+========================================================= */
+
+.historyHero__overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: -3;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(13, 20, 15, 0.9) 0%,
+      rgba(13, 20, 15, 0.7) 38%,
+      rgba(13, 20, 15, 0.32) 70%,
+      rgba(13, 20, 15, 0.15) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(11, 16, 12, 0.06),
+      rgba(11, 16, 12, 0.7)
+    );
+}
+
+
+/* =========================================================
+   WARM HISTORICAL GLOW
+========================================================= */
+
+.historyHero__warmGlow {
+  position: absolute;
+
+  top: -80px;
+  right: 8%;
+
+  z-index: -2;
+
+  width: 460px;
+  height: 460px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(211, 163, 87, 0.22),
+      rgba(211, 163, 87, 0.06) 48%,
+      transparent 72%
+    );
+
+  filter: blur(18px);
+}
+
+
+/* =========================================================
+   HERO INNER
+========================================================= */
+
+.historyHero__inner {
+  position: relative;
+
+  width: min(1180px, calc(100% - 56px));
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+}
+
+
+/* =========================================================
+   HERO CONTENT
+========================================================= */
+
+.historyHero__content {
+  width: min(720px, 68%);
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.historyHero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 34px;
+
+  padding: 0 15px;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.055);
+
+  color: rgba(255, 255, 255, 0.76);
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   HERO TITLE
+========================================================= */
+
+.historyHero__title {
+  margin: 20px 0 0;
+
+  display: flex;
+  flex-direction: column;
+
+  color: #f6f0e5;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(68px, 7vw, 104px);
+  line-height: 0.88;
+
+  font-weight: 600;
+
+  letter-spacing: -2.6px;
+
+  text-transform: uppercase;
+}
+
+.historyHero__title span:last-child {
+  margin-left: 76px;
+
+  color: #dcb676;
+}
+
+
+/* =========================================================
+   HERO DESCRIPTION
+========================================================= */
+
+.historyHero__description {
+  max-width: 620px;
+
+  margin: 28px 0 0;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   DISCOVER PILL
+========================================================= */
+
+.historyHero__discover {
+  position: absolute;
+
+  top: 52%;
+  right: 1%;
+
+  width: 270px;
+  height: 72px;
+
+  padding: 10px 12px 10px 20px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 16px;
+
+  border: 1px solid rgba(255, 255, 255, 0.17);
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.11),
+      rgba(255, 255, 255, 0.04)
+    );
+
+  color: #ffffff;
+
+  font-family: "Poppins", Arial, sans-serif;
+
+  text-align: left;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  box-shadow:
+    0 18px 45px rgba(0, 0, 0, 0.16);
+
+  animation:
+    historyDiscoverDrift
+    3.8s
+    ease-in-out
+    infinite;
+}
+
+@keyframes historyDiscoverDrift {
+  0% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(-30px);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.historyHero__discover > span:first-child {
+  display: flex;
+  flex-direction: column;
+
+  gap: 4px;
+}
+
+.historyHero__discover small {
+  color: rgba(255, 255, 255, 0.54);
+
+  font-size: 7px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.historyHero__discover strong {
+  color: #ffffff;
+
+  font-size: 14px;
+  line-height: 1.15;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   CTA ICON
+========================================================= */
+
+.historyHero__discoverIcon {
+  width: 46px;
+  height: 46px;
+
+  flex: 0 0 46px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  color: #ffffff;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   HERO BOTTOM FADE
+========================================================= */
+
+.historyHero__bottomFade {
+  position: absolute;
+
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  height: 90px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(244, 240, 231, 0),
+      rgba(244, 240, 231, 0.4) 55%,
+      #f4f0e7 100%
+    );
+}
+
+
+/* =========================================================
+   TEMPORARY TIMELINE PLACEHOLDER
+========================================================= */
+
+.historyTimelinePlaceholder {
+  padding: 70px 0 76px;
+
+  background: #f4f0e7;
+}
+
+.historyTimelinePlaceholder > div {
+  width: min(1080px, calc(100% - 56px));
+
+  margin: 0 auto;
+}
+
+.historyTimelinePlaceholder span {
+  color: #1f9a68;
+
+  font-size: 9px;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+.historyTimelinePlaceholder h2 {
+  max-width: 720px;
+
+  margin: 12px 0 0;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 48px;
+  line-height: 1.02;
+
+  font-weight: 600;
+}
+
+.historyTimelinePlaceholder p {
+  max-width: 620px;
+
+  margin: 14px 0 0;
+
+  color: rgba(23, 56, 44, 0.62);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .historyHero__content {
+    width: 76%;
+  }
+
+  .historyHero__title {
+    font-size: clamp(60px, 9vw, 82px);
+  }
+
+  .historyHero__discover {
+    right: 2%;
+
+    width: 235px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .historyHero {
+    height: 650px;
+  }
+
+  .historyHero__inner {
+    width: calc(100% - 28px);
+
+    align-items: flex-start;
+
+    padding-top: 120px;
+  }
+
+  .historyHero__content {
+    width: 100%;
+  }
+
+  .historyHero__title {
+    font-size: clamp(52px, 14vw, 68px);
+  }
+
+  .historyHero__title span:last-child {
+    margin-left: 28px;
+  }
+
+  .historyHero__description {
+    max-width: 480px;
+
+    font-size: 13px;
+  }
+
+  .historyHero__discover {
+    top: auto;
+    right: auto;
+    left: 14px;
+    bottom: 42px;
+
+    width: 225px;
+    height: 60px;
+  }
+
+  .historyHero__discoverIcon {
+    width: 38px;
+    height: 38px;
+
+    flex-basis: 38px;
+  }
+
+  .historyTimelinePlaceholder {
+    padding: 52px 0 58px;
+  }
+
+  .historyTimelinePlaceholder > div {
+    width: calc(100% - 28px);
+  }
+
+  .historyTimelinePlaceholder h2 {
+    font-size: 38px;
+  }
+}
+/* =========================================================
+   HISTORY OF PAKISTAN — HORIZONTAL ERA SLIDER
+========================================================= */
+
+.pakistanHistory {
+  position: relative;
+
+  width: 100%;
+
+  padding: 58px 0 66px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 8% 8%,
+      rgba(197, 147, 72, 0.07),
+      transparent 26%
+    ),
+    radial-gradient(
+      circle at 92% 90%,
+      rgba(31, 154, 104, 0.06),
+      transparent 30%
+    ),
+    #f4f0e7;
+
+  color: #17382c;
+}
+
+.pakistanHistory__container {
+  width: min(1120px, calc(100% - 56px));
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.pakistanHistory__intro {
+  margin-bottom: 26px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+.pakistanHistory__introCopy {
+  max-width: 700px;
+}
+
+.pakistanHistory__eyebrow {
+  display: inline-flex;
+
+  margin-bottom: 9px;
+
+  color: #1f9a68;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.pakistanHistory__title {
+  margin: 0;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    "Times New Roman",
+    serif;
+
+  font-size: clamp(38px, 4vw, 54px);
+  line-height: 1;
+
+  font-weight: 600;
+
+  letter-spacing: -1.3px;
+}
+
+.pakistanHistory__description {
+  max-width: 610px;
+
+  margin: 12px 0 0;
+
+  color: rgba(23, 56, 44, 0.63);
+
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   SLIDER CONTROLS
+========================================================= */
+
+.pakistanHistory__controls {
+  display: flex;
+  align-items: center;
+
+  gap: 8px;
+
+  flex: 0 0 auto;
+}
+
+.pakistanHistory__controls button {
+  width: 38px;
+  height: 38px;
+
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(23, 56, 44, 0.12);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.6);
+
+  color: #17382c;
+
+  font-family: inherit;
+
+  font-size: 15px;
+  line-height: 1;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 22px rgba(23, 56, 44, 0.05);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.pakistanHistory__controls button:hover {
+  transform: translateY(-2px);
+
+  border-color: #1f9a68;
+
+  background: #1f9a68;
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   ERA TRACK
+========================================================= */
+
+.pakistanHistory__track {
+  display: flex;
+
+  gap: 14px;
+
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+
+  padding:
+    4px
+    4px
+    12px;
+
+  scrollbar-width: none;
+
+  cursor: grab;
+}
+
+.pakistanHistory__track::-webkit-scrollbar {
+  display: none;
+}
+
+.pakistanHistory__track:active {
+  cursor: grabbing;
+}
+
+
+/* =========================================================
+   ERA CARD
+========================================================= */
+
+.historyEraCard {
+  position: relative;
+
+  flex: 0 0 350px;
+
+  min-width: 350px;
+
+  scroll-snap-align: start;
+
+  overflow: hidden;
+
+  border: 1px solid rgba(23, 56, 44, 0.08);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.72);
+
+  box-shadow:
+    0 16px 40px rgba(23, 56, 44, 0.07);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+.historyEraCard:hover {
+  transform: translateY(-4px);
+
+  border-color: rgba(31, 154, 104, 0.2);
+
+  box-shadow:
+    0 22px 50px rgba(23, 56, 44, 0.11);
+}
+
+
+/* =========================================================
+   ERA IMAGE
+========================================================= */
+
+.historyEraCard__media {
+  position: relative;
+
+  height: 190px;
+
+  overflow: hidden;
+
+  background: #17382c;
+}
+
+.historyEraCard__media img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transform: scale(1.01);
+
+  filter:
+    saturate(0.82)
+    contrast(1.03);
+
+  transition:
+    transform 700ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.historyEraCard:hover
+.historyEraCard__media img {
+  transform: scale(1.05);
+}
+
+
+/* =========================================================
+   IMAGE OVERLAY
+========================================================= */
+
+.historyEraCard__overlay {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(7, 20, 14, 0.04) 0%,
+      rgba(7, 20, 14, 0.12) 45%,
+      rgba(7, 20, 14, 0.72) 100%
+    );
+}
+
+
+/* =========================================================
+   ERA NUMBER
+========================================================= */
+
+.historyEraCard__number {
+  position: absolute;
+
+  top: 12px;
+  left: 12px;
+
+  width: 32px;
+  height: 32px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 50%;
+
+  background: rgba(7, 20, 14, 0.44);
+
+  color: #ffffff;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   ERA PERIOD
+========================================================= */
+
+.historyEraCard__period {
+  position: absolute;
+
+  left: 14px;
+  right: 14px;
+  bottom: 12px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-size: 8px;
+  line-height: 1.35;
+
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   ERA CONTENT
+========================================================= */
+
+.historyEraCard__content {
+  padding: 18px;
+}
+
+.historyEraCard__category {
+  display: inline-flex;
+
+  color: #1f9a68;
+
+  font-size: 7px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.historyEraCard__content h3 {
+  margin: 8px 0 0;
+
+  color: #17382c;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 19px;
+  line-height: 1.15;
+
+  font-weight: 700;
+
+  letter-spacing: -0.35px;
+}
+
+.historyEraCard__content p {
+  margin: 10px 0 0;
+
+  color: rgba(23, 56, 44, 0.62);
+
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   HIGHLIGHTS
+========================================================= */
+
+.historyEraCard__highlights {
+  margin-top: 14px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 6px;
+}
+
+.historyEraCard__highlights span {
+  min-height: 24px;
+
+  padding: 0 8px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 999px;
+
+  background:
+    rgba(31, 154, 104, 0.08);
+
+  color: #1f805a;
+
+  font-size: 7px;
+  line-height: 1;
+
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   SLIDER HINT
+========================================================= */
+
+.pakistanHistory__hint {
+  margin-top: 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 7px;
+
+  color: rgba(23, 56, 44, 0.42);
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .pakistanHistory {
+    padding:
+      52px 0
+      58px;
+  }
+
+  .pakistanHistory__container {
+    width: min(
+      100% - 42px,
+      1040px
+    );
+  }
+
+  .historyEraCard {
+    flex-basis: 320px;
+    min-width: 320px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .pakistanHistory {
+    padding:
+      44px 0
+      50px;
+  }
+
+  .pakistanHistory__container {
+    width: calc(100% - 28px);
+  }
+
+  .pakistanHistory__intro {
+    margin-bottom: 20px;
+
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 18px;
+  }
+
+  .pakistanHistory__title {
+    font-size:
+      clamp(34px, 10vw, 44px);
+  }
+
+  .pakistanHistory__description {
+    font-size: 11px;
+  }
+
+  .historyEraCard {
+    flex-basis: 285px;
+    min-width: 285px;
+  }
+
+  .historyEraCard__media {
+    height: 165px;
+  }
+
+  .historyEraCard__content {
+    padding: 15px;
+  }
+
+  .historyEraCard__content h3 {
+    font-size: 17px;
+  }
+
+  .historyEraCard__content p {
+    font-size: 10px;
+  }
+}/* =========================================================
+   HISTORY ERA EXPLORER — FINAL LAYOUT REPAIR
+   Keep this block at the absolute bottom of historyPage.css
+========================================================= */
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.pakistanHistory {
+  position: relative !important;
+
+  width: 100% !important;
+
+  padding: 56px 0 64px !important;
+
+  overflow: hidden !important;
+
+  background:
+    radial-gradient(
+      circle at 10% 8%,
+      rgba(193, 145, 75, 0.07),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 90%,
+      rgba(30, 154, 103, 0.06),
+      transparent 28%
+    ),
+    #f4f0e7 !important;
+
+  color: #17382c !important;
+}
+
+
+.pakistanHistory__container {
+  width: min(1120px, calc(100% - 64px)) !important;
+
+  margin: 0 auto !important;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.pakistanHistory__intro {
+  margin-bottom: 28px !important;
+
+  display: flex !important;
+  align-items: flex-end !important;
+  justify-content: space-between !important;
+
+  gap: 40px !important;
+}
+
+
+.pakistanHistory__introCopy {
+  max-width: 700px !important;
+}
+
+
+.pakistanHistory__eyebrow {
+  display: inline-block !important;
+
+  margin-bottom: 9px !important;
+
+  color: #1f9a68 !important;
+
+  font-size: 8px !important;
+  line-height: 1 !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+}
+
+
+.pakistanHistory__title {
+  margin: 0 !important;
+
+  color: #17382c !important;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif !important;
+
+  font-size: clamp(38px, 4vw, 54px) !important;
+  line-height: 1 !important;
+
+  font-weight: 600 !important;
+
+  letter-spacing: -1.2px !important;
+}
+
+
+.pakistanHistory__description {
+  max-width: 620px !important;
+
+  margin: 12px 0 0 !important;
+
+  color: rgba(23, 56, 44, 0.62) !important;
+
+  font-size: 12px !important;
+  line-height: 1.65 !important;
+}
+
+
+/* =========================================================
+   COUNTER
+========================================================= */
+
+.pakistanHistory__counter {
+  min-height: 38px !important;
+
+  padding: 0 14px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+
+  gap: 6px !important;
+
+  border: 1px solid rgba(23, 56, 44, 0.1) !important;
+  border-radius: 999px !important;
+
+  background: rgba(255, 255, 255, 0.62) !important;
+
+  color: rgba(23, 56, 44, 0.45) !important;
+
+  font-size: 9px !important;
+
+  font-weight: 800 !important;
+}
+
+
+.pakistanHistory__counter strong {
+  color: #1e9a67 !important;
+}
+
+
+/* =========================================================
+   STAGE
+========================================================= */
+
+.pakistanHistoryStage {
+  position: relative !important;
+
+  width: 100% !important;
+}
+
+
+/* =========================================================
+   ONE LARGE ERA CARD
+========================================================= */
+
+.pakistanHistoryStage__card {
+  position: relative !important;
+
+  width: 100% !important;
+  min-height: 470px !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(320px, 0.88fr)
+    minmax(0, 1.12fr) !important;
+
+  overflow: hidden !important;
+
+  border: 1px solid rgba(23, 56, 44, 0.1) !important;
+  border-radius: 26px !important;
+
+  background: rgba(252, 252, 248, 0.84) !important;
+
+  box-shadow:
+    0 22px 58px rgba(23, 56, 44, 0.09) !important;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.pakistanHistoryStage__content {
+  min-width: 0 !important;
+
+  padding: 34px !important;
+
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.84),
+      rgba(247, 247, 241, 0.86)
+    ) !important;
+}
+
+
+.pakistanHistoryStage__top {
+  display: flex !important;
+  align-items: center !important;
+
+  gap: 9px !important;
+}
+
+
+.pakistanHistoryStage__number {
+  width: 32px !important;
+  height: 32px !important;
+
+  flex: 0 0 32px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  background: rgba(30, 154, 103, 0.1) !important;
+
+  color: #1e9a67 !important;
+
+  font-size: 8px !important;
+
+  font-weight: 900 !important;
+}
+
+
+.pakistanHistoryStage__category {
+  min-height: 27px !important;
+
+  padding: 0 10px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+
+  border-radius: 999px !important;
+
+  background: rgba(30, 154, 103, 0.075) !important;
+
+  color: #1c8159 !important;
+
+  font-size: 7px !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+
+.pakistanHistoryStage__period {
+  margin-top: 22px !important;
+
+  color: #a9783d !important;
+
+  font-size: 9px !important;
+  line-height: 1.4 !important;
+
+  font-weight: 850 !important;
+
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+}
+
+
+.pakistanHistoryStage__content h3 {
+  max-width: 430px !important;
+
+  margin: 9px 0 0 !important;
+
+  color: #17382c !important;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif !important;
+
+  font-size: clamp(29px, 2.8vw, 39px) !important;
+  line-height: 1.06 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: -0.7px !important;
+}
+
+
+.pakistanHistoryStage__content > p {
+  max-width: 470px !important;
+
+  margin: 16px 0 0 !important;
+
+  color: rgba(23, 56, 44, 0.66) !important;
+
+  font-size: 12px !important;
+  line-height: 1.72 !important;
+}
+
+
+.pakistanHistoryStage__divider {
+  width: 100% !important;
+  height: 1px !important;
+
+  margin: 23px 0 17px !important;
+
+  background: rgba(23, 56, 44, 0.09) !important;
+}
+
+
+.pakistanHistoryStage__highlightLabel {
+  color: rgba(23, 56, 44, 0.43) !important;
+
+  font-size: 7px !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.11em !important;
+  text-transform: uppercase !important;
+}
+
+
+.pakistanHistoryStage__highlights {
+  margin-top: 10px !important;
+
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  gap: 7px !important;
+}
+
+
+.pakistanHistoryStage__highlights span {
+  min-height: 26px !important;
+
+  padding: 0 9px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+
+  border-radius: 999px !important;
+
+  background: rgba(30, 154, 103, 0.08) !important;
+
+  color: #1c7e59 !important;
+
+  font-size: 7px !important;
+
+  font-weight: 750 !important;
+}
+
+
+/* =========================================================
+   RIGHT IMAGE MOSAIC
+========================================================= */
+
+.pakistanHistoryStage__visuals {
+  min-width: 0 !important;
+
+  padding: 18px !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(170px, 0.85fr) !important;
+
+  gap: 12px !important;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(231, 241, 235, 0.46),
+      rgba(255, 255, 255, 0.24)
+    ) !important;
+}
+
+
+/* =========================================================
+   LARGE IMAGE
+========================================================= */
+
+.pakistanHistoryStage__mainImage {
+  position: relative !important;
+
+  min-width: 0 !important;
+  min-height: 430px !important;
+
+  overflow: hidden !important;
+
+  border-radius: 20px !important;
+
+  background: #17382c !important;
+
+  box-shadow:
+    0 14px 34px rgba(23, 56, 44, 0.12) !important;
+}
+
+
+.pakistanHistoryStage__mainImage img {
+  position: absolute !important;
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+
+  max-width: none !important;
+}
+
+
+.pakistanHistoryStage__imageShade {
+  position: absolute !important;
+  inset: 0 !important;
+
+  z-index: 1 !important;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 19, 13, 0.02),
+      rgba(6, 19, 13, 0.58)
+    ) !important;
+
+  pointer-events: none !important;
+}
+
+
+.pakistanHistoryStage__imageCaption {
+  position: absolute !important;
+
+  left: 17px !important;
+  right: 17px !important;
+  bottom: 16px !important;
+
+  z-index: 2 !important;
+}
+
+
+.pakistanHistoryStage__imageCaption span {
+  display: block !important;
+
+  color: #9ae5bc !important;
+
+  font-size: 7px !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+
+.pakistanHistoryStage__imageCaption strong {
+  display: block !important;
+
+  margin-top: 5px !important;
+
+  color: #ffffff !important;
+
+  font-size: 14px !important;
+
+  font-weight: 700 !important;
+}
+
+
+/* =========================================================
+   TWO SMALL IMAGES
+========================================================= */
+
+.pakistanHistoryStage__sideImages {
+  min-width: 0 !important;
+
+  display: grid !important;
+
+  grid-template-columns: 1fr !important;
+
+  grid-template-rows:
+    repeat(2, minmax(0, 1fr)) !important;
+
+  gap: 12px !important;
+}
+
+
+.pakistanHistoryStage__sideImages > div {
+  position: relative !important;
+
+  min-height: 0 !important;
+
+  overflow: hidden !important;
+
+  border-radius: 18px !important;
+
+  background: #17382c !important;
+
+  box-shadow:
+    0 10px 26px rgba(23, 56, 44, 0.09) !important;
+}
+
+
+.pakistanHistoryStage__sideImages img {
+  position: absolute !important;
+  inset: 0 !important;
+
+  width: 100% !important;
+  height: 100% !important;
+
+  display: block !important;
+
+  object-fit: cover !important;
+
+  max-width: none !important;
+}
+
+
+/* =========================================================
+   PREVIOUS / NEXT ARROWS
+========================================================= */
+
+.pakistanHistoryStage__arrow {
+  position: absolute !important;
+
+  top: 50% !important;
+
+  z-index: 10 !important;
+
+  width: 46px !important;
+  height: 46px !important;
+
+  padding: 0 !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border: 1px solid rgba(30, 154, 103, 0.18) !important;
+  border-radius: 50% !important;
+
+  background: rgba(252, 255, 253, 0.94) !important;
+
+  color: #197b56 !important;
+
+  font-size: 17px !important;
+
+  cursor: pointer !important;
+
+  transform: translateY(-50%) !important;
+
+  box-shadow:
+    0 12px 28px rgba(23, 56, 44, 0.12) !important;
+}
+
+
+.pakistanHistoryStage__arrow:hover {
+  background: #1e9a67 !important;
+
+  color: #ffffff !important;
+}
+
+
+.pakistanHistoryStage__arrow--left {
+  left: -62px !important;
+}
+
+
+.pakistanHistoryStage__arrow--right {
+  right: -62px !important;
+}
+
+
+/* =========================================================
+   BOTTOM ERA PILLS
+========================================================= */
+
+.pakistanHistoryTabs {
+  width: 100% !important;
+
+  margin-top: 20px !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  flex-wrap: wrap !important;
+
+  gap: 7px !important;
+}
+
+
+.pakistanHistoryTabs__button {
+  width: auto !important;
+  min-width: 0 !important;
+  min-height: 37px !important;
+
+  padding: 0 13px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  gap: 7px !important;
+
+  border: 1px solid rgba(23, 56, 44, 0.1) !important;
+  border-radius: 999px !important;
+
+  background: rgba(255, 255, 255, 0.62) !important;
+
+  color: rgba(23, 56, 44, 0.62) !important;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif !important;
+
+  cursor: pointer !important;
+}
+
+
+.pakistanHistoryTabs__button span {
+  color: #1e9a67 !important;
+
+  font-size: 7px !important;
+
+  font-weight: 900 !important;
+}
+
+
+.pakistanHistoryTabs__button strong {
+  color: inherit !important;
+
+  font-size: 8px !important;
+  line-height: 1 !important;
+
+  font-weight: 700 !important;
+
+  white-space: nowrap !important;
+}
+
+
+.pakistanHistoryTabs__button--active {
+  border-color: #1e9a67 !important;
+
+  background: #1e9a67 !important;
+
+  color: #ffffff !important;
+
+  box-shadow:
+    0 9px 22px rgba(30, 154, 103, 0.18) !important;
+}
+
+
+.pakistanHistoryTabs__button--active span {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .pakistanHistory__container {
+    width: calc(100% - 44px) !important;
+  }
+
+
+  .pakistanHistoryStage__card {
+    grid-template-columns: 1fr !important;
+  }
+
+
+  .pakistanHistoryStage__visuals {
+    min-height: 420px !important;
+  }
+
+
+  .pakistanHistoryStage__mainImage {
+    min-height: 390px !important;
+  }
+
+
+  .pakistanHistoryStage__arrow--left {
+    left: 12px !important;
+  }
+
+
+  .pakistanHistoryStage__arrow--right {
+    right: 12px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .pakistanHistory {
+    padding: 44px 0 50px !important;
+  }
+
+
+  .pakistanHistory__container {
+    width: calc(100% - 28px) !important;
+  }
+
+
+  .pakistanHistory__intro {
+    align-items: flex-start !important;
+    flex-direction: column !important;
+
+    gap: 16px !important;
+  }
+
+
+  .pakistanHistory__title {
+    font-size:
+      clamp(34px, 10vw, 44px) !important;
+  }
+
+
+  .pakistanHistoryStage__content {
+    padding: 23px !important;
+  }
+
+
+  .pakistanHistoryStage__visuals {
+    min-height: auto !important;
+
+    padding: 12px !important;
+
+    grid-template-columns: 1fr !important;
+  }
+
+
+  .pakistanHistoryStage__mainImage {
+    min-height: 270px !important;
+  }
+
+
+  .pakistanHistoryStage__sideImages {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+
+    grid-template-rows: 125px !important;
+  }
+
+
+  .pakistanHistoryStage__sideImages > div {
+    min-height: 125px !important;
+  }
+
+
+  .pakistanHistoryTabs {
+    justify-content: flex-start !important;
+
+    flex-wrap: nowrap !important;
+
+    overflow-x: auto !important;
+
+    padding-bottom: 6px !important;
+
+    scrollbar-width: none !important;
+  }
+
+
+  .pakistanHistoryTabs::-webkit-scrollbar {
+    display: none !important;
+  }
+
+
+  .pakistanHistoryTabs__button {
+    flex: 0 0 auto !important;
+  }
+}
+/* =========================================================
+   HISTORY ERA EXPLORER — FINAL CARD DESIGN
+========================================================= */
+
+.historyEraExplorer {
+  position: relative;
+
+  width: 100%;
+
+  padding: 54px 0 62px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 10% 10%,
+      rgba(187, 143, 77, 0.06),
+      transparent 28%
+    ),
+    #f5f1e8;
+
+  color: #17382c;
+}
+
+
+.historyEraExplorer__container {
+  width: min(1120px, calc(100% - 64px));
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.historyEraExplorer__intro {
+  margin-bottom: 30px;
+
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 40px;
+}
+
+
+.historyEraExplorer__intro > div:first-child {
+  max-width: 700px;
+}
+
+
+.historyEraExplorer__eyebrow {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #1b9765;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+
+.historyEraExplorer__title {
+  margin: 0;
+
+  max-width: 720px;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: clamp(40px, 4vw, 55px);
+  line-height: 0.98;
+
+  font-weight: 600;
+
+  letter-spacing: -1.3px;
+}
+
+
+.historyEraExplorer__description {
+  max-width: 610px;
+
+  margin: 13px 0 0;
+
+  color: rgba(23, 56, 44, 0.61);
+
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   COUNTER
+========================================================= */
+
+.historyEraExplorer__counter {
+  min-height: 38px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  border: 1px solid rgba(23, 56, 44, 0.1);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.65);
+
+  color: rgba(23, 56, 44, 0.42);
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+
+.historyEraExplorer__counter strong {
+  color: #159965;
+}
+
+
+/* =========================================================
+   STAGE
+========================================================= */
+
+.historyEraExplorer__stage {
+  position: relative;
+
+  display: grid;
+
+  grid-template-columns:
+    52px
+    minmax(0, 1fr);
+
+  gap: 18px;
+
+  align-items: stretch;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.historyEraExplorer__timeline {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.historyEraExplorer__number {
+  position: relative;
+
+  z-index: 2;
+
+  width: 52px;
+  height: 52px;
+
+  flex: 0 0 52px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #176a49;
+
+  color: #ffffff;
+
+  font-size: 18px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 10px 24px rgba(23, 106, 73, 0.16);
+}
+
+
+.historyEraExplorer__line {
+  width: 1px;
+
+  flex: 1;
+
+  margin-top: 8px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(23, 106, 73, 0.2),
+      rgba(23, 106, 73, 0.03)
+    );
+}
+
+
+/* =========================================================
+   MAIN ERA CARD
+========================================================= */
+
+.historyEraSlide {
+  min-width: 0;
+  min-height: 430px;
+
+  padding: 30px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    255px;
+
+  gap: 32px;
+
+  align-items: stretch;
+
+  border: 1px solid rgba(23, 56, 44, 0.09);
+  border-radius: 25px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, 0.92),
+      rgba(249, 249, 246, 0.9)
+    );
+
+  box-shadow:
+    0 18px 45px rgba(23, 56, 44, 0.055);
+
+  animation:
+    historyEraSlideIn
+    320ms
+    cubic-bezier(0.16, 1, 0.3, 1)
+    both;
+}
+
+
+@keyframes historyEraSlideIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(7px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   TEXT COLUMN
+========================================================= */
+
+.historyEraSlide__content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+}
+
+
+.historyEraSlide__period {
+  color: rgba(25, 46, 40, 0.72);
+
+  font-size: 10px;
+  line-height: 1.4;
+
+  font-weight: 800;
+
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+
+.historyEraSlide__content h3 {
+  margin: 9px 0 0;
+
+  color: #1b2d27;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 34px;
+  line-height: 1.05;
+
+  font-weight: 650;
+
+  letter-spacing: -0.6px;
+}
+
+
+/* =========================================================
+   HISTORY TEXT
+========================================================= */
+
+.historyEraSlide__story {
+  max-width: 650px;
+
+  margin-top: 16px;
+}
+
+
+.historyEraSlide__story p {
+  margin: 0;
+
+  color: rgba(37, 54, 68, 0.74);
+
+  font-size: 12px;
+  line-height: 1.72;
+}
+
+
+.historyEraSlide__story p + p {
+  margin-top: 10px;
+}
+
+
+/* =========================================================
+   HIGHLIGHTS
+========================================================= */
+
+.historyEraSlide__highlights {
+  margin-top: 20px;
+}
+
+
+.historyEraSlide__label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: rgba(42, 58, 71, 0.56);
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+.historyEraSlide__highlights > div {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+
+.historyEraSlide__highlights > div > span {
+  min-height: 30px;
+
+  padding: 0 12px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border: 1px solid rgba(23, 56, 44, 0.08);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.78);
+
+  color: rgba(32, 52, 44, 0.76);
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 14px rgba(23, 56, 44, 0.035);
+}
+
+
+/* =========================================================
+   SINGLE SMALL IMAGE
+========================================================= */
+
+.historyEraSlide__imageWrap {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+  min-height: 350px;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: #17382c;
+}
+
+
+.historyEraSlide__imageWrap img {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 700ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.historyEraSlide:hover
+.historyEraSlide__imageWrap img {
+  transform: scale(1.035);
+}
+
+
+.historyEraSlide__imageShade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 20, 14, 0.02),
+      rgba(5, 20, 14, 0.3)
+    );
+}
+
+
+.historyEraSlide__imageCategory {
+  position: absolute;
+
+  left: 13px;
+  bottom: 13px;
+
+  min-height: 26px;
+
+  padding: 0 9px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+
+  background: rgba(5, 20, 14, 0.44);
+
+  color: rgba(255, 255, 255, 0.84);
+
+  font-size: 7px;
+
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  backdrop-filter: blur(8px);
+}
+
+
+/* =========================================================
+   ARROWS
+========================================================= */
+
+.historyEraExplorer__arrow {
+  position: absolute;
+
+  top: 50%;
+
+  z-index: 10;
+
+  width: 44px;
+  height: 44px;
+
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(19, 111, 75, 0.16);
+  border-radius: 50%;
+
+  background: rgba(251, 255, 253, 0.94);
+
+  color: #176f4e;
+
+  font-size: 16px;
+
+  cursor: pointer;
+
+  transform: translateY(-50%);
+
+  box-shadow:
+    0 10px 26px rgba(23, 56, 44, 0.1);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+
+.historyEraExplorer__arrow:hover {
+  background: #159965;
+
+  color: #ffffff;
+}
+
+
+.historyEraExplorer__arrow--left {
+  left: -68px;
+}
+
+
+.historyEraExplorer__arrow--left:hover {
+  transform:
+    translateY(-50%)
+    translateX(-3px);
+}
+
+
+.historyEraExplorer__arrow--right {
+  right: -66px;
+}
+
+
+.historyEraExplorer__arrow--right:hover {
+  transform:
+    translateY(-50%)
+    translateX(3px);
+}
+
+
+/* =========================================================
+   ERA TABS
+========================================================= */
+
+.historyEraExplorer__tabs {
+  margin:
+    18px
+    0
+    0
+    70px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+
+.historyEraExplorer__tab {
+  min-height: 36px;
+
+  padding: 0 13px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 7px;
+
+  border: 1px solid rgba(23, 56, 44, 0.1);
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.64);
+
+  color: rgba(23, 56, 44, 0.61);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+
+.historyEraExplorer__tab:hover {
+  transform: translateY(-2px);
+}
+
+
+.historyEraExplorer__tab span {
+  color: #159965;
+
+  font-size: 7px;
+
+  font-weight: 900;
+}
+
+
+.historyEraExplorer__tab strong {
+  font-size: 8px;
+
+  font-weight: 650;
+
+  white-space: nowrap;
+}
+
+
+.historyEraExplorer__tab--active {
+  border-color: #159965;
+
+  background: #159965;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 9px 22px rgba(21, 153, 101, 0.16);
+}
+
+
+.historyEraExplorer__tab--active span {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .historyEraExplorer__container {
+    width: calc(100% - 44px);
+  }
+
+  .historyEraExplorer__arrow--left {
+    left: 6px;
+  }
+
+  .historyEraExplorer__arrow--right {
+    right: 6px;
+  }
+
+  .historyEraSlide {
+    grid-template-columns:
+      minmax(0, 1fr)
+      220px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .historyEraExplorer {
+    padding:
+      44px 0
+      50px;
+  }
+
+  .historyEraExplorer__container {
+    width: calc(100% - 28px);
+  }
+
+  .historyEraExplorer__intro {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+  .historyEraExplorer__title {
+    font-size:
+      clamp(35px, 10vw, 45px);
+  }
+
+  .historyEraExplorer__stage {
+    grid-template-columns: 40px minmax(0, 1fr);
+
+    gap: 10px;
+  }
+
+  .historyEraExplorer__number {
+    width: 40px;
+    height: 40px;
+
+    flex-basis: 40px;
+
+    font-size: 14px;
+  }
+
+  .historyEraSlide {
+    min-height: 0;
+
+    padding: 20px;
+
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  .historyEraSlide__content h3 {
+    font-size: 29px;
+  }
+
+  .historyEraSlide__story p {
+    font-size: 11px;
+  }
+
+  .historyEraSlide__imageWrap {
+    min-height: 260px;
+  }
+
+  .historyEraExplorer__tabs {
+    margin-left: 50px;
+
+    justify-content: flex-start;
+
+    flex-wrap: nowrap;
+
+    overflow-x: auto;
+
+    padding-bottom: 5px;
+
+    scrollbar-width: none;
+  }
+
+  .historyEraExplorer__tabs::-webkit-scrollbar {
+    display: none;
+  }
+
+  .historyEraExplorer__tab {
+    flex: 0 0 auto;
+  }
+
+  .historyEraExplorer__arrow {
+    width: 38px;
+    height: 38px;
+  }
+}
+/* =========================================================
+   HISTORY ERA — CONTENT LAYOUT REPAIR
+========================================================= */
+
+/* Make the content column breathe properly */
+
+.historyEraSlide__content {
+  justify-content: flex-start !important;
+
+  padding:
+    28px
+    30px
+    26px
+    30px !important;
+}
+
+
+/* =========================================================
+   DATE + TITLE
+========================================================= */
+
+.historyEraSlide__period {
+  display: block !important;
+
+  margin-bottom: 8px !important;
+
+  color: rgba(23, 56, 44, 0.58) !important;
+
+  font-size: 8px !important;
+  line-height: 1 !important;
+
+  font-weight: 850 !important;
+
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+}
+
+
+.historyEraSlide__content h3 {
+  margin: 0 !important;
+
+  max-width: 580px !important;
+
+  color: #1b2d27 !important;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif !important;
+
+  font-size: 31px !important;
+  line-height: 1.05 !important;
+
+  font-weight: 650 !important;
+
+  letter-spacing: -0.45px !important;
+}
+
+
+/* =========================================================
+   MAIN HISTORY PARAGRAPHS
+========================================================= */
+
+.historyEraSlide__story {
+  max-width: 610px !important;
+
+  margin-top: 14px !important;
+}
+
+
+.historyEraSlide__story p {
+  margin: 0 !important;
+
+  color: rgba(38, 56, 67, 0.7) !important;
+
+  font-size: 10.5px !important;
+  line-height: 1.65 !important;
+
+  font-weight: 400 !important;
+}
+
+
+.historyEraSlide__story p + p {
+  margin-top: 9px !important;
+}
+
+
+/* =========================================================
+   SECTION LABELS
+========================================================= */
+
+.historyEraSlide__sectionLabel,
+.historyEraSlide__label {
+  display: block !important;
+
+  margin: 0 0 9px !important;
+
+  color: rgba(23, 56, 44, 0.42) !important;
+
+  font-size: 7px !important;
+  line-height: 1 !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+}
+
+
+/* =========================================================
+   KEY DEVELOPMENTS — CLEAN GRID
+========================================================= */
+
+.historyEraSlide__developments {
+  margin-top: 18px !important;
+
+  padding-top: 15px !important;
+
+  border-top:
+    1px solid rgba(23, 56, 44, 0.08) !important;
+}
+
+
+.historyEraSlide__developmentGrid {
+  display: grid !important;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr)) !important;
+
+  gap: 8px !important;
+}
+
+
+.historyEraSlide__development {
+  min-width: 0 !important;
+
+  min-height: 52px !important;
+
+  padding: 10px 11px !important;
+
+  display: grid !important;
+
+  grid-template-columns:
+    24px
+    minmax(0, 1fr) !important;
+
+  gap: 9px !important;
+
+  align-items: center !important;
+
+  border:
+    1px solid rgba(23, 56, 44, 0.065) !important;
+
+  border-radius: 12px !important;
+
+  background:
+    rgba(247, 250, 247, 0.92) !important;
+}
+
+
+.historyEraSlide__development > span {
+  width: 24px !important;
+  height: 24px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  border-radius: 50% !important;
+
+  background:
+    rgba(21, 153, 101, 0.1) !important;
+
+  color: #16865b !important;
+
+  font-size: 6px !important;
+  line-height: 1 !important;
+
+  font-weight: 900 !important;
+}
+
+
+.historyEraSlide__development p {
+  margin: 0 !important;
+
+  color: rgba(35, 53, 64, 0.68) !important;
+
+  font-size: 8.5px !important;
+  line-height: 1.45 !important;
+
+  font-weight: 500 !important;
+}
+
+
+/* =========================================================
+   HISTORICAL LEGACY — SEPARATE CALLOUT
+========================================================= */
+
+.historyEraSlide__legacy {
+  margin-top: 15px !important;
+
+  padding: 12px 14px !important;
+
+  border-left:
+    3px solid rgba(21, 153, 101, 0.58) !important;
+
+  border-radius:
+    0
+    12px
+    12px
+    0 !important;
+
+  background:
+    rgba(21, 153, 101, 0.045) !important;
+}
+
+
+.historyEraSlide__legacy .historyEraSlide__sectionLabel {
+  margin-bottom: 7px !important;
+}
+
+
+.historyEraSlide__legacy p {
+  margin: 0 !important;
+
+  color: rgba(35, 53, 64, 0.69) !important;
+
+  font-size: 9.5px !important;
+  line-height: 1.58 !important;
+}
+
+
+/* =========================================================
+   KEY HIGHLIGHTS
+========================================================= */
+
+.historyEraSlide__highlights {
+  margin-top: 15px !important;
+}
+
+
+.historyEraSlide__highlights > div {
+  display: flex !important;
+  flex-wrap: wrap !important;
+
+  gap: 6px !important;
+}
+
+
+.historyEraSlide__highlights > div > span {
+  min-height: 25px !important;
+
+  padding: 0 9px !important;
+
+  display: inline-flex !important;
+  align-items: center !important;
+
+  border:
+    1px solid rgba(23, 56, 44, 0.07) !important;
+
+  border-radius: 999px !important;
+
+  background:
+    rgba(255, 255, 255, 0.85) !important;
+
+  color: rgba(23, 56, 44, 0.68) !important;
+
+  font-size: 7px !important;
+  line-height: 1 !important;
+
+  font-weight: 650 !important;
+}
+
+
+/* =========================================================
+   CARD BALANCE
+========================================================= */
+
+.historyEraSlide {
+  min-height: 500px !important;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    320px !important;
+
+  gap: 28px !important;
+
+  padding:
+    24px
+    26px
+    24px
+    28px !important;
+}
+
+
+/* =========================================================
+   IMAGE — SLIGHTLY WIDER
+========================================================= */
+
+.historyEraSlide__imageWrap {
+  width: 320px !important;
+
+  min-width: 320px !important;
+
+  min-height: 430px !important;
+
+  border-radius: 17px !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+  .historyEraSlide {
+    grid-template-columns:
+      minmax(0, 1fr)
+      280px !important;
+  }
+
+  .historyEraSlide__imageWrap {
+    width: 280px !important;
+    min-width: 280px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .historyEraSlide {
+    grid-template-columns: 1fr !important;
+
+    padding: 18px !important;
+  }
+
+  .historyEraSlide__developmentGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .historyEraSlide__imageWrap {
+    width: 100% !important;
+
+    min-width: 0 !important;
+
+    min-height: 270px !important;
+  }
+}
+/* =========================================================
+   HISTORY SECTION — WIDTH ONLY
+========================================================= */
+
+.historyEraExplorer__container {
+  width: min(1200px, calc(100% - 40px)) !important;
+  max-width: 1200px !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.historyEraExplorer__stage {
+  width:100% !important;
+  max-width: none !important;
+}
+
+.historyEraSlide {
+  width: 100% !important;
+  max-width: none !important;
+}
+/* =========================================================
+   HISTORY ERA — FINAL MICRO POLISH
+========================================================= */
+
+
+/* =========================================================
+   1. DATE / PERIOD — BIGGER + PILL
+========================================================= */
+
+.historyEraSlide__period {
+  display: inline-flex !important;
+  align-items: center !important;
+
+  width: fit-content !important;
+
+  min-height: 34px !important;
+
+  padding:
+    0
+    14px !important;
+
+  margin-bottom: 12px !important;
+
+  border:
+    1px solid rgba(23, 56, 44, 0.1) !important;
+
+  border-radius: 999px !important;
+
+  background:
+    rgba(255, 255, 255, 0.72) !important;
+
+  color:
+    rgba(23, 56, 44, 0.7) !important;
+
+  font-size: 11px !important;
+  line-height: 1 !important;
+
+  font-weight: 800 !important;
+
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+
+  box-shadow:
+    0 6px 18px rgba(23, 56, 44, 0.04) !important;
+}
+
+
+/* =========================================================
+   2. BOTTOM ERA PILLS — LARGER TEXT + LARGER PILLS
+========================================================= */
+
+.historyEraExplorer__tabs {
+  gap: 10px !important;
+
+  margin-top: 22px !important;
+}
+
+
+.historyEraExplorer__tab {
+  min-height: 46px !important;
+
+  padding:
+    0
+    18px !important;
+
+  gap: 9px !important;
+
+  border-radius: 999px !important;
+}
+
+
+.historyEraExplorer__tab span {
+  font-size: 9px !important;
+
+  font-weight: 900 !important;
+}
+
+
+.historyEraExplorer__tab strong {
+  font-size: 11px !important;
+  line-height: 1 !important;
+
+  font-weight: 700 !important;
+}
+
+
+.historyEraExplorer__tab--active {
+  box-shadow:
+    0 12px 26px rgba(21, 153, 101, 0.18) !important;
+}
+
+
+/* =========================================================
+   3. KEY DEVELOPMENTS — BIGGER FONT
+========================================================= */
+
+.historyEraSlide__sectionLabel,
+.historyEraSlide__label {
+  font-size: 10px !important;
+
+  letter-spacing: 0.11em !important;
+}
+
+
+.historyEraSlide__development {
+  min-height: 68px !important;
+
+  padding:
+    14px
+    16px !important;
+
+  border-radius: 14px !important;
+
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease !important;
+}
+
+
+.historyEraSlide__development > span {
+  width: 32px !important;
+  height: 32px !important;
+
+  font-size: 9px !important;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease !important;
+}
+
+
+.historyEraSlide__development p {
+  font-size: 13px !important;
+  line-height: 1.5 !important;
+
+  font-weight: 500 !important;
+}
+
+
+/* =========================================================
+   KEY DEVELOPMENT HOVER
+========================================================= */
+
+.historyEraSlide__development:hover {
+  transform:
+    translateY(-3px) !important;
+
+  border-color:
+    rgba(21, 153, 101, 0.24) !important;
+
+  background:
+    rgba(21, 153, 101, 0.075) !important;
+
+  box-shadow:
+    0 12px 26px rgba(23, 56, 44, 0.08) !important;
+}
+
+
+.historyEraSlide__development:hover > span {
+  transform:
+    scale(1.08) !important;
+
+  background:
+    #159965 !important;
+
+  color:
+    #ffffff !important;
+}
+
+
+/* =========================================================
+   4. HISTORICAL LEGACY — BIGGER FONT
+========================================================= */
+
+.historyEraSlide__legacy {
+  padding:
+    16px
+    18px !important;
+}
+
+
+.historyEraSlide__legacy p {
+  font-size: 13px !important;
+  line-height: 1.65 !important;
+}
+
+
+/* =========================================================
+   5. KEY HIGHLIGHT PILLS — SLIGHTLY LARGER
+========================================================= */
+
+.historyEraSlide__highlights > div > span {
+  min-height: 34px !important;
+
+  padding:
+    0
+    14px !important;
+
+  font-size: 10px !important;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease !important;
+}
+
+
+.historyEraSlide__highlights > div > span:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(21, 153, 101, 0.2) !important;
+
+  background:
+    rgba(21, 153, 101, 0.07) !important;
+}
+/* =========================================================
+   HISTORY ERA — REDUCE VERTICAL HEIGHT
+   Keep this at the absolute bottom
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   SECTION HEIGHT / SPACING
+--------------------------------------------------------- */
+
+.historyEraExplorer {
+  padding-top: 42px !important;
+  padding-bottom: 46px !important;
+}
+
+
+/* ---------------------------------------------------------
+   INTRO SPACING
+--------------------------------------------------------- */
+
+.historyEraExplorer__intro {
+  margin-bottom: 20px !important;
+}
+
+
+/* ---------------------------------------------------------
+   MAIN CARD — SHORTER
+--------------------------------------------------------- */
+
+.historyEraSlide {
+  min-height: 430px !important;
+
+  grid-template-columns:
+    minmax(0, 1fr)
+    380px !important;
+
+  gap: 30px !important;
+
+  padding:
+    24px
+    28px
+    24px
+    32px !important;
+}
+
+
+/* ---------------------------------------------------------
+   TEXT COLUMN
+--------------------------------------------------------- */
+
+.historyEraSlide__content {
+  padding:
+    6px
+    0 !important;
+
+  justify-content: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   TITLE
+--------------------------------------------------------- */
+
+.historyEraSlide__content h3 {
+  margin-bottom: 12px !important;
+
+  font-size: 38px !important;
+}
+
+
+/* ---------------------------------------------------------
+   PARAGRAPHS — TIGHTER
+--------------------------------------------------------- */
+
+.historyEraSlide__story {
+  margin-top: 0 !important;
+}
+
+.historyEraSlide__story p {
+  font-size: 12.5px !important;
+  line-height: 1.52 !important;
+}
+
+.historyEraSlide__story p + p {
+  margin-top: 7px !important;
+}
+
+
+/* ---------------------------------------------------------
+   KEY DEVELOPMENTS
+--------------------------------------------------------- */
+
+.historyEraSlide__developments {
+  margin-top: 14px !important;
+  padding-top: 12px !important;
+}
+
+.historyEraSlide__developmentGrid {
+  gap: 7px !important;
+}
+
+.historyEraSlide__development {
+  min-height: 52px !important;
+
+  padding:
+    9px
+    11px !important;
+}
+
+.historyEraSlide__development p {
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+}
+
+
+/* ---------------------------------------------------------
+   HISTORICAL LEGACY
+--------------------------------------------------------- */
+
+.historyEraSlide__legacy {
+  margin-top: 11px !important;
+
+  padding:
+    10px
+    13px !important;
+}
+
+.historyEraSlide__legacy p {
+  font-size: 11.5px !important;
+  line-height: 1.45 !important;
+}
+
+
+/* ---------------------------------------------------------
+   KEY HIGHLIGHTS
+--------------------------------------------------------- */
+
+.historyEraSlide__highlights {
+  margin-top: 11px !important;
+}
+
+.historyEraSlide__highlights > div > span {
+  min-height: 28px !important;
+
+  padding:
+    0
+    11px !important;
+}
+
+
+/* ---------------------------------------------------------
+   IMAGE — LESS VERTICAL, MORE BALANCED
+--------------------------------------------------------- */
+
+.historyEraSlide__imageWrap {
+  width: 380px !important;
+  min-width: 380px !important;
+
+  height: 390px !important;
+  min-height: 390px !important;
+  max-height: 390px !important;
+
+  align-self: center !important;
+
+  border-radius: 18px !important;
+}
+
+.historyEraSlide__imageWrap img {
+  width: 100% !important;
+  height: 100% !important;
+
+  object-fit: cover !important;
+
+  object-position: center !important;
+}
+
+
+/* ---------------------------------------------------------
+   BOTTOM TABS CLOSER TO CARD
+--------------------------------------------------------- */
+
+.historyEraExplorer__tabs {
+  margin-top: 14px !important;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1050px) {
+
+  .historyEraSlide {
+    grid-template-columns:
+      minmax(0, 1fr)
+      320px !important;
+  }
+
+  .historyEraSlide__imageWrap {
+    width: 320px !important;
+    min-width: 320px !important;
+
+    height: 360px !important;
+    min-height: 360px !important;
+    max-height: 360px !important;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .historyEraSlide {
+    grid-template-columns: 1fr !important;
+
+    min-height: 0 !important;
+  }
+
+  .historyEraSlide__imageWrap {
+    width: 100% !important;
+    min-width: 0 !important;
+
+    height: 260px !important;
+    min-height: 260px !important;
+    max-height: 260px !important;
+  }
+}
+/* =========================================================
+   REGIONAL HISTORY
+========================================================= */
+
+.regionalHistory {
+  position: relative;
+
+  width: 100%;
+
+  padding:
+    58px
+    0
+    66px;
+
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 15% 8%,
+      rgba(31, 154, 104, 0.055),
+      transparent 28%
+    ),
+    #f3f6f1;
+}
+
+
+.regionalHistory__container {
+  width: min(
+    1500px,
+    calc(100% - 64px)
+  );
+
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   INTRO
+========================================================= */
+
+.regionalHistory__intro {
+  max-width: 760px;
+
+  margin:
+    0 auto
+    30px;
+
+  text-align: center;
+}
+
+
+.regionalHistory__eyebrow {
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #159965;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+
+  text-transform: uppercase;
+}
+
+
+.regionalHistory__title {
+  margin: 0;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(42px, 4vw, 58px);
+
+  line-height: 0.98;
+
+  font-weight: 600;
+
+  letter-spacing: -1.2px;
+}
+
+
+.regionalHistory__description {
+  max-width: 620px;
+
+  margin:
+    13px auto
+    0;
+
+  color:
+    rgba(23, 56, 44, 0.62);
+
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   GRID
+========================================================= */
+
+.regionalHistory__grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, minmax(0, 1fr));
+
+  gap: 16px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.regionalHistoryCard {
+  min-width: 0;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(23, 56, 44, 0.08);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, 0.74);
+
+  box-shadow:
+    0 14px 34px
+    rgba(23, 56, 44, 0.055);
+
+  transition:
+    transform 220ms ease,
+    box-shadow 220ms ease,
+    border-color 220ms ease;
+}
+
+
+.regionalHistoryCard:hover {
+  transform:
+    translateY(-6px);
+
+  border-color:
+    rgba(21, 153, 101, 0.18);
+
+  box-shadow:
+    0 22px 48px
+    rgba(23, 56, 44, 0.095);
+}
+
+
+/* =========================================================
+   IMAGE
+========================================================= */
+
+.regionalHistoryCard__media {
+  position: relative;
+
+  height: 190px;
+
+  overflow: hidden;
+
+  background: #17382c;
+}
+
+
+.regionalHistoryCard__media img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 650ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.regionalHistoryCard:hover
+.regionalHistoryCard__media img {
+  transform:
+    scale(1.05);
+}
+
+
+.regionalHistoryCard__shade {
+  position: absolute;
+  inset: 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(5, 20, 14, 0.02),
+      rgba(5, 20, 14, 0.58)
+    );
+}
+
+
+.regionalHistoryCard__period {
+  position: absolute;
+
+  left: 12px;
+  right: 12px;
+  bottom: 11px;
+
+  color:
+    rgba(255, 255, 255, 0.82);
+
+  font-size: 7px;
+  line-height: 1.35;
+
+  font-weight: 850;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.regionalHistoryCard__content {
+  padding: 17px;
+}
+
+
+.regionalHistoryCard__content h3 {
+  margin: 0;
+
+  color: #17382c;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 17px;
+  line-height: 1.15;
+
+  font-weight: 750;
+
+  letter-spacing: -0.25px;
+}
+
+
+.regionalHistoryCard__content p {
+  margin:
+    9px
+    0
+    0;
+
+  color:
+    rgba(23, 56, 44, 0.62);
+
+  font-size: 10.5px;
+  line-height: 1.62;
+}
+
+
+/* =========================================================
+   HIGHLIGHTS
+========================================================= */
+
+.regionalHistoryCard__highlights {
+  margin-top: 12px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 5px;
+}
+
+
+.regionalHistoryCard__highlights span {
+  min-height: 24px;
+
+  padding:
+    0
+    8px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 999px;
+
+  background:
+    rgba(21, 153, 101, 0.07);
+
+  color: #167f57;
+
+  font-size: 7px;
+  line-height: 1;
+
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   CTA
+========================================================= */
+
+.regionalHistoryCard__cta {
+  width: 100%;
+
+  margin-top: 14px;
+
+  padding:
+    12px
+    0
+    0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: 0;
+  border-top:
+    1px solid
+    rgba(23, 56, 44, 0.08);
+
+  background: transparent;
+
+  color: #16865b;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+
+.regionalHistoryCard__cta span:last-child {
+  transition:
+    transform 180ms ease;
+}
+
+
+.regionalHistoryCard:hover
+.regionalHistoryCard__cta
+span:last-child {
+  transform:
+    translateX(3px);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1150px) {
+
+  .regionalHistory__grid {
+    grid-template-columns:
+      repeat(3, minmax(0, 1fr));
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .regionalHistory {
+    padding:
+      46px
+      0
+      52px;
+  }
+
+
+  .regionalHistory__container {
+    width:
+      calc(100% - 28px);
+  }
+
+
+  .regionalHistory__title {
+    font-size:
+      clamp(38px, 10vw, 48px);
+  }
+
+
+  .regionalHistory__grid {
+    grid-template-columns:
+      1fr;
+  }
+
+
+  .regionalHistoryCard__media {
+    height: 220px;
+  }
+}
+/* =========================================================
+   REGIONAL HISTORY EXPLORER
+========================================================= */
+
+.regionalHistoryExplorer {
+  position: relative;
+  width: 100%;
+  padding: 54px 0 64px;
+  background:
+    radial-gradient(
+      circle at 80% 20%,
+      rgba(20, 160, 105, 0.06),
+      transparent 32%
+    ),
+    #f3f6f1;
+}
+
+.regionalHistoryExplorer__container {
+  position: relative;
+
+  width: min(1540px, calc(100% - 110px));
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   MAIN PANEL
+========================================================= */
+
+.regionalHistoryExplorer__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(520px, 1.15fr);
+
+  gap: 38px;
+
+  min-height: 500px;
+
+  padding: 38px;
+
+  border: 1px solid rgba(20, 75, 55, 0.11);
+  border-radius: 28px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.96),
+      rgba(248, 252, 249, 0.92)
+    );
+
+  box-shadow:
+    0 24px 60px rgba(22, 61, 47, 0.07);
+
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.regionalHistoryExplorer__content {
+  min-width: 0;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  padding: 8px 8px 8px 12px;
+}
+
+
+/* REGION PILL */
+
+.regionalHistoryExplorer__pill {
+  width: fit-content;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 40px;
+
+  padding: 0 19px;
+
+  margin-bottom: 17px;
+
+  border: 1px solid rgba(21, 153, 101, 0.18);
+  border-radius: 999px;
+
+  background: rgba(21, 153, 101, 0.09);
+
+  color: #137b54;
+
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+}
+
+
+/* TITLE */
+
+.regionalHistoryExplorer__content h2 {
+  margin: 0;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: clamp(38px, 3.4vw, 54px);
+  line-height: 0.98;
+  font-weight: 650;
+
+  letter-spacing: -0.8px;
+}
+
+
+/* SUMMARY */
+
+.regionalHistoryExplorer__summary {
+  margin: 18px 0 0;
+
+  max-width: 650px;
+
+  color: #355a4d;
+
+  font-size: 14px;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+
+/* FULL STORY */
+
+.regionalHistoryExplorer__story {
+  max-width: 680px;
+
+  margin-top: 14px;
+}
+
+.regionalHistoryExplorer__story p {
+  margin: 0;
+
+  color: rgba(31, 66, 54, 0.72);
+
+  font-size: 12.5px;
+  line-height: 1.7;
+}
+
+.regionalHistoryExplorer__story p + p {
+  margin-top: 9px;
+}
+
+
+/* =========================================================
+   HISTORICAL THREADS
+========================================================= */
+
+.regionalHistoryExplorer__highlights {
+  margin-top: 20px;
+  padding-top: 16px;
+
+  border-top: 1px solid rgba(23, 56, 44, 0.09);
+}
+
+.regionalHistoryExplorer__highlights > span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: rgba(23, 56, 44, 0.55);
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+.regionalHistoryExplorer__highlights > div {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 7px;
+}
+
+.regionalHistoryExplorer__highlights > div > span {
+  min-height: 29px;
+
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+
+  background: rgba(21, 153, 101, 0.075);
+
+  color: #167d57;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 750;
+}
+
+
+/* =========================================================
+   RIGHT IMAGE AREA
+========================================================= */
+
+.regionalHistoryExplorer__visuals {
+  min-width: 0;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1.15fr)
+    minmax(190px, 0.85fr);
+
+  gap: 12px;
+
+  height: 430px;
+}
+
+
+/* LARGE IMAGE */
+
+.regionalHistoryExplorer__mainImage {
+  position: relative;
+
+  min-width: 0;
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 20px;
+
+  background: #dce7df;
+}
+
+
+/* SMALL IMAGES */
+
+.regionalHistoryExplorer__sideImages {
+  display: grid;
+
+  grid-template-rows: 1fr 1fr;
+
+  gap: 12px;
+
+  min-width: 0;
+}
+
+.regionalHistoryExplorer__sideImages > div {
+  position: relative;
+
+  min-width: 0;
+  min-height: 0;
+
+  overflow: hidden;
+
+  border-radius: 18px;
+
+  background: #dce7df;
+}
+
+
+/* ALL IMAGES */
+
+.regionalHistoryExplorer__visuals img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 700ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.regionalHistoryExplorer__mainImage:hover img,
+.regionalHistoryExplorer__sideImages > div:hover img {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   LEFT / RIGHT ARROWS
+========================================================= */
+
+.regionalHistoryExplorer__arrow {
+  position: absolute;
+
+  top: calc(50% - 32px);
+
+  z-index: 5;
+
+  width: 54px;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border: 1px solid rgba(18, 112, 76, 0.17);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.9);
+
+  color: #138258;
+
+  font-size: 20px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 12px 30px rgba(19, 73, 54, 0.08);
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.regionalHistoryExplorer__arrow:hover {
+  transform: scale(1.08);
+
+  background: #159965;
+  color: #ffffff;
+
+  box-shadow:
+    0 15px 34px rgba(21, 153, 101, 0.2);
+}
+
+
+.regionalHistoryExplorer__arrow--left {
+  left: -72px;
+}
+
+
+.regionalHistoryExplorer__arrow--right {
+  right: -72px;
+}
+
+
+/* =========================================================
+   REGION TABS
+========================================================= */
+
+.regionalHistoryExplorer__tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  flex-wrap: wrap;
+
+  gap: 9px;
+
+  margin-top: 18px;
+}
+
+
+.regionalHistoryExplorer__tab {
+  min-height: 38px;
+
+  padding: 0 19px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid rgba(23, 56, 44, 0.11);
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.76);
+
+  color: rgba(23, 56, 44, 0.7);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+
+.regionalHistoryExplorer__tab:hover {
+  transform: translateY(-2px);
+
+  border-color: rgba(21, 153, 101, 0.25);
+
+  color: #138258;
+}
+
+
+.regionalHistoryExplorer__tab--active {
+  border-color: #159965;
+
+  background: #159965;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 9px 22px rgba(21, 153, 101, 0.2);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1180px) {
+
+  .regionalHistoryExplorer__container {
+    width: calc(100% - 90px);
+  }
+
+
+  .regionalHistoryExplorer__panel {
+    grid-template-columns:
+      minmax(0, 0.95fr)
+      minmax(400px, 1fr);
+
+    gap: 26px;
+
+    padding: 30px;
+  }
+
+
+  .regionalHistoryExplorer__visuals {
+    grid-template-columns: 1fr;
+
+    height: 430px;
+  }
+
+
+  .regionalHistoryExplorer__sideImages {
+    display: none;
+  }
+
+
+  .regionalHistoryExplorer__arrow--left {
+    left: -42px;
+  }
+
+
+  .regionalHistoryExplorer__arrow--right {
+    right: -42px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .regionalHistoryExplorer {
+    padding: 42px 0 50px;
+  }
+
+
+  .regionalHistoryExplorer__container {
+    width: calc(100% - 28px);
+  }
+
+
+  .regionalHistoryExplorer__panel {
+    display: flex;
+    flex-direction: column;
+
+    min-height: 0;
+
+    gap: 24px;
+
+    padding: 20px;
+
+    border-radius: 22px;
+  }
+
+
+  .regionalHistoryExplorer__content {
+    padding: 0;
+  }
+
+
+  .regionalHistoryExplorer__content h2 {
+    font-size: 39px;
+  }
+
+
+  .regionalHistoryExplorer__summary {
+    font-size: 13px;
+  }
+
+
+  .regionalHistoryExplorer__story p {
+    font-size: 12px;
+  }
+
+
+  .regionalHistoryExplorer__visuals {
+    display: block;
+
+    width: 100%;
+    height: 290px;
+  }
+
+
+  .regionalHistoryExplorer__mainImage {
+    height: 100%;
+  }
+
+
+  .regionalHistoryExplorer__sideImages {
+    display: none;
+  }
+
+
+  .regionalHistoryExplorer__arrow {
+    top: auto;
+    bottom: -3px;
+
+    width: 43px;
+    height: 43px;
+
+    font-size: 17px;
+  }
+
+
+  .regionalHistoryExplorer__arrow--left {
+    left: 0;
+  }
+
+
+  .regionalHistoryExplorer__arrow--right {
+    right: 0;
+  }
+
+
+  .regionalHistoryExplorer__tabs {
+    padding: 0 50px;
+
+    margin-top: 15px;
+
+    gap: 6px;
+  }
+
+
+  .regionalHistoryExplorer__tab {
+    min-height: 34px;
+
+    padding: 0 13px;
+
+    font-size: 8px;
+  }
+}
+/* =========================================================
+   REGIONAL HISTORY — CATEGORY NAVIGATION
+========================================================= */
+
+.regionalHistoryExplorer__categoryNav {
+  margin-top: 14px;
+
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(23, 56, 44, 0.1);
+
+  border-radius: 16px;
+
+  background:
+    rgba(255, 255, 255, 0.68);
+
+  box-shadow:
+    0 9px 24px
+    rgba(23, 56, 44, 0.04);
+}
+
+
+.regionalHistoryExplorer__categoryButton {
+  min-height: 52px;
+
+  padding:
+    0
+    18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 9px;
+
+  border: 0;
+  border-right:
+    1px solid
+    rgba(23, 56, 44, 0.08);
+
+  background: transparent;
+
+  color:
+    rgba(23, 56, 44, 0.68);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  cursor: pointer;
+
+  transition:
+    background 180ms ease,
+    color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+
+.regionalHistoryExplorer__categoryButton:last-child {
+  border-right: 0;
+}
+
+
+.regionalHistoryExplorer__categoryButton > span {
+  font-size: 16px;
+  line-height: 1;
+
+  color: #16865b;
+}
+
+
+.regionalHistoryExplorer__categoryButton strong {
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 750;
+}
+
+
+.regionalHistoryExplorer__categoryButton:hover {
+  background:
+    rgba(21, 153, 101, 0.06);
+
+  color: #16865b;
+}
+
+
+.regionalHistoryExplorer__categoryButton--active {
+  background:
+    linear-gradient(
+      135deg,
+      #159965,
+      #117a54
+    );
+
+  color: #ffffff;
+
+  box-shadow:
+    inset 0 0 0 1px
+    rgba(255, 255, 255, 0.1);
+}
+
+
+.regionalHistoryExplorer__categoryButton--active
+> span {
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   TEMPORARY CATEGORY PLACEHOLDER
+========================================================= */
+
+.regionalHistoryExplorer__comingSoon {
+  max-width: 620px;
+}
+
+
+.regionalHistoryExplorer__comingSoon > span {
+  display: inline-flex;
+
+  margin-bottom: 10px;
+
+  color: #159965;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+
+  text-transform: uppercase;
+}
+
+
+.regionalHistoryExplorer__comingSoon h2 {
+  margin: 0;
+}
+
+
+.regionalHistoryExplorer__comingSoon p {
+  max-width: 570px;
+
+  margin: 16px 0 0;
+
+  color:
+    rgba(23, 56, 44, 0.65);
+
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .regionalHistoryExplorer__categoryNav {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .regionalHistoryExplorer__categoryButton {
+    min-height: 48px;
+
+    border-bottom:
+      1px solid
+      rgba(23, 56, 44, 0.08);
+  }
+
+
+  .regionalHistoryExplorer__categoryButton:nth-child(2) {
+    border-right: 0;
+  }
+
+
+  .regionalHistoryExplorer__categoryButton:nth-child(3),
+  .regionalHistoryExplorer__categoryButton:nth-child(4) {
+    border-bottom: 0;
+  }
+
+
+  .regionalHistoryExplorer__categoryButton strong {
+    font-size: 9px;
+  }
+}/* =========================================================
+   HISTORICAL PLACES / WALK THROUGH HISTORY
+========================================================= */
+
+.historicalPlaces {
+  position: relative;
+  width: 100%;
+  padding: 72px 0 82px;
+  overflow: hidden;
+
+  background:
+    radial-gradient(
+      circle at 88% 12%,
+      rgba(21, 153, 101, 0.075),
+      transparent 30%
+    ),
+    #f7f4ec;
+}
+
+.historicalPlaces__container {
+  width: min(1540px, calc(100% - 110px));
+  margin: 0 auto;
+}
+
+
+/* =========================================================
+   SECTION INTRO
+========================================================= */
+
+.historicalPlaces__intro {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  gap: 40px;
+
+  margin-bottom: 32px;
+}
+
+.historicalPlaces__intro > div:first-child {
+  max-width: 760px;
+}
+
+.historicalPlaces__eyebrow {
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: #159965;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.historicalPlaces__title {
+  max-width: 720px;
+
+  margin: 0;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: clamp(48px, 4.7vw, 72px);
+  line-height: 0.94;
+
+  font-weight: 650;
+  letter-spacing: -1.5px;
+}
+
+.historicalPlaces__description {
+  max-width: 680px;
+
+  margin: 17px 0 0;
+
+  color: rgba(35, 68, 57, 0.68);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   ARROW CONTROLS
+========================================================= */
+
+.historicalPlaces__controls {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  padding-bottom: 4px;
+}
+
+.historicalPlaces__controls button {
+  width: 48px;
+  height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  border:
+    1px solid rgba(23, 56, 44, 0.12);
+
+  border-radius: 50%;
+
+  background:
+    rgba(255, 255, 255, 0.84);
+
+  color: #176f50;
+
+  font-size: 18px;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 9px 24px
+    rgba(23, 56, 44, 0.055);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+}
+
+.historicalPlaces__controls button:hover {
+  transform: translateY(-3px);
+
+  border-color: #159965;
+
+  background: #159965;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 13px 28px
+    rgba(21, 153, 101, 0.2);
+}
+
+
+/* =========================================================
+   CAROUSEL TRACK
+========================================================= */
+
+.historicalPlaces__track {
+  display: flex;
+
+  gap: 18px;
+
+  width: 100%;
+
+  overflow-x: auto;
+  overflow-y: hidden;
+
+  padding:
+    4px
+    1px
+    22px;
+
+  scroll-behavior: smooth;
+
+  scroll-snap-type: x mandatory;
+
+  scrollbar-width: none;
+
+  overscroll-behavior-inline: contain;
+}
+
+.historicalPlaces__track::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* =========================================================
+   HISTORICAL PLACE CARD
+========================================================= */
+
+.historicalPlaceCard {
+  flex:
+    0
+    0
+    clamp(290px, 27vw, 390px);
+
+  scroll-snap-align: start;
+
+  overflow: hidden;
+
+  border:
+    1px solid rgba(23, 56, 44, 0.09);
+
+  border-radius: 22px;
+
+  background:
+    rgba(255, 255, 255, 0.91);
+
+  box-shadow:
+    0 16px 38px
+    rgba(23, 56, 44, 0.06);
+
+  transition:
+    transform 260ms
+    cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 260ms ease,
+    border-color 260ms ease;
+}
+
+.historicalPlaceCard:hover {
+  transform: translateY(-7px);
+
+  border-color:
+    rgba(21, 153, 101, 0.18);
+
+  box-shadow:
+    0 23px 48px
+    rgba(23, 56, 44, 0.11);
+}
+
+
+/* =========================================================
+   CARD IMAGE
+========================================================= */
+
+.historicalPlaceCard__media {
+  position: relative;
+
+  height: 255px;
+
+  overflow: hidden;
+
+  background: #dce5df;
+}
+
+.historicalPlaceCard__media img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transition:
+    transform 700ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.historicalPlaceCard:hover
+.historicalPlaceCard__media img {
+  transform: scale(1.055);
+}
+
+
+/* IMAGE SHADE */
+
+.historicalPlaceCard__shade {
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  background:
+    linear-gradient(
+      to bottom,
+      transparent 48%,
+      rgba(5, 28, 20, 0.52) 100%
+    );
+}
+
+
+/* REGION PILL */
+
+.historicalPlaceCard__region {
+  position: absolute;
+
+  left: 18px;
+  bottom: 17px;
+
+  z-index: 2;
+
+  min-height: 29px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 12px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.25);
+
+  border-radius: 999px;
+
+  background:
+    rgba(12, 52, 38, 0.6);
+
+  color: #ffffff;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 750;
+
+  letter-spacing: 0.08em;
+
+  text-transform: uppercase;
+
+  backdrop-filter: blur(9px);
+}
+
+
+/* =========================================================
+   CARD CONTENT
+========================================================= */
+
+.historicalPlaceCard__content {
+  padding:
+    21px
+    21px
+    19px;
+}
+
+.historicalPlaceCard__content h3 {
+  margin: 0;
+
+  color: #17382c;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size: 29px;
+  line-height: 1;
+
+  font-weight: 700;
+
+  letter-spacing: -0.35px;
+}
+
+.historicalPlaceCard__content > p {
+  min-height: 64px;
+
+  margin: 11px 0 0;
+
+  color:
+    rgba(35, 68, 57, 0.66);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 11px;
+  line-height: 1.65;
+}
+
+
+/* =========================================================
+   CARD FOOTER
+========================================================= */
+
+.historicalPlaceCard__meta {
+  margin-top: 17px;
+  padding-top: 15px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 12px;
+
+  border-top:
+    1px solid rgba(23, 56, 44, 0.08);
+}
+
+.historicalPlaceCard__meta > span {
+  color:
+    rgba(23, 56, 44, 0.52);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 750;
+
+  letter-spacing: 0.07em;
+
+  text-transform: uppercase;
+}
+
+
+/* EXPLORE BUTTON */
+
+.historicalPlaceCard__meta button {
+  display: inline-flex;
+  align-items: center;
+
+  gap: 8px;
+
+  padding: 0;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #159965;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.historicalPlaceCard__meta button span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 26px;
+  height: 26px;
+
+  border:
+    1px solid
+    rgba(21, 153, 101, 0.2);
+
+  border-radius: 50%;
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    color 180ms ease;
+}
+
+.historicalPlaceCard__meta button:hover span {
+  transform: translateX(3px);
+
+  background: #159965;
+
+  color: #ffffff;
+}
+
+
+/* =========================================================
+   SUBTLE DRAG HINT
+========================================================= */
+
+.historicalPlaces__container::after {
+  content: "DRAG TO EXPLORE  →";
+
+  display: block;
+
+  margin-top: -8px;
+
+  text-align: right;
+
+  color:
+    rgba(23, 56, 44, 0.4);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .historicalPlaces {
+    padding:
+      60px
+      0
+      70px;
+  }
+
+  .historicalPlaces__container {
+    width:
+      calc(100% - 70px);
+  }
+
+  .historicalPlaceCard {
+    flex-basis:
+      clamp(
+        290px,
+        39vw,
+        360px
+      );
+  }
+
+  .historicalPlaceCard__media {
+    height: 235px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .historicalPlaces {
+    padding:
+      48px
+      0
+      55px;
+  }
+
+  .historicalPlaces__container {
+    width:
+      calc(100% - 28px);
+  }
+
+  .historicalPlaces__intro {
+    align-items: flex-end;
+
+    gap: 16px;
+
+    margin-bottom: 24px;
+  }
+
+  .historicalPlaces__title {
+    font-size: 42px;
+  }
+
+  .historicalPlaces__description {
+    font-size: 11px;
+  }
+
+  .historicalPlaces__controls {
+    gap: 6px;
+  }
+
+  .historicalPlaces__controls button {
+    width: 40px;
+    height: 40px;
+
+    font-size: 15px;
+  }
+
+  .historicalPlaceCard {
+    flex-basis:
+      min(82vw, 325px);
+  }
+
+  .historicalPlaceCard__media {
+    height: 220px;
+  }
+
+  .historicalPlaceCard__content {
+    padding: 18px;
+  }
+
+  .historicalPlaceCard__content h3 {
+    font-size: 27px;
+  }
+
+  .historicalPlaceCard__content > p {
+    min-height: 0;
+
+    font-size: 10.5px;
+  }
+
+  .historicalPlaces__container::after {
+    margin-top: -6px;
+
+    font-size: 7px;
+  }
+}/* =========================================================
+   HISTORY CLOSING CTA
+========================================================= */
+
+.historyClosingCTA {
+  position: relative;
+
+  width: min(1540px, calc(100% - 110px));
+  min-height: 430px;
+
+  margin:
+    58px
+    auto
+    72px;
+
+  overflow: hidden;
+
+  border-radius: 30px;
+
+  background: #10291f;
+
+  isolation: isolate;
+
+  box-shadow:
+    0 28px 70px
+    rgba(14, 53, 39, 0.14);
+}
+
+
+/* =========================================================
+   BACKGROUND IMAGE
+========================================================= */
+
+.historyClosingCTA__image {
+  position: absolute;
+  inset: 0;
+
+  z-index: -4;
+
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+
+  transform: scale(1.02);
+
+  filter:
+    saturate(0.85)
+    contrast(1.04)
+    brightness(0.72);
+
+  transition:
+    transform 900ms
+    cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+.historyClosingCTA:hover
+.historyClosingCTA__image {
+  transform: scale(1.045);
+}
+
+
+/* =========================================================
+   OVERLAY
+========================================================= */
+
+.historyClosingCTA__overlay {
+  position: absolute;
+  inset: 0;
+
+  z-index: -3;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(7, 29, 20, 0.94) 0%,
+      rgba(7, 29, 20, 0.79) 47%,
+      rgba(7, 29, 20, 0.38) 78%,
+      rgba(7, 29, 20, 0.18) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(4, 18, 12, 0.08),
+      rgba(4, 18, 12, 0.4)
+    );
+}
+
+
+/* =========================================================
+   SUBTLE GLOW
+========================================================= */
+
+.historyClosingCTA__glow {
+  position: absolute;
+
+  top: -100px;
+  right: 5%;
+
+  z-index: -2;
+
+  width: 440px;
+  height: 440px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(207, 169, 99, 0.22),
+      rgba(207, 169, 99, 0.06) 48%,
+      transparent 72%
+    );
+
+  filter: blur(20px);
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.historyClosingCTA__container {
+  width: min(1240px, calc(100% - 72px));
+  min-height: 430px;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.historyClosingCTA__content {
+  max-width: 780px;
+}
+
+
+/* EYEBROW */
+
+.historyClosingCTA__eyebrow {
+  display: inline-flex;
+  align-items: center;
+
+  min-height: 34px;
+
+  padding: 0 14px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.17);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.065);
+
+  color:
+    rgba(255, 255, 255, 0.74);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  letter-spacing: 0.13em;
+
+  text-transform: uppercase;
+
+  backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   HEADING
+========================================================= */
+
+.historyClosingCTA__content h2 {
+  max-width: 760px;
+
+  margin: 18px 0 0;
+
+  color: #f6f0e5;
+
+  font-family:
+    "Cormorant Garamond",
+    Georgia,
+    serif;
+
+  font-size:
+    clamp(48px, 4.8vw, 72px);
+
+  line-height: 0.98;
+
+  font-weight: 650;
+
+  letter-spacing: -1.5px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.historyClosingCTA__content p {
+  max-width: 680px;
+
+  margin: 18px 0 0;
+
+  color:
+    rgba(255, 255, 255, 0.68);
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 13px;
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.historyClosingCTA__actions {
+  margin-top: 27px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 11px;
+}
+
+
+/* =========================================================
+   PRIMARY BUTTON
+========================================================= */
+
+.historyClosingCTA__primary {
+  min-height: 50px;
+
+  padding:
+    0
+    21px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  border:
+    1px solid
+    #159965;
+
+  border-radius: 999px;
+
+  background:
+    #159965;
+
+  color: #ffffff;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 800;
+
+  text-decoration: none;
+
+  box-shadow:
+    0 13px 30px
+    rgba(21, 153, 101, 0.22);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    box-shadow 180ms ease;
+}
+
+
+.historyClosingCTA__primary:hover {
+  transform: translateY(-3px);
+
+  background: #117b55;
+
+  box-shadow:
+    0 18px 36px
+    rgba(21, 153, 101, 0.28);
+}
+
+
+.historyClosingCTA__primary
+span:last-child {
+  transition:
+    transform 180ms ease;
+}
+
+
+.historyClosingCTA__primary:hover
+span:last-child {
+  transform: translateX(4px);
+}
+
+
+/* =========================================================
+   SECONDARY BUTTON
+========================================================= */
+
+.historyClosingCTA__secondary {
+  min-height: 50px;
+
+  padding:
+    0
+    20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 12px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.2);
+
+  border-radius: 999px;
+
+  background:
+    rgba(255, 255, 255, 0.075);
+
+  color: #ffffff;
+
+  font-family:
+    "Poppins",
+    Arial,
+    sans-serif;
+
+  font-size: 10px;
+  line-height: 1;
+
+  font-weight: 750;
+
+  text-decoration: none;
+
+  backdrop-filter: blur(10px);
+
+  transition:
+    transform 180ms ease,
+    background 180ms ease,
+    border-color 180ms ease;
+}
+
+
+.historyClosingCTA__secondary:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(255, 255, 255, 0.34);
+
+  background:
+    rgba(255, 255, 255, 0.13);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .historyClosingCTA {
+    width:
+      calc(100% - 70px);
+
+    min-height: 410px;
+
+    margin:
+      52px
+      auto
+      64px;
+  }
+
+
+  .historyClosingCTA__container {
+    width:
+      calc(100% - 58px);
+
+    min-height: 410px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .historyClosingCTA {
+    width:
+      calc(100% - 28px);
+
+    min-height: 470px;
+
+    margin:
+      42px
+      auto
+      50px;
+
+    border-radius: 23px;
+  }
+
+
+  .historyClosingCTA__overlay {
+    background:
+      linear-gradient(
+        180deg,
+        rgba(7, 29, 20, 0.66),
+        rgba(7, 29, 20, 0.94)
+      );
+  }
+
+
+  .historyClosingCTA__container {
+    width:
+      calc(100% - 38px);
+
+    min-height: 470px;
+
+    align-items: flex-end;
+
+    padding:
+      0
+      0
+      38px;
+  }
+
+
+  .historyClosingCTA__content h2 {
+    font-size:
+      clamp(40px, 11vw, 52px);
+  }
+
+
+  .historyClosingCTA__content p {
+    font-size: 12px;
+  }
+
+
+  .historyClosingCTA__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+
+  .historyClosingCTA__primary,
+  .historyClosingCTA__secondary {
+    width: 100%;
+  }
+}
+/* =========================================================
+   HISTORY PAGE — FINAL GLOBAL POLISH
+   Keep this at the absolute bottom
+========================================================= */
+
+
+/* =========================================================
+   1. PAGE-WIDE WIDTH SYSTEM
+========================================================= */
+
+.historyPage {
+  --history-page-max: 1500px;
+  --history-page-padding: 48px;
+}
+
+
+/* Main section containers */
+
+.historyHero__inner,
+.historyEraExplorer__container,
+.regionalHistory__container,
+.regionalHistoryExplorer__container,
+.historicalPlaces__container {
+  width:
+    min(
+      var(--history-page-max),
+      calc(100% - var(--history-page-padding))
+    ) !important;
+
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+
+/* =========================================================
+   2. CONSISTENT SECTION SPACING
+========================================================= */
+
+.historyEraExplorer,
+.regionalHistory,
+.regionalHistoryExplorer,
+.historicalPlaces {
+  padding-top: 50px !important;
+  padding-bottom: 54px !important;
+}
+
+
+/* Reduce excessive separation between sections */
+
+.historyEraExplorer + .regionalHistory,
+.regionalHistory + .regionalHistoryExplorer,
+.regionalHistoryExplorer + .historicalPlaces {
+  margin-top: 0 !important;
+}
+
+
+/* =========================================================
+   3. CONSISTENT SECTION HEADINGS
+========================================================= */
+
+.historyEraExplorer__title,
+.regionalHistory__title,
+.historicalPlaces__title {
+  font-size:
+    clamp(42px, 3.7vw, 56px) !important;
+
+  line-height: 0.98 !important;
+
+  letter-spacing: -1px !important;
+}
+
+
+/* =========================================================
+   4. CONSISTENT EYEBROWS
+========================================================= */
+
+.historyEraExplorer__eyebrow,
+.regionalHistory__eyebrow,
+.historicalPlaces__eyebrow {
+  margin-bottom: 10px !important;
+
+  font-size: 9px !important;
+
+  font-weight: 900 !important;
+
+  letter-spacing: 0.13em !important;
+}
+
+
+/* =========================================================
+   5. SECTION DESCRIPTIONS
+========================================================= */
+
+.historyEraExplorer__description,
+.regionalHistory__description,
+.historicalPlaces__description {
+  max-width: 650px !important;
+
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+}
+
+
+/* =========================================================
+   6. HISTORY ERA CARD
+========================================================= */
+
+.historyEraSlide {
+  border-radius: 24px !important;
+
+  box-shadow:
+    0 18px 44px
+    rgba(23, 56, 44, 0.06) !important;
+}
+
+
+/* Image consistency */
+
+.historyEraSlide__imageWrap {
+  border-radius: 18px !important;
+}
+
+
+/* =========================================================
+   7. REGIONAL HISTORY CARDS
+========================================================= */
+
+.regionalHistory__grid {
+  gap: 18px !important;
+}
+
+
+.regionalHistoryCard {
+  border-radius: 20px !important;
+
+  box-shadow:
+    0 15px 38px
+    rgba(23, 56, 44, 0.055) !important;
+}
+
+
+.regionalHistoryCard__media {
+  height: 205px !important;
+}
+
+
+.regionalHistoryCard__content {
+  padding: 18px !important;
+}
+
+
+.regionalHistoryCard__content h3 {
+  font-size: 18px !important;
+}
+
+
+.regionalHistoryCard__content p {
+  font-size: 11px !important;
+  line-height: 1.65 !important;
+}
+
+
+/* =========================================================
+   8. REGIONAL HISTORY EXPLORER
+========================================================= */
+
+.regionalHistoryExplorer__panel {
+  min-height: 470px !important;
+
+  border-radius: 26px !important;
+
+  padding: 32px !important;
+}
+
+
+.regionalHistoryExplorer__content h2 {
+  font-size:
+    clamp(40px, 3.2vw, 52px) !important;
+}
+
+
+.regionalHistoryExplorer__summary {
+  font-size: 13px !important;
+}
+
+
+.regionalHistoryExplorer__story p {
+  font-size: 12px !important;
+  line-height: 1.68 !important;
+}
+
+
+/* =========================================================
+   9. HISTORICAL PLACES CARDS
+========================================================= */
+
+.historicalPlaces__track {
+  gap: 16px !important;
+}
+
+
+.historicalPlaceCard {
+  border-radius: 20px !important;
+}
+
+
+.historicalPlaceCard__media {
+  height: 235px !important;
+}
+
+
+.historicalPlaceCard__content h3 {
+  font-size: 27px !important;
+}
+
+
+.historicalPlaceCard__content > p {
+  font-size: 11px !important;
+  line-height: 1.65 !important;
+}
+
+
+/* =========================================================
+   10. CONSISTENT PILLS
+========================================================= */
+
+.historyEraExplorer__tab,
+.regionalHistoryExplorer__tab,
+.regionalHistoryExplorer__pill,
+.regionalHistoryCard__highlights span,
+.historyEraSlide__highlights > div > span,
+.historicalPlaceCard__region {
+  border-radius: 999px !important;
+}
+
+
+/* =========================================================
+   11. BUTTON / ARROW CONSISTENCY
+========================================================= */
+
+.historyEraExplorer__arrow,
+.regionalHistoryExplorer__arrow,
+.historicalPlaces__controls button {
+  width: 46px !important;
+  height: 46px !important;
+
+  border-radius: 50% !important;
+
+  box-shadow:
+    0 10px 26px
+    rgba(23, 56, 44, 0.08) !important;
+}
+
+
+/* =========================================================
+   12. HOVER LANGUAGE
+========================================================= */
+
+.regionalHistoryCard,
+.historicalPlaceCard,
+.historyEraSlide__development,
+.regionalHistoryExplorer__tab,
+.historyEraExplorer__tab {
+  transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    border-color 180ms ease,
+    background 180ms ease !important;
+}
+
+
+.regionalHistoryCard:hover,
+.historicalPlaceCard:hover {
+  transform: translateY(-5px) !important;
+}
+
+
+/* =========================================================
+   13. CLOSING CTA
+========================================================= */
+
+.historyClosingCTA {
+  width:
+    min(
+      var(--history-page-max),
+      calc(100% - var(--history-page-padding))
+    ) !important;
+
+  min-height: 390px !important;
+
+  margin:
+    48px
+    auto
+    58px !important;
+
+  border-radius: 28px !important;
+}
+
+
+.historyClosingCTA__container {
+  min-height: 390px !important;
+}
+
+
+.historyClosingCTA__content h2 {
+  font-size:
+    clamp(46px, 4.2vw, 66px) !important;
+}
+
+
+/* =========================================================
+   14. TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  .historyPage {
+    --history-page-padding: 40px;
+  }
+
+
+  .historyEraExplorer,
+  .regionalHistory,
+  .regionalHistoryExplorer,
+  .historicalPlaces {
+    padding-top: 46px !important;
+    padding-bottom: 50px !important;
+  }
+
+
+  .regionalHistory__grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr)) !important;
+  }
+
+
+  .regionalHistoryCard__media {
+    height: 220px !important;
+  }
+
+
+  .historyClosingCTA {
+    min-height: 380px !important;
+  }
+}
+
+
+/* =========================================================
+   15. MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+
+  .historyPage {
+    --history-page-padding: 28px;
+  }
+
+
+  .historyEraExplorer,
+  .regionalHistory,
+  .regionalHistoryExplorer,
+  .historicalPlaces {
+    padding-top: 40px !important;
+    padding-bottom: 44px !important;
+  }
+
+
+  .historyEraExplorer__title,
+  .regionalHistory__title,
+  .historicalPlaces__title {
+    font-size:
+      clamp(36px, 10vw, 46px) !important;
+  }
+
+
+  .regionalHistory__grid {
+    grid-template-columns: 1fr !important;
+  }
+
+
+  .regionalHistoryCard__media {
+    height: 220px !important;
+  }
+
+
+  .regionalHistoryExplorer__panel {
+    padding: 20px !important;
+
+    border-radius: 22px !important;
+  }
+
+
+  .historicalPlaceCard__media {
+    height: 215px !important;
+  }
+
+
+  .historyClosingCTA {
+    min-height: 440px !important;
+
+    margin:
+      38px
+      auto
+      46px !important;
+
+    border-radius: 22px !important;
+  }
+}
+
+
+/* =========================================================
+   16. REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .regionalHistoryCard,
+  .historicalPlaceCard,
+  .historyEraSlide__development,
+  .historyEraExplorer__tab,
+  .regionalHistoryExplorer__tab,
+  .historyEraExplorer__arrow,
+  .regionalHistoryExplorer__arrow,
+  .historicalPlaces__controls button {
+    transition: none !important;
+  }
+}

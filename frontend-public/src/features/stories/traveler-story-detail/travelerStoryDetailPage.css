@@ -1,0 +1,1134 @@
+.travelerStoryDetailPage {
+  width: 100%;
+  min-height: 100vh;
+
+  overflow-x: hidden;
+
+  background: #f5f2e9;
+  color: #123529;
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.travelerStoryHero {
+  position: relative;
+
+  width: 100%;
+  height: 700px;
+
+  overflow: hidden;
+
+  isolation: isolate;
+
+  background: #071a14;
+}
+
+.travelerStoryHero__background {
+  position: absolute;
+  inset: 0;
+
+  z-index: -3;
+
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+
+  filter: saturate(0.92) contrast(1.04) brightness(0.8);
+}
+
+.travelerStoryHero__shade {
+  position: absolute;
+  inset: 0;
+
+  z-index: -2;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(3, 17, 12, 0.9),
+      rgba(3, 17, 12, 0.62) 52%,
+      rgba(3, 17, 12, 0.18)
+    ),
+    linear-gradient(180deg, rgba(3, 17, 12, 0.06), rgba(3, 17, 12, 0.72));
+}
+
+.travelerStoryHero__inner {
+  position: relative;
+
+  width: min(1220px, calc(100% - 48px));
+  height: 100%;
+
+  margin: 0 auto;
+
+  display: flex;
+  align-items: center;
+}
+
+.travelerStoryHero__back {
+  position: absolute;
+
+  top: 48px;
+  left: 0;
+
+  color: rgba(255, 255, 255, 0.68);
+
+  font-size: 10px;
+  font-weight: 800;
+
+  text-decoration: none;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.travelerStoryHero__content {
+  max-width: 780px;
+}
+
+.travelerStoryHero__eyebrow {
+  color: #91e6b8;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.travelerStoryHero__content h1 {
+  margin: 18px 0 0;
+
+  color: #f7f1e7;
+
+  font-family: "Cormorant Garamond", Georgia, serif;
+
+  font-size: clamp(56px, 6vw, 88px);
+  line-height: 0.98;
+
+  font-weight: 600;
+
+  letter-spacing: -2px;
+}
+
+.travelerStoryHero__content blockquote {
+  max-width: 700px;
+
+  margin: 28px 0 0;
+
+  color: rgba(255, 255, 255, 0.76);
+
+  font-family: "Cormorant Garamond", Georgia, serif;
+
+  font-size: 24px;
+  line-height: 1.55;
+
+  font-style: italic;
+}
+
+.travelerStoryHero__meta {
+  margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 8px;
+
+  color: rgba(255, 255, 255, 0.54);
+
+  font-size: 11px;
+}
+
+/* =========================================================
+   JOURNEY BODY
+========================================================= */
+
+.travelerJourney {
+  padding: 100px 0 120px;
+
+  background:
+    radial-gradient(circle at 8% 5%, rgba(31, 166, 110, 0.07), transparent 28%),
+    #f5f2e9;
+}
+
+.travelerJourney__inner {
+  width: min(900px, calc(100% - 48px));
+
+  margin: 0 auto;
+}
+
+.travelerJourney__eyebrow {
+  color: #20a66f;
+
+  font-size: 10px;
+  font-weight: 900;
+
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.travelerJourney__intro h2 {
+  max-width: 760px;
+
+  margin: 14px 0 0;
+
+  color: #123529;
+
+  font-family: "Cormorant Garamond", Georgia, serif;
+
+  font-size: 48px;
+  line-height: 1.05;
+
+  font-weight: 600;
+}
+
+.travelerJourney__intro p {
+  max-width: 720px;
+
+  margin: 18px 0 0;
+
+  color: rgba(18, 53, 41, 0.64);
+
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+/* =========================================================
+   OVERVIEW GRID
+========================================================= */
+
+.travelerJourney__overviewGrid {
+  margin-top: 46px;
+
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.travelerJourney__overviewGrid > div {
+  padding: 18px;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.travelerJourney__overviewGrid span {
+  display: block;
+
+  color: rgba(18, 53, 41, 0.44);
+
+  font-size: 8px;
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.travelerJourney__overviewGrid strong {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #123529;
+
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   HIGHLIGHTS
+========================================================= */
+
+.travelerJourney__highlights {
+  margin-top: 38px;
+}
+
+.travelerJourney__highlights > span {
+  color: rgba(18, 53, 41, 0.5);
+
+  font-size: 9px;
+  font-weight: 850;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.travelerJourney__highlights > div {
+  margin-top: 12px;
+
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 8px;
+}
+
+.travelerJourney__highlights > div span {
+  min-height: 31px;
+
+  padding: 0 11px;
+
+  display: inline-flex;
+  align-items: center;
+
+  border-radius: 999px;
+
+  background: rgba(31, 166, 110, 0.09);
+
+  color: #177e58;
+
+  font-size: 9px;
+  font-weight: 750;
+}
+
+/* =========================================================
+   COMING SOON
+========================================================= */
+
+.travelerJourney__comingSoon {
+  margin-top: 56px;
+
+  padding: 36px;
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    135deg,
+    rgba(31, 166, 110, 0.08),
+    rgba(255, 255, 255, 0.6)
+  );
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+}
+
+.travelerJourney__comingSoon > span {
+  color: #20a66f;
+
+  font-size: 9px;
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.travelerJourney__comingSoon h3 {
+  margin: 12px 0 0;
+
+  color: #123529;
+
+  font-family: "Cormorant Garamond", Georgia, serif;
+
+  font-size: 34px;
+  line-height: 1.1;
+
+  font-weight: 600;
+}
+
+.travelerJourney__comingSoon p {
+  max-width: 700px;
+
+  margin: 14px 0 0;
+
+  color: rgba(18, 53, 41, 0.64);
+
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+/* =========================================================
+   FOOTER LINK
+========================================================= */
+
+.travelerJourney__footer {
+  margin-top: 56px;
+
+  padding-top: 28px;
+
+  border-top: 1px solid rgba(18, 53, 41, 0.1);
+}
+
+.travelerJourney__back {
+  min-height: 48px;
+
+  padding: 0 18px;
+
+  display: inline-flex;
+  align-items: center;
+
+  gap: 12px;
+
+  border-radius: 999px;
+
+  background: #177e58;
+
+  color: #ffffff;
+
+  font-size: 11px;
+  font-weight: 800;
+
+  text-decoration: none;
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .travelerStoryHero {
+    height: 650px;
+  }
+
+  .travelerStoryHero__inner {
+    width: calc(100% - 28px);
+  }
+
+  .travelerStoryHero__content h1 {
+    font-size: clamp(44px, 12vw, 62px);
+  }
+
+  .travelerStoryHero__content blockquote {
+    font-size: 20px;
+  }
+
+  .travelerJourney {
+    padding: 72px 0 84px;
+  }
+
+  .travelerJourney__inner {
+    width: calc(100% - 28px);
+  }
+
+  .travelerJourney__intro h2 {
+    font-size: 38px;
+  }
+
+  .travelerJourney__overviewGrid {
+    grid-template-columns: 1fr;
+  }
+}
+/* =========================================================
+   TRAVELER STORY DETAIL — EXTENDED SECTIONS
+========================================================= */
+
+/* =========================================================
+   SHARED DETAIL SECTION
+========================================================= */
+
+.travelerDetailSection {
+  margin-top: 72px;
+}
+
+.travelerDetailSection__head {
+  display: grid;
+
+  grid-template-columns:
+    42px
+    minmax(0, 1fr);
+
+  gap: 18px;
+
+  align-items: start;
+
+  margin-bottom: 26px;
+}
+
+.travelerDetailSection__head > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 38px;
+  height: 38px;
+
+  border-radius: 50%;
+
+  background: rgba(31, 166, 110, 0.1);
+
+  color: #1d9a68;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+}
+
+.travelerDetailSection__head small {
+  display: block;
+
+  color: #1d9a68;
+
+  font-size: 9px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.travelerDetailSection__head h3 {
+  margin: 8px 0 0;
+
+  color: #123529;
+
+  font-family: "Poppins", Arial, sans-serif;
+
+  font-size: 30px;
+  line-height: 1.16;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+/* =========================================================
+   PLACES VISITED
+========================================================= */
+
+.travelerPlacesGrid {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.travelerPlaceCard {
+  padding: 20px;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 18px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.8),
+    rgba(246, 247, 241, 0.78)
+  );
+
+  box-shadow: 0 12px 34px rgba(18, 53, 41, 0.05);
+}
+
+.travelerPlaceCard > span {
+  color: #1d9a68;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.travelerPlaceCard h4 {
+  margin: 9px 0 0;
+
+  color: #123529;
+
+  font-size: 16px;
+  line-height: 1.25;
+
+  font-weight: 800;
+}
+
+.travelerPlaceCard p {
+  margin: 10px 0 0;
+
+  color: rgba(18, 53, 41, 0.62);
+
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   ACTIVITIES
+========================================================= */
+
+.travelerActivitiesGrid {
+  display: grid;
+
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 10px;
+}
+
+.travelerActivityChip {
+  min-height: 48px;
+
+  padding: 0 14px;
+
+  display: flex;
+  align-items: center;
+
+  gap: 10px;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.62);
+}
+
+.travelerActivityChip > span {
+  width: 22px;
+  height: 22px;
+
+  flex: 0 0 22px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(31, 166, 110, 0.11);
+
+  color: #1d9a68;
+
+  font-size: 9px;
+
+  font-weight: 900;
+}
+
+.travelerActivityChip strong {
+  color: #123529;
+
+  font-size: 11px;
+  line-height: 1.4;
+
+  font-weight: 700;
+}
+
+/* =========================================================
+   FOOD + CULTURE
+========================================================= */
+
+.travelerExperienceColumns {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 18px;
+}
+
+.travelerExperienceColumn {
+  min-width: 0;
+}
+
+.travelerExperienceColumn__label {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: rgba(18, 53, 41, 0.48);
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.travelerExperienceCard {
+  padding: 17px 18px;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.travelerExperienceCard + .travelerExperienceCard {
+  margin-top: 10px;
+}
+
+.travelerExperienceCard h4 {
+  margin: 0;
+
+  color: #123529;
+
+  font-size: 14px;
+  line-height: 1.3;
+
+  font-weight: 800;
+}
+
+.travelerExperienceCard p {
+  margin: 8px 0 0;
+
+  color: rgba(18, 53, 41, 0.6);
+
+  font-size: 11.5px;
+  line-height: 1.68;
+}
+
+/* =========================================================
+   EVENTS
+========================================================= */
+
+.travelerEvents {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.travelerEventCard {
+  padding: 18px 20px;
+
+  display: grid;
+
+  grid-template-columns:
+    minmax(180px, 0.55fr)
+    minmax(0, 1.45fr);
+
+  gap: 20px;
+
+  align-items: start;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.travelerEventCard span {
+  color: #1d9a68;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.travelerEventCard h4 {
+  margin: 8px 0 0;
+
+  color: #123529;
+
+  font-size: 14px;
+  line-height: 1.3;
+
+  font-weight: 800;
+}
+
+.travelerEventCard p {
+  margin: 0;
+
+  color: rgba(18, 53, 41, 0.62);
+
+  font-size: 11.5px;
+  line-height: 1.7;
+}
+
+/* =========================================================
+   LOGISTICS
+========================================================= */
+
+.travelerLogistics {
+  display: grid;
+
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 14px;
+}
+
+.travelerLogistics__panel {
+  padding: 20px;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.travelerLogistics__panel > span {
+  display: block;
+
+  margin-bottom: 13px;
+
+  color: #1d9a68;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.travelerLogistics__panel > div {
+  display: flex;
+  flex-direction: column;
+
+  gap: 10px;
+}
+
+.travelerLogistics__panel > div > div {
+  padding: 12px 0;
+
+  border-bottom: 1px solid rgba(18, 53, 41, 0.07);
+}
+
+.travelerLogistics__panel > div > div:last-child {
+  border-bottom: 0;
+}
+
+.travelerLogistics__panel strong {
+  display: block;
+
+  color: #123529;
+
+  font-size: 12px;
+  line-height: 1.4;
+
+  font-weight: 800;
+}
+
+.travelerLogistics__panel small {
+  display: block;
+
+  margin-top: 3px;
+
+  color: rgba(18, 53, 41, 0.48);
+
+  font-size: 9px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   FAVORITE MOMENT
+========================================================= */
+
+.travelerFavoriteMoment {
+  position: relative;
+
+  margin-top: 72px;
+
+  padding: 34px;
+
+  overflow: hidden;
+
+  border-radius: 22px;
+
+  background:
+    radial-gradient(
+      circle at 86% 18%,
+      rgba(147, 229, 185, 0.14),
+      transparent 30%
+    ),
+    linear-gradient(145deg, #11382a, #0c2b21);
+
+  color: #ffffff;
+
+  box-shadow: 0 18px 52px rgba(18, 53, 41, 0.12);
+}
+
+.travelerFavoriteMoment > span {
+  color: #8fe6b8;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.travelerFavoriteMoment h3 {
+  margin: 12px 0 0;
+
+  color: #ffffff;
+
+  font-family: "Poppins", Arial, sans-serif;
+
+  font-size: 28px;
+  line-height: 1.16;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.travelerFavoriteMoment p {
+  max-width: 680px;
+
+  margin: 13px 0 0;
+
+  color: rgba(255, 255, 255, 0.7);
+
+  font-size: 12px;
+  line-height: 1.75;
+}
+
+/* =========================================================
+   TRAVELER ADVICE
+========================================================= */
+
+.travelerAdviceList {
+  display: flex;
+  flex-direction: column;
+
+  gap: 9px;
+}
+
+.travelerAdviceList > div {
+  padding: 14px 16px;
+
+  display: grid;
+
+  grid-template-columns:
+    34px
+    minmax(0, 1fr);
+
+  gap: 14px;
+
+  align-items: start;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.64);
+}
+
+.travelerAdviceList > div > span {
+  width: 28px;
+  height: 28px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(31, 166, 110, 0.1);
+
+  color: #1d9a68;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+}
+
+.travelerAdviceList p {
+  margin: 3px 0 0;
+
+  color: rgba(18, 53, 41, 0.72);
+
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+/* =========================================================
+   FINAL REVIEW
+========================================================= */
+
+.travelerFinalReview {
+  margin-top: 72px;
+
+  padding: 34px;
+
+  border: 1px solid rgba(18, 53, 41, 0.08);
+
+  border-radius: 22px;
+
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.78),
+    rgba(241, 244, 237, 0.82)
+  );
+
+  box-shadow: 0 16px 44px rgba(18, 53, 41, 0.06);
+}
+
+.travelerFinalReview > span {
+  color: #1d9a68;
+
+  font-size: 8px;
+  line-height: 1;
+
+  font-weight: 900;
+
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+}
+
+.travelerFinalReview blockquote {
+  margin: 18px 0 0;
+
+  color: #123529;
+
+  font-family: "Poppins", Arial, sans-serif;
+
+  font-size: 20px;
+  line-height: 1.55;
+
+  font-weight: 500;
+
+  letter-spacing: -0.2px;
+}
+
+.travelerFinalReview > div {
+  margin-top: 22px;
+
+  display: flex;
+  flex-direction: column;
+
+  gap: 3px;
+}
+
+.travelerFinalReview strong {
+  color: #123529;
+
+  font-size: 12px;
+  line-height: 1.3;
+
+  font-weight: 800;
+}
+
+.travelerFinalReview small {
+  color: rgba(18, 53, 41, 0.5);
+
+  font-size: 9px;
+}
+
+/* =========================================================
+   DETAIL PAGE TYPOGRAPHY CLEANUP
+========================================================= */
+
+.travelerStoryHero__content h1,
+.travelerJourney__intro h2,
+.travelerJourney__comingSoon h3 {
+  font-family: "Poppins", Arial, sans-serif !important;
+}
+
+.travelerStoryHero__content h1 {
+  font-size: clamp(46px, 5vw, 68px) !important;
+
+  line-height: 1.02 !important;
+
+  font-weight: 700 !important;
+
+  letter-spacing: -1.5px !important;
+}
+
+.travelerStoryHero__content blockquote {
+  font-family: "Poppins", Arial, sans-serif !important;
+
+  font-size: 19px !important;
+  line-height: 1.6 !important;
+
+  font-weight: 400 !important;
+
+  font-style: normal !important;
+}
+
+.travelerJourney__intro h2 {
+  font-size: 36px !important;
+  line-height: 1.12 !important;
+
+  font-weight: 700 !important;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 980px) {
+  .travelerPlacesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .travelerActivitiesGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .travelerExperienceColumns {
+    grid-template-columns: 1fr;
+  }
+
+  .travelerLogistics {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .travelerDetailSection {
+    margin-top: 54px;
+  }
+
+  .travelerDetailSection__head {
+    grid-template-columns:
+      34px
+      minmax(0, 1fr);
+
+    gap: 13px;
+
+    margin-bottom: 20px;
+  }
+
+  .travelerDetailSection__head > span {
+    width: 32px;
+    height: 32px;
+  }
+
+  .travelerDetailSection__head h3 {
+    font-size: 25px;
+  }
+
+  .travelerActivitiesGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .travelerEventCard {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+  .travelerFavoriteMoment,
+  .travelerFinalReview {
+    margin-top: 54px;
+
+    padding: 24px;
+  }
+
+  .travelerFavoriteMoment h3 {
+    font-size: 24px;
+  }
+
+  .travelerFinalReview blockquote {
+    font-size: 18px;
+  }
+
+  .travelerStoryHero__content h1 {
+    font-size: clamp(39px, 10vw, 52px) !important;
+  }
+
+  .travelerStoryHero__content blockquote {
+    font-size: 16px !important;
+  }
+
+  .travelerJourney__intro h2 {
+    font-size: 31px !important;
+  }
+}

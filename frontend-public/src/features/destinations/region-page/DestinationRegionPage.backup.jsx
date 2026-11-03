@@ -1,0 +1,1755 @@
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Link, NavLink, useParams } from "react-router-dom";
+
+import heroImg from "../../../assets/images/hero/hero.jpeg";
+import gbHeroImg from "../../../assets/images/destinations/hero-gilgit-baltistan.jpeg";
+
+import "./regionPage.css";
+
+import "./regionPage.css";
+import "./featuredPlaces.css";
+
+function slugify(text = "") {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[’']/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function splitHeading(name) {
+  const clean = (name || "").replace(/capital territory/i, "").trim();
+  if (clean.toLowerCase().includes("and")) return clean.toUpperCase();
+  const parts = clean.split(" ");
+  if (parts.length <= 1) return clean.toUpperCase();
+  return `${parts[0].toUpperCase()}\n${parts.slice(1).join(" ").toUpperCase()}`;
+}
+
+function riskClass(risk) {
+  const r = (risk || "").toLowerCase();
+  if (r.includes("not safe")) return "notSafe";
+  if (r.includes("high")) return "high";
+  if (r.includes("moderate")) return "moderate";
+  if (r.includes("low")) return "low";
+  return "unknown";
+}
+
+const RISK_ORDER = {
+  "not safe": 1,
+  "high risk": 2,
+  "moderate risk": 3,
+  "low risk": 4,
+  unknown: 5,
+};
+
+function sortByRisk(places) {
+  return [...places].sort((a, b) => {
+    const ap = RISK_ORDER[(a.risk || "unknown").toLowerCase()] || 5;
+    const bp = RISK_ORDER[(b.risk || "unknown").toLowerCase()] || 5;
+    return ap - bp;
+  });
+}
+
+function FaqItem({ item, isOpen, onToggle }) {
+  return (
+    <div className={isOpen ? "faqItem isOpen" : "faqItem"}>
+      <button
+        type="button"
+        className="faqTrigger"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+      >
+        <span className="faqQ">{item.q}</span>
+        <span className="faqIcon" aria-hidden="true">
+          {isOpen ? "−" : "+"}
+        </span>
+      </button>
+      {isOpen && <div className="faqBody">{item.a}</div>}
+    </div>
+  );
+}
+
+function HeroSlider({ images, alt }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    if (!images || images.length < 2) return;
+    const id = setInterval(
+      () => setActive((v) => (v + 1) % images.length),
+      5000,
+    );
+    return () => clearInterval(id);
+  }, [images]);
+  return (
+    <div className="regionHero__slides" aria-hidden="true">
+      {images.map((src, i) => (
+        <div
+          key={i}
+          className={
+            i === active ? "regionHero__slide isActive" : "regionHero__slide"
+          }
+          style={{ backgroundImage: `url(${src})` }}
+          role="img"
+          aria-label={alt}
+        />
+      ))}
+    </div>
+  );
+}
+
+function CollageSlider({ sets, variant = "left-tall" }) {
+  const [active, setActive] = useState(0);
+  useEffect(() => {
+    if (!sets || sets.length < 2) return;
+    const id = setInterval(() => setActive((v) => (v + 1) % sets.length), 5000);
+    return () => clearInterval(id);
+  }, [sets]);
+  const isMirrored = variant === "right-tall";
+  return (
+    <div
+      className={
+        isMirrored ? "socialCollage socialCollage--mirrored" : "socialCollage"
+      }
+    >
+      {sets.map((set, i) => (
+        <div
+          key={i}
+          className={
+            i === active ? "socialCollage__set isActive" : "socialCollage__set"
+          }
+        >
+          {isMirrored ? (
+            <>
+              <div className="socialCollage__right">
+                <div className="socialCollage__cell">
+                  <img src={set[1]} alt="" loading="lazy" />
+                </div>
+                <div className="socialCollage__cell">
+                  <img src={set[2]} alt="" loading="lazy" />
+                </div>
+              </div>
+              <div className="socialCollage__left">
+                <img src={set[0]} alt="" loading="lazy" />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="socialCollage__left">
+                <img src={set[0]} alt="" loading="lazy" />
+              </div>
+              <div className="socialCollage__right">
+                <div className="socialCollage__cell">
+                  <img src={set[1]} alt="" loading="lazy" />
+                </div>
+                <div className="socialCollage__cell">
+                  <img src={set[2]} alt="" loading="lazy" />
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function AboutProvinceCarousel({ slides }) {
+  const [active, setActive] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const total = slides.length;
+
+  useEffect(() => {
+    if (isPaused || total < 2) return;
+    const id = setInterval(() => setActive((v) => (v + 1) % total), 5000);
+    return () => clearInterval(id);
+  }, [isPaused, total]);
+
+  const goPrev = () => setActive((v) => (v - 1 + total) % total);
+  const goNext = () => setActive((v) => (v + 1) % total);
+  const goTo = (idx) => setActive(idx);
+
+  const renderParagraphs = (text) =>
+    text.split("\n\n").map((para, idx) => (
+      <p key={idx} className="aboutProvince__desc">
+        {para}
+      </p>
+    ));
+
+  return (
+    <div
+      className="aboutCarousel"
+      aria-label="About the province"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
+      <div className="aboutCarousel__inner">
+        <button
+          type="button"
+          className="aboutCarousel__arrow aboutCarousel__arrow--prev"
+          onClick={goPrev}
+          aria-label="Previous"
+        >
+          ‹
+        </button>
+        <button
+          type="button"
+          className="aboutCarousel__arrow aboutCarousel__arrow--next"
+          onClick={goNext}
+          aria-label="Next"
+        >
+          ›
+        </button>
+
+        <div className="aboutCarousel__viewport">
+          {slides.map((slide, i) => {
+            const isMirrored = i % 2 === 1;
+            return (
+              <div
+                key={slide.key}
+                className={
+                  i === active
+                    ? "aboutCarousel__slide isActive"
+                    : "aboutCarousel__slide"
+                }
+                aria-hidden={i !== active}
+              >
+                <div
+                  className={
+                    isMirrored
+                      ? "aboutProvince__inner aboutProvince__inner--mirrored"
+                      : "aboutProvince__inner"
+                  }
+                >
+                  {isMirrored ? (
+                    <>
+                      <div className="aboutProvince__visual">
+                        <CollageSlider
+                          sets={slide.collage}
+                          variant="right-tall"
+                        />
+                      </div>
+                      <div className="aboutProvince__text aboutProvince__text--right">
+                        <span className="aboutCarousel__pill">
+                          {slide.title}
+                        </span>
+                        {renderParagraphs(slide.text)}
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="aboutProvince__text">
+                        <span className="aboutCarousel__pill">
+                          {slide.title}
+                        </span>
+                        {renderParagraphs(slide.text)}
+                      </div>
+                      <div className="aboutProvince__visual">
+                        <CollageSlider
+                          sets={slide.collage}
+                          variant="left-tall"
+                        />
+                      </div>
+                    </>
+                  )}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+
+        <div className="aboutCarousel__dots" role="tablist">
+          {slides.map((slide, i) => (
+            <button
+              key={slide.key}
+              type="button"
+              className={
+                i === active
+                  ? "aboutCarousel__dot isActive"
+                  : "aboutCarousel__dot"
+              }
+              onClick={() => goTo(i)}
+              aria-label={`Go to ${slide.title}`}
+              aria-selected={i === active}
+              role="tab"
+            >
+              <span className="aboutCarousel__dotLabel">{slide.title}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function FeaturedPlacesRich({ places, regionSlug, regionName }) {
+  const FILTERS = [
+    "All",
+    "Not Safe",
+    "High Risk",
+    "Moderate Risk",
+    "Low Risk",
+    "Unknown",
+  ];
+
+  const CARDS_PER_PAGE = 3;
+
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const sorted = useMemo(() => sortByRisk(places), [places]);
+
+  const filtered = useMemo(() => {
+    if (activeFilter === "All") {
+      return sorted;
+    }
+
+    return sorted.filter(
+      (place) =>
+        (place.risk || "Unknown").toLowerCase() === activeFilter.toLowerCase(),
+    );
+  }, [sorted, activeFilter]);
+
+  const totalPages = Math.max(1, Math.ceil(filtered.length / CARDS_PER_PAGE));
+
+  const firstVisibleIndex = currentPage * CARDS_PER_PAGE;
+
+  const visiblePlaces = filtered.slice(
+    firstVisibleIndex,
+    firstVisibleIndex + CARDS_PER_PAGE,
+  );
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [activeFilter]);
+
+  useEffect(() => {
+    if (currentPage > totalPages - 1) {
+      setCurrentPage(Math.max(0, totalPages - 1));
+    }
+  }, [currentPage, totalPages]);
+
+  const goPrev = () => {
+    setCurrentPage((page) => Math.max(0, page - 1));
+  };
+
+  const goNext = () => {
+    setCurrentPage((page) => Math.min(totalPages - 1, page + 1));
+  };
+
+  return (
+    <section
+      className="regionPlaces"
+      aria-label={`Featured places in ${regionName}`}
+    >
+      <div className="regionPlaces__inner">
+        <div className="regionPlaces__head">
+          <h2 className="regionPlaces__title">
+            Featured Places in {regionName}
+          </h2>
+
+          <div className="regionPlaces__viewAllWrap">
+            {filtered.length > CARDS_PER_PAGE && (
+              <span className="regionPlaces__more">
+                +{filtered.length - CARDS_PER_PAGE} more
+              </span>
+            )}
+
+            <Link to="/destinations" className="regionPlaces__viewAll">
+              View all
+            </Link>
+          </div>
+        </div>
+
+        <div className="regionPlaces__sortBar">
+          <span className="regionPlaces__sortLabel">
+            Destinations sorted by risk (
+          </span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--notSafe">
+            Not Safe
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--high">
+            High Risk
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--moderate">
+            Moderate Risk
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--low">
+            Low Risk
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--unknown">
+            Unknown
+          </span>
+
+          <span className="regionPlaces__sortLabel">)</span>
+        </div>
+
+        <div
+          className="regionPlaces__filters"
+          role="group"
+          aria-label="Filter destinations by risk"
+        >
+          {FILTERS.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              className={
+                activeFilter === filter
+                  ? "regionPlaces__chip isActive"
+                  : "regionPlaces__chip"
+              }
+              onClick={() => setActiveFilter(filter)}
+              aria-pressed={activeFilter === filter}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        {filtered.length === 0 ? (
+          <div className="regionPlaces__empty">
+            No destinations match this filter yet.
+          </div>
+        ) : (
+          <div className="placesCarousel">
+            <button
+              type="button"
+              className="placesCarousel__arrow placesCarousel__arrow--prev"
+              onClick={goPrev}
+              disabled={currentPage === 0}
+              aria-label="Show previous three destinations"
+            >
+              ‹
+            </button>
+
+            <div className="placesCarousel__viewport">
+              <div
+                key={`${activeFilter}-${currentPage}`}
+                className="placesCarousel__track"
+              >
+                {visiblePlaces.map((place) => {
+                  const placeSlug = slugify(place.name);
+                  const placeRiskClass = riskClass(place.risk);
+
+                  return (
+                    <article key={place.name} className="placeCard">
+                      <div className="placeCard__media">
+                        <img
+                          src={place.image}
+                          alt={place.name}
+                          loading="lazy"
+                        />
+
+                        <span className="placeCard__namePill">
+                          {place.name}
+                        </span>
+
+                        <button
+                          type="button"
+                          className="placeCard__save"
+                          aria-label={`Save ${place.name}`}
+                        >
+                          <svg viewBox="0 0 24 24" aria-hidden="true">
+                            <path
+                              d="M7 4.75A1.75 1.75 0 0 1 8.75 3h6.5A1.75 1.75 0 0 1 17 4.75V21l-5-3.15L7 21V4.75Z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+
+                      <div className="placeCard__body">
+                        <div className="placeCard__row">
+                          <span className="placeCard__regionPill">
+                            {place.region || regionName}
+                          </span>
+
+                          <span className="placeCard__meta">
+                            <span
+                              className="placeCard__metaIcon"
+                              aria-hidden="true"
+                            >
+                              ◷
+                            </span>
+
+                            {place.updatedAgo || "Recently updated"}
+                          </span>
+                        </div>
+
+                        <div className="placeCard__row">
+                          <span className="placeCard__temperature">
+                            <span
+                              className="placeCard__metaIcon"
+                              aria-hidden="true"
+                            >
+                              ♨
+                            </span>
+
+                            {place.temperature || "—"}
+                          </span>
+
+                          <span className="placeCard__status">
+                            <span
+                              className="placeCard__metaIcon"
+                              aria-hidden="true"
+                            >
+                              ⌂
+                            </span>
+
+                            {place.civicStatus || "Normal"}
+                          </span>
+                        </div>
+
+                        <div className="placeCard__row">
+                          <span
+                            className={`placeCard__riskPill placeCard__riskPill--${placeRiskClass}`}
+                          >
+                            {place.risk || "Unknown"}
+                          </span>
+
+                          <span className="placeCard__status">
+                            <span
+                              className="placeCard__metaIcon"
+                              aria-hidden="true"
+                            >
+                              ⇄
+                            </span>
+
+                            {place.roadStatus || "Normal"}
+                          </span>
+                        </div>
+
+                        <p className="placeCard__desc">{place.desc}</p>
+
+                        <div className="placeCard__actions">
+                          <Link
+                            to={`/destinations/${regionSlug}/${placeSlug}`}
+                            className="placeCard__btn placeCard__btn--primary"
+                          >
+                            More Info
+                          </Link>
+
+                          <Link
+                            to="/tiss"
+                            className="placeCard__btn placeCard__btn--ghost"
+                          >
+                            Route Updates
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="placesCarousel__arrow placesCarousel__arrow--next"
+              onClick={goNext}
+              disabled={currentPage >= totalPages - 1}
+              aria-label="Show next three destinations"
+            >
+              ›
+            </button>
+          </div>
+        )}
+
+        {totalPages > 1 && (
+          <div
+            className="placesCarousel__pagination"
+            aria-label="Carousel pagination"
+          >
+            {Array.from({ length: totalPages }).map((_, pageIndex) => (
+              <button
+                key={pageIndex}
+                type="button"
+                className={
+                  currentPage === pageIndex
+                    ? "placesCarousel__dot isActive"
+                    : "placesCarousel__dot"
+                }
+                onClick={() => setCurrentPage(pageIndex)}
+                aria-label={`Show destination set ${pageIndex + 1}`}
+                aria-current={currentPage === pageIndex ? "true" : undefined}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
+
+export default function DestinationRegionPage() {
+  const { regionSlug } = useParams();
+  const [openFaq, setOpenFaq] = useState(null);
+
+  const REGIONS = useMemo(
+    () => ({
+      "gilgit-baltistan": {
+        name: "Gilgit-Baltistan",
+        tagline: "The Crown Jewel of Pakistan",
+        heroImage: gbHeroImg,
+        heroImages: [gbHeroImg, heroImg, gbHeroImg],
+        about:
+          "Gilgit-Baltistan is where the Himalayas, Karakoram, and Hindu Kush converge—creating breathtaking scenery and unforgettable road trips. Home to K2, Deosai, and iconic valleys, it’s a top destination for nature lovers and adventurers.",
+        history: {
+          text: "Gilgit-Baltistan carries a history stretching back thousands of years, shaped by its strategic position along the ancient Silk Route that connected China, Central Asia, and South Asia. Traders, monks, pilgrims, and travelers passed through its remote valleys for centuries, leaving behind Buddhist rock carvings, ancient forts, monasteries, and heritage sites that still stand today as living witnesses of the past. The Kargah Buddha near Gilgit and the sacred rock inscriptions along the Karakoram Highway are silent reminders of a time when Buddhism flourished across these highlands.\n\nKingdoms like the Balti, Hunza, Nagar, and Skardu ruled these mountains for centuries, forming a rich blend of Tibetan, Central Asian, Persian, and local influences that shaped the region’s identity. Iconic landmarks such as Baltit Fort, Altit Fort, and Shigar Fort echo tales of royalty, resilience, mountain warfare, and generations of traditions passed down through royal courts and village elders.\n\nIn the modern era, Gilgit-Baltistan became a crucial gateway between Pakistan and China with the construction of the Karakoram Highway—often called the Eighth Wonder of the World—an engineering marvel that reshaped connectivity, trade, and tourism across the region.",
+          collage: [
+            [gbHeroImg, heroImg, gbHeroImg],
+            [heroImg, gbHeroImg, heroImg],
+            [gbHeroImg, gbHeroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "The cultural fabric of Gilgit-Baltistan is woven from centuries-old traditions, folk music, colorful festivals, and unique regional attire representing diverse communities like the Balti, Shina, Burusho, Wakhi, and Domaki. Each valley carries its own dialect, cuisine, and craftsmanship—making the region one of the most culturally diverse landscapes in Pakistan. From the legendary polo matches at Shandur—the highest polo ground in the world—to spring blossom celebrations in Hunza and harvest festivals across the valleys, culture here is alive in every season.\n\nLocal languages such as Balti, Shina, Burushaski, and Wakhi are still widely spoken, preserving oral traditions, folk poetry, and storytelling passed down through generations. Handcrafted jewelry, hand-woven carpets, embroidered caps, wood carvings, and traditional cuisine like chapshuro, mamtu, harissa, and butter tea reflect a heritage shaped by the Silk Route and mountain life.\n\nMusic and dance play a central role in cultural gatherings, with instruments like the rubab, surnai, and dadang bringing life to weddings, festivals, and community celebrations. The region’s hospitality is legendary—visitors are welcomed as honored guests, often invited into homes for tea, stories, and shared meals that reflect the warmth of mountain culture.",
+          collage: [
+            [heroImg, gbHeroImg, heroImg],
+            [gbHeroImg, heroImg, gbHeroImg],
+            [heroImg, heroImg, gbHeroImg],
+          ],
+        },
+        social: {
+          text: "The people of Gilgit-Baltistan are known for their warmth, hospitality, and close-knit community life that reflects generations of mountain living. Everyday moments—shared meals, seasonal gatherings, mountain village traditions, and communal work in the fields—reflect a lifestyle deeply connected to nature, family, and heritage. Visitors are welcomed like family, and social bonds run strong across generations, shaped by shared responsibility, respect for elders, and pride in local identity.\n\nLife in Gilgit-Baltistan moves at a calm and grounded pace. Villages often function as extended families, where neighbors help each other during harvests, weddings, funerals, and religious celebrations. Traditional jirgas (community councils) still play a role in resolving disputes and making decisions collectively, preserving a sense of unity and shared purpose.\n\nWomen play an important role in preserving cultural heritage through handicrafts, storytelling, and traditional cuisine, while young people are increasingly bridging the gap between age-old customs and modern education. The literacy rate in Gilgit-Baltistan is among the highest in Pakistan, thanks to strong community-driven schools and programs. Life here is calm, community-driven, and rooted in the belief that nature and tradition must be respected in equal measure.",
+          collage: [
+            [gbHeroImg, heroImg, gbHeroImg],
+            [heroImg, gbHeroImg, heroImg],
+            [gbHeroImg, gbHeroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Festivals in Gilgit-Baltistan are a vivid celebration of heritage, seasons, and community spirit—each event offering a colorful window into mountain life. The Shandur Polo Festival, held every July on the world’s highest polo ground at 12,200 feet, is the most iconic event—attracting visitors from across the globe to witness the legendary rivalry between Chitral and Gilgit teams, accompanied by folk music, traditional dances, and cultural exhibitions.\n\nSpring blossom festivals in Hunza and Nagar celebrate the breathtaking arrival of cherry, apricot, and almond flowers that transform the valleys into pink and white landscapes. Harvest festivals like Ginani mark the beginning of the wheat harvest with rituals, feasts, and blessings for prosperity, while Nowruz—the Persian New Year—is celebrated with music, family gatherings, and traditional dishes.\n\nOther cultural events include the Silk Route Festival, Babusar Polo Festival, and traditional weddings that showcase folk music, sword dances, and centuries-old customs. Religious observances such as Eid and Ashura are marked with community prayers, processions, and hospitality. These celebrations bring communities together across valleys and offer travelers an authentic glimpse into the region’s living traditions, resilient spirit, and vibrant sense of identity.",
+          collage: [
+            [heroImg, gbHeroImg, heroImg],
+            [gbHeroImg, heroImg, gbHeroImg],
+            [heroImg, heroImg, gbHeroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Hunza Valley",
+            region: "Gilgit-Baltistan",
+            image: gbHeroImg,
+            temperature: "14°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "2 hours ago",
+            desc: "Low Risk. Weather: Clear. Temperature around 14°C. Civic status: Normal. Road access: Normal. Perfect time to explore viewpoints and lakes.",
+          },
+          {
+            name: "Skardu",
+            region: "Gilgit-Baltistan",
+            image: heroImg,
+            temperature: "10°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "3 hours ago",
+            desc: "Moderate Risk. Weather: Partly Cloudy. Temperature around 10°C. Civic status: Normal. Road access: Delays possible. Please verify updates before travel.",
+          },
+          {
+            name: "Fairy Meadows",
+            region: "Gilgit-Baltistan",
+            image: heroImg,
+            temperature: "6°C",
+            civicStatus: "Normal",
+            risk: "High Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "5 hours ago",
+            desc: "High Risk. Weather: Light Snow. Temperature around 6°C. Civic status: Normal. Road access: Slow in sections due to conditions. Plan carefully.",
+          },
+          {
+            name: "Deosai Plains",
+            region: "Gilgit-Baltistan",
+            image: gbHeroImg,
+            temperature: "8°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "6 hours ago",
+            desc: "Moderate Risk. Weather: Windy. Temperature around 8°C. Civic status: Normal. Road access: Delays possible on high-altitude routes.",
+          },
+          {
+            name: "Gilgit",
+            region: "Gilgit-Baltistan",
+            image: heroImg,
+            temperature: "16°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Sunny. Temperature around 16°C. Civic status: Normal. Road access: Normal. Great hub for onward travel.",
+          },
+          {
+            name: "Attabad Lake",
+            region: "Gilgit-Baltistan",
+            image: gbHeroImg,
+            temperature: "12°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "4 hours ago",
+            desc: "Low Risk. Weather: Clear. Temperature around 12°C. Civic status: Normal. Road access: Normal. Ideal for boat rides and photography.",
+          },
+          {
+            name: "Rakaposhi View",
+            region: "Gilgit-Baltistan",
+            image: heroImg,
+            temperature: "11°C",
+            civicStatus: "Normal",
+            risk: "Unknown",
+            roadStatus: "Normal",
+            updatedAgo: "8 hours ago",
+            desc: "Unknown status. Weather: Cloudy. Temperature around 11°C. Civic status: Normal. Road access: Normal. Check local sources for latest info.",
+          },
+        ],
+        attractions: [
+          {
+            title: "Natural Attractions",
+            text: "Mountain viewpoints, lakes, glaciers, and wide open valleys—ideal for scenic stays and photography.",
+          },
+          {
+            title: "Must-Do Experiences",
+            text: "Road trips, trekking routes, local village walks, and sunrise viewpoints.",
+          },
+        ],
+        faqs: [
+          {
+            q: "How do I get to Gilgit-Baltistan?",
+            a: "You can travel by road (seasonal conditions apply) or by flight depending on route and weather. Plan ahead for closures and delays.",
+          },
+          {
+            q: "When is the best time to visit?",
+            a: "May to October is generally the most comfortable period for travel, with clearer roads and better weather.",
+          },
+          {
+            q: "Is it good for families?",
+            a: "Yes—many areas are family-friendly in peak season. For remote routes, plan carefully and choose comfortable stays.",
+          },
+        ],
+      },
+
+      punjab: {
+        name: "Punjab",
+        tagline: "The Heart of Pakistan",
+        heroImage: heroImg,
+        heroImages: [heroImg, heroImg, heroImg],
+        about:
+          "Punjab is Pakistan’s cultural heartland—heritage cities, food streets, bazaars, and iconic architecture. It’s ideal for history lovers, families, and anyone who wants a vibrant city experience.",
+        history: {
+          text: "Punjab’s history spans thousands of years, tracing its roots back to the ancient Indus Valley Civilization—one of the world’s earliest urban cultures—whose remnants can still be seen at Harappa. The region has witnessed the rise and fall of great empires, from the Mauryans and Kushans to the Mughals, Sikhs, and the British, each leaving a lasting imprint on its cities, monuments, and identity.\n\nLahore, the cultural capital of Punjab, served as a Mughal capital under emperors like Akbar, Jahangir, and Shah Jahan, leaving behind architectural masterpieces such as the Lahore Fort, Badshahi Mosque, Shalimar Gardens, and the Tomb of Jahangir. Multan, one of the oldest cities in South Asia, became a center of Sufism, home to shrines of saints like Bahauddin Zakariya and Shah Rukn-e-Alam that still draw thousands of devotees each year.\n\nThe Sikh era brought new architectural and cultural additions, with Maharaja Ranjit Singh’s reign shaping cities like Lahore in unique ways. The colonial period introduced railways, universities, and administrative structures that continue to shape modern Punjab. Today, the region stands as a living museum where every street, monument, and bazaar tells a story spanning millennia.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "Punjab’s culture is a rich blend of Sufi heritage, folk music, dance, poetry, and centuries-old traditions carried forward through generations. From qawwali nights at ancient shrines like Data Darbar and Baba Farid’s shrine to colorful Basant celebrations that fill the skies with kites, cultural life here is deeply expressive and endlessly vibrant. Traditional dances such as Bhangra, Luddi, and Jhumar, along with folk instruments like the dhol, tumbi, and algoza, remain central to weddings and celebrations.\n\nPunjabi poetry, shaped by legendary Sufi poets like Bulleh Shah, Waris Shah, and Sultan Bahu, continues to influence music, film, and daily conversation across the region. The famous love legends of Heer-Ranjha, Sassi-Punnu, and Mirza-Sahiba are still sung and performed at cultural gatherings, festivals, and shrines throughout the province.\n\nCrafts like truck art, phulkari embroidery, khussa footwear, and intricate woodwork represent centuries of skilled craftsmanship passed down through families. Punjabi cuisine—rich, hearty, and full of flavor—features iconic dishes like nihari, sarson da saag with makki di roti, biryani, halwa puri, and endless varieties of kebabs, making Punjab’s food streets in Lahore, Faisalabad, and Multan world-famous.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        social: {
+          text: "Punjab’s social life is vibrant, expressive, and full of energy. From bustling food streets and lively bazaars to family gatherings and seasonal celebrations, the people are known for their warmth, generosity, and love for shared experiences. Community and hospitality sit at the heart of daily life, whether it’s meeting friends over chai, celebrating weddings that last for days, or gathering for cricket matches in local streets.\n\nFamily bonds are extraordinarily strong in Punjab, with joint family systems still common in many households. Weddings are grand affairs involving multiple events like mehndi, mayun, baraat, and walima, often spanning several days and bringing together hundreds of relatives and friends. Punjabi hospitality is legendary—guests are treated with unmatched warmth, endless food, and genuine affection.\n\nDaily life in Punjab’s cities blends modernity with tradition. Lahore’s café culture, Multan’s historic bazaars, Faisalabad’s textile industry, and Rawalpindi’s food streets all reflect a society that embraces both progress and heritage. Elders are highly respected, community leaders play meaningful roles in local affairs, and neighborhood ties remain strong even in fast-growing urban centers. Whether in a village or a major city, the Punjabi spirit of ‘khush dili’ (open-heartedness) shines through in every interaction.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Punjab’s festivals reflect its vibrant spirit and cultural richness—each celebration bringing communities together in joyous, colorful ways. Basant marks the arrival of spring with skies full of colorful kites, music, and traditional feasts, especially in old Lahore. Eid celebrations bring families together with grand feasts, new clothes, and community prayers, while urs festivals at Sufi shrines like Data Darbar, Baba Farid’s shrine in Pakpattan, and Bahauddin Zakariya’s shrine in Multan draw thousands of devotees for nights of qawwali, poetry, and spiritual gatherings.\n\nMelas (fairs) and harvest festivals such as Baisakhi are celebrated with traditional dances, music, and communal meals, marking the beginning of the wheat harvest. Horse and cattle shows in cities like Sahiwal and Jhang showcase Punjab’s deep agricultural heritage, while the National Horse and Cattle Show in Lahore is one of the largest cultural events in the country.\n\nTraditional weddings themselves are festivals in their own right—featuring bhangra performances, mehndi nights, dhol beats, and elaborate feasts. Independence Day (August 14) transforms cities into a sea of green and white, with parades, fireworks, and community celebrations. Cultural events like the Faiz International Festival and Lahore Literary Festival highlight Punjab’s literary heritage, making the province a year-round hub of celebration and cultural expression.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Lahore",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "24°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Clear. Temperature around 24°C. Civic status: Normal. Road access: Normal. Great for heritage walks and food streets.",
+          },
+          {
+            name: "Multan",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "27°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "2 hours ago",
+            desc: "Low Risk. Weather: Sunny. Temperature around 27°C. Civic status: Normal. Road access: Normal. Perfect for visiting shrines and craft markets.",
+          },
+          {
+            name: "Murree",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "13°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "3 hours ago",
+            desc: "Moderate Risk. Weather: Cool and Cloudy. Temperature around 13°C. Civic status: Normal. Road access: Delays possible on weekends.",
+          },
+          {
+            name: "Taxila",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "21°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "4 hours ago",
+            desc: "Low Risk. Weather: Mild. Temperature around 21°C. Civic status: Normal. Road access: Normal. Ideal for archaeology and history lovers.",
+          },
+          {
+            name: "Khewra Salt Mine",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "20°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "5 hours ago",
+            desc: "Low Risk. Weather: Mild. Temperature around 20°C. Civic status: Normal. Road access: Normal. One of Punjab's most unique destinations.",
+          },
+          {
+            name: "Neela Sandh",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "23°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "6 hours ago",
+            desc: "Moderate Risk. Weather: Humid. Temperature around 23°C. Civic status: Normal. Road access: Slow in sections due to trail conditions.",
+          },
+          {
+            name: "Kartarpur Corridor",
+            region: "Punjab",
+            image: heroImg,
+            temperature: "22°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "7 hours ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 22°C. Civic status: Normal. Road access: Normal. A landmark religious and cultural site.",
+          },
+        ],
+        attractions: [
+          {
+            title: "Heritage & Culture",
+            text: "Historic forts, mosques, old cities, museums, and cultural streets.",
+          },
+          {
+            title: "Food & City Life",
+            text: "Local cuisine, markets, and vibrant neighborhoods across major cities.",
+          },
+        ],
+        faqs: [
+          {
+            q: "What’s the best season for Punjab?",
+            a: "October to March is generally the most comfortable for city travel.",
+          },
+          {
+            q: "Is Punjab easy to travel around?",
+            a: "Yes. It has strong road connectivity, and major cities are very accessible.",
+          },
+          {
+            q: "What should I try in Punjab?",
+            a: "Heritage walks, local food streets, bazaars, and cultural landmarks.",
+          },
+        ],
+      },
+
+      sindh: {
+        name: "Sindh",
+        tagline: "Land of Sufis & Civilizations",
+        heroImage: heroImg,
+        heroImages: [heroImg, heroImg, heroImg],
+        about:
+          "Sindh combines energetic city life with deep heritage and coastal routes. From urban experiences to historical sites, it’s a strong pick for winter travel and culture-focused trips.",
+        history: {
+          text: "Sindh is home to one of the world’s oldest civilizations—Mohenjo-daro—dating back over 4,500 years and recognized as a UNESCO World Heritage Site. This ancient Indus Valley city featured advanced urban planning, drainage systems, and craftsmanship that were remarkable for its time. Alongside Mohenjo-daro, sites like Kot Diji and Amri reveal even earlier settlements, making Sindh one of the cradles of human civilization.\n\nOver the centuries, Sindh has been ruled by Persians, Greeks under Alexander the Great, Mauryans, Arabs, Mughals, Kalhoras, Talpurs, and the British—each leaving a lasting mark on its architecture, language, cuisine, and identity. Sindh is also known as the land where Islam first entered the subcontinent in 711 CE through the young Arab general Muhammad bin Qasim, who arrived at the port city of Debal and shaped the religious history of the region forever.\n\nThe Kalhora and Talpur dynasties later built forts, mosques, and cities like Hyderabad, contributing to Sindh’s architectural heritage. The province became a stronghold of Sufi traditions with saints like Shah Abdul Latif Bhittai, Sachal Sarmast, and Lal Shahbaz Qalandar whose shrines continue to draw millions of devotees. Sindh’s history is a layered story of civilizations, conquests, spiritual movements, and enduring cultural resilience.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "Sindh’s cultural identity is defined by ancient civilizations, Sufi shrines, folk music, poetry, and vibrant handicrafts that have influenced the region for thousands of years. From the ruins of Mohenjo-daro to the mystic poetry of Shah Abdul Latif Bhittai and Sachal Sarmast, the region’s heritage runs among Pakistan’s deepest. Colorful ajrak prints, Sindhi topis (caps), and embroidered rilli quilts showcase a craft tradition passed down through generations and worn with immense cultural pride.\n\nSindhi music, rooted in devotion and folk storytelling, features soulful instruments like the yaktaro, dholak, and surando, often accompanying verses from Shah Jo Risalo—Shah Abdul Latif Bhittai’s masterpiece of Sindhi poetry. The dhamaal at Sehwan Sharif, performed at the shrine of Lal Shahbaz Qalandar, is one of the most powerful spiritual dance traditions in the subcontinent, drawing devotees into trance-like celebrations of divine love.\n\nSindhi cuisine reflects the region’s agricultural richness and coastal heritage—featuring dishes like sai bhaji, sindhi biryani, palla fish from the Indus River, and sweet delicacies like tosha and khubani. Handicrafts such as Hala’s hand-painted pottery, Thatta’s lacquer work, and Nasarpur’s embroidered textiles are celebrated across Pakistan. Cultural pride runs deep here, with Sindh Culture Day celebrated annually as a symbol of unity and heritage.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        social: {
+          text: "Sindh’s social fabric is rich with tradition, music, and hospitality that has been shaped by centuries of coastal, riverside, and desert living. From coastal communities in Karachi to heritage towns like Thatta and Sehwan, people carry a deep sense of identity, celebrated through folk arts, traditional cuisine, and everyday warmth toward guests. The concept of ‘mehmaan nawazi’ (hospitality) is a cornerstone of Sindhi social life—guests are welcomed with tea, sweets, and often a meal, no matter how brief the visit.\n\nDaily life across Sindh varies dramatically between the bustling metropolis of Karachi—Pakistan’s largest city and economic hub—and the calm rural villages of interior Sindh where agriculture, fishing, and craftsmanship shape everyday routines. Karachi is a cultural melting pot where communities from all provinces coexist, giving the city its unique diversity of food, language, and lifestyle.\n\nSindhi society places strong emphasis on family bonds, respect for elders, and community solidarity. Traditional gatherings such as ‘otaqs’ (guest houses) serve as spaces for storytelling, discussion, and hospitality. Weddings are grand multi-day affairs featuring traditional Sindhi music, ajrak ceremonies, and elaborate feasts. Fishing communities along the Arabian Sea and desert dwellers in Tharparkar each have their own social rhythms, but all share the same values of generosity, resilience, and pride in Sindhi heritage.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Sindh’s festivals are deeply spiritual and vibrant, from the annual Urs at the shrines of Shah Abdul Latif Bhittai in Bhit Shah and Lal Shahbaz Qalandar in Sehwan Sharif, to Sindh Culture Day celebrated every February with ajrak, Sindhi topis, folk music, and cultural pride across the province. The Urs celebrations attract hundreds of thousands of devotees who gather for nights of qawwali, poetry recitations, dhamaal dances, and communal meals that continue for several days.\n\nMelas, camel and cattle fairs, and coastal festivals in Karachi highlight the region’s diverse traditions and community spirit throughout the year. The Thar Desert’s festivals showcase colorful desert culture with camel races, folk performances, and traditional Rajasthani-influenced music. Karachi Eat Festival, Karachi Literature Festival, and the Aalmi Urdu Conference bring together food lovers, thinkers, and artists from across the country.\n\nReligious festivals like Eid-ul-Fitr, Eid-ul-Azha, and Muharram are observed with deep devotion and community gatherings. Traditional Sindhi weddings themselves are cultural festivals—featuring the exchange of ajrak, folk music, and elaborate rituals passed down for generations. Independence Day in Karachi transforms the city into a lively celebration of national pride, while cultural performances at venues like the National Academy of Performing Arts (NAPA) keep Sindh’s artistic legacy alive year-round.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Karachi",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "29°C",
+            civicStatus: "Disruption",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "1 hour ago",
+            desc: "Moderate Risk. Weather: Humid. Temperature around 29°C. Civic status: Disruption. Road access: Delays possible. Plan travel with buffer time.",
+          },
+          {
+            name: "Thatta",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "31°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "3 hours ago",
+            desc: "Low Risk. Weather: Hot. Temperature around 31°C. Civic status: Normal. Road access: Normal. Perfect for exploring historic architecture.",
+          },
+          {
+            name: "Hyderabad",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "30°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "2 hours ago",
+            desc: "Low Risk. Weather: Sunny. Temperature around 30°C. Civic status: Normal. Road access: Normal. Great for bazaars and local culture.",
+          },
+          {
+            name: "Mohenjo-daro",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "33°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "4 hours ago",
+            desc: "Low Risk. Weather: Hot. Temperature around 33°C. Civic status: Normal. Road access: Normal. Iconic historical landmark.",
+          },
+          {
+            name: "Sukkur",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "32°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "5 hours ago",
+            desc: "Low Risk. Weather: Hot. Temperature around 32°C. Civic status: Normal. Road access: Normal. Riverside views and regional heritage.",
+          },
+          {
+            name: "Thar Desert",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "35°C",
+            civicStatus: "Normal",
+            risk: "High Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "6 hours ago",
+            desc: "High Risk. Weather: Very Hot. Temperature around 35°C. Civic status: Normal. Road access: Slow in sections. Plan carefully and carry water.",
+          },
+          {
+            name: "Keenjhar Lake",
+            region: "Sindh",
+            image: heroImg,
+            temperature: "28°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "7 hours ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 28°C. Civic status: Normal. Road access: Normal. Popular weekend lake stop.",
+          },
+        ],
+        attractions: [
+          {
+            title: "Heritage Sites",
+            text: "Ancient ruins, historical towns, and cultural landmarks.",
+          },
+          {
+            title: "Coastal & City",
+            text: "Food culture, sea views, and urban exploration.",
+          },
+        ],
+        faqs: [
+          {
+            q: "When is the best time for Sindh?",
+            a: "November to March is ideal for comfortable travel.",
+          },
+          {
+            q: "Is Karachi good for tourists?",
+            a: "Yes—great for food, markets, and city experiences. Plan routes ahead.",
+          },
+          {
+            q: "What’s a must-see in Sindh?",
+            a: "Heritage sites and coastal stops are the top highlights.",
+          },
+        ],
+      },
+
+      balochistan: {
+        name: "Balochistan",
+        tagline: "The Untamed Frontier",
+        heroImage: heroImg,
+        heroImages: [heroImg, heroImg, heroImg],
+        about:
+          "Balochistan is known for raw landscapes, long highways, and dramatic coastlines. It’s ideal for travelers who enjoy quiet roads, unique scenery, and offbeat exploration.",
+        history: {
+          text: "Balochistan’s history is layered with ancient civilizations, tribal legacies, and strategic importance along historic trade routes that connected the Middle East, Central Asia, and South Asia. The Mehrgarh archaeological site—one of the earliest known farming communities in South Asia—dates back to 7000 BCE and reveals a Neolithic society that predates even Mohenjo-daro. Its discoveries of early agriculture, dentistry, and pottery have reshaped our understanding of human civilization in the region.\n\nOver centuries, the region has been influenced by Persians, Greeks under Alexander the Great (who marched through the harsh Makran coast in 325 BCE), Arabs, Mongols, and various tribal confederations, shaping its unique identity and culture. The Baloch people, believed to have migrated from Aleppo centuries ago, established powerful tribal confederations including the Khanate of Kalat, which ruled much of the region for hundreds of years and negotiated with the Mughal Empire, the British, and neighboring powers.\n\nBalochistan’s strategic ports like Gwadar have historically served as gateways between the Arabian Sea and inland trade routes. During the colonial era, the British recognized the region’s geopolitical importance and established several treaties with local tribal leaders. Today, Balochistan carries forward this proud heritage—its history preserved not just in ruins and forts but in the oral traditions, poetry, and tribal customs that continue to define its identity.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "Balochistan’s culture reflects a proud tribal heritage, expressed through folk music, embroidery, poetry, and traditional attire that is instantly recognizable across Pakistan. Rich Balochi, Brahvi, and Pashto languages, ancient oral storytelling, and legendary hospitality shape the region’s identity. Cultural gatherings feature the rhythmic Chaap dance, folk instruments like the Suroz, Dambura, and Benju, and beautifully hand-embroidered dresses that take months—sometimes years—to complete.\n\nBalochi embroidery is world-renowned for its intricate mirror work, geometric patterns, and vibrant colors—each region having its own distinct style. The Balochi dress, worn by both men and women, is a symbol of cultural pride. Men wear long shalwar kameez with turbans, while women wear elaborately embroidered gowns that can weigh several kilograms due to the density of their stitching.\n\nBalochi poetry, particularly the tradition of ‘sher-o-shairi,’ celebrates themes of bravery, love, honor, and the beauty of the land. Legendary figures like Hammal Jiand and Chakar Khan Rind live on through folk songs and epic tales. Balochi cuisine—featuring dishes like sajji (whole roasted lamb), khaddi kabab, dampukht, and rosh—reflects the pastoral lifestyle and hospitality traditions. Traditional crafts such as Balochi rugs, mirror-work embroidery, and hand-stitched caps are treasured across Pakistan and internationally.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        social: {
+          text: "Balochistan’s social life is shaped by tradition, tribal heritage, and a strong sense of community that has stood the test of time. Life moves at a calm and grounded pace here—centered around family, hospitality, and generations-old customs that give the region its unique identity. Guests are honored with a code of respect known as ‘Mehman Nawazi,’ and social gatherings often bring entire villages together for weddings, folk music, and communal meals that can last for days.\n\nThe tribal system remains an important part of Baloch and Pashtun social structures in the province, with elders and sardars playing key roles in community decision-making, dispute resolution, and preserving cultural values. Jirgas (traditional councils) are still convened to address matters of importance, reflecting a deep-rooted commitment to collective wisdom and shared responsibility.\n\nFamily bonds are extraordinarily strong, and extended families often live together or in close proximity, supporting each other through life’s milestones. Baloch and Pashtun hospitality is legendary—travelers passing through remote areas are frequently invited into homes for tea, meals, and rest. Women play vital roles in preserving cultural crafts, folk songs, and family traditions. Despite the challenges of geography and climate, the resilience and warmth of Balochistan’s people define a way of life that has endured for centuries.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Festivals in Balochistan reflect its tribal spirit and rich traditions—each celebration offering a glimpse into a culture shaped by mountains, deserts, and coasts. The Sibi Mela, one of the oldest festivals in the region held annually in February, brings together tribes from across Balochistan for livestock exhibitions, camel and horse races, folk music, cultural performances, and traditional handicraft displays. It’s a centuries-old gathering that continues to unite the province in celebration.\n\nNowruz, the Persian New Year, is celebrated in western Balochistan with music, family gatherings, and traditional feasts, reflecting the region’s historical ties to Iran and Central Asia. Traditional Baloch weddings are grand multi-day events featuring folk music, chaap dances, elaborate feasts, and the exchange of embroidered gifts. The bride’s embroidered dress is often a family heirloom passed through generations.\n\nSeasonal fairs and religious gatherings occur throughout the year, including urs celebrations at shrines of local Sufi saints. The Buzkashi-style horse games in northern Balochistan, camel races in Makran, and folk poetry recitations in tribal areas offer visitors an authentic experience of the region’s traditions. Independence Day and Balochistan Cultural Day are also marked with pride, showcasing the region’s music, dance, and diverse tribal heritage. These festivals collectively preserve and celebrate a culture that has thrived in one of the most challenging landscapes in South Asia.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Gwadar",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "26°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "2 hours ago",
+            desc: "Moderate Risk. Weather: Coastal breeze. Temperature around 26°C. Civic status: Normal. Road access: Delays possible on long routes.",
+          },
+          {
+            name: "Ormara Beach",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "27°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Normal",
+            updatedAgo: "3 hours ago",
+            desc: "Moderate Risk. Weather: Sunny. Temperature around 27°C. Civic status: Normal. Road access: Normal. Peaceful coastline stop.",
+          },
+          {
+            name: "Hingol Area",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "29°C",
+            civicStatus: "Normal",
+            risk: "High Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "5 hours ago",
+            desc: "High Risk. Weather: Hot. Temperature around 29°C. Civic status: Normal. Road access: Slow in sections. Verify routes carefully.",
+          },
+          {
+            name: "Ziarat",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "9°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "4 hours ago",
+            desc: "Low Risk. Weather: Cool. Temperature around 9°C. Civic status: Normal. Road access: Normal. Cool weather and forest-like scenery.",
+          },
+          {
+            name: "Quetta",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "12°C",
+            civicStatus: "Disruption",
+            risk: "High Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "1 hour ago",
+            desc: "High Risk. Weather: Cool. Temperature around 12°C. Civic status: Disruption. Road access: Delays possible. Plan carefully.",
+          },
+          {
+            name: "Bolan Pass",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "18°C",
+            civicStatus: "Normal",
+            risk: "Not Safe",
+            roadStatus: "High risk",
+            updatedAgo: "6 hours ago",
+            desc: "Not Safe. Weather: Windy. Temperature around 18°C. Civic status: Normal. Road access: High risk due to conditions. Please verify advisories.",
+          },
+          {
+            name: "Astola Island",
+            region: "Balochistan",
+            image: heroImg,
+            temperature: "28°C",
+            civicStatus: "Normal",
+            risk: "Unknown",
+            roadStatus: "Normal",
+            updatedAgo: "8 hours ago",
+            desc: "Unknown status. Weather: Sunny. Temperature around 28°C. Civic status: Normal. Access requires boat—verify local schedules.",
+          },
+        ],
+        attractions: [
+          {
+            title: "Coastal Routes",
+            text: "Highway views, beaches, and cliffside stops—best in cooler months.",
+          },
+          {
+            title: "Nature & Landscape",
+            text: "Wide open scenery, unique rock formations, and quiet travel routes.",
+          },
+        ],
+        faqs: [
+          {
+            q: "When should I visit Balochistan?",
+            a: "October to March is best due to cooler temperatures.",
+          },
+          {
+            q: "Do I need to plan extra for routes?",
+            a: "Yes. Plan carefully and verify route advisories before travel.",
+          },
+          {
+            q: "Is it suitable for families?",
+            a: "It can be, but planning and route selection matter more here than other regions.",
+          },
+        ],
+      },
+
+      "khyber-pakhtunkhwa": {
+        name: "Khyber Pakhtunkhwa",
+        tagline: "Gateway to the Northern Valleys",
+        heroImage: heroImg,
+        heroImages: [heroImg, heroImg, heroImg],
+        about:
+          "Khyber Pakhtunkhwa is filled with forest valleys, rivers, and summer destinations. It’s a great pick for nature escapes, family trips, and scenic stays.",
+        history: {
+          text: "Khyber Pakhtunkhwa has been a historical crossroads for centuries, connecting South Asia with Central Asia through the legendary Khyber Pass—a route used by traders, conquerors, and armies for over two thousand years. The region was once the heart of the ancient Gandhara civilization, a major center of Buddhist art, learning, and culture that flourished from the 6th century BCE to the 11th century CE. The famous Gandhara sculptures, blending Greek and Indian artistic styles, are considered among the world’s greatest artistic achievements.\n\nPeshawar, one of the oldest continuously inhabited cities in South Asia, has witnessed the rise and fall of empires including the Mauryans under Emperor Ashoka, the Kushans led by King Kanishka (who made Peshawar his capital), the Mughals, Sikhs, and the British—each shaping the region’s cultural and historical identity. The ancient city was home to one of the tallest stupas ever built and served as a great center of Buddhist learning during the Kushan era.\n\nThe Khyber Pass witnessed historic invasions by Alexander the Great, Mahmud of Ghazni, Babur, and countless other figures who shaped South Asian history. Iconic landmarks like the Bala Hisar Fort, Mahabat Khan Mosque, and the Peshawar Museum (housing one of the world’s finest collections of Gandhara art) stand as living reminders of this deep historical legacy. In modern times, the province has played an important role in Pakistan’s independence movement and continues to be a strategic and cultural bridge between civilizations.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "The cultural heritage of Khyber Pakhtunkhwa is expressed through Pashto poetry, traditional music, folk dances like the iconic Attan, and vibrant regional attire that reflects centuries of history. Age-old customs, artisan crafts such as intricate wood carvings, embroidered fabrics, chitrali caps, and copperware, along with rich musical traditions using instruments like the rabab, mangey, and sitar, bring the region’s culture to life in every gathering and celebration.\n\nPashto poetry has a rich tradition dating back centuries, with legendary figures like Khushal Khan Khattak, Rahman Baba, and Ghani Khan whose verses on love, honor, war, and spirituality are still recited and sung today. Pashto literature and folk tales like Adam Khan and Durkhanai continue to inspire generations. The rabab, often called the ‘lion of instruments,’ is the soul of Pashtun music and has gained international recognition.\n\nThe province’s cultural diversity is remarkable—from the unique animist Kalash people in Chitral, whose ancient traditions have survived for over 2,000 years, to the distinct heritage of the Hindko-speaking communities in Hazara and the Chitrali people in the north. Traditional crafts include Chitrali woolen shawls, Swati wood carvings, embroidered caps, and copper handicrafts. Pashtun cuisine—featuring dishes like chapli kebab, kabuli pulao, tikka, and mantu—reflects a rich culinary heritage shaped by the region’s history and geography.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        social: {
+          text: "Khyber Pakhtunkhwa is known for its rich cultural heritage, strong family values, and legendary hospitality that has become synonymous with the Pashtun way of life. The concept of ‘Pashtunwali’—an ancient code of honor built on hospitality (melmastia), respect (nanawatai), loyalty, courage, and justice—shapes daily interactions, social gatherings, and community life. Guests, whether known or strangers, are treated with extraordinary warmth and often given the best food, seat, and attention available.\n\nCommunal meals, jirgas (traditional councils where elders resolve disputes), and family celebrations remain central to everyday life across the province. The hujra, a traditional guesthouse found in Pashtun villages, serves as a space for men to gather, discuss community matters, host travelers, and pass down oral traditions. Family bonds are extremely strong, with joint family systems being the norm in most areas.\n\nRespect for elders is deeply ingrained—young people are taught from childhood to defer to the wisdom and experience of older generations. Women play crucial roles in preserving family traditions, crafts, and folk knowledge. Communities in areas like Chitral, Hunza’s bordering valleys, and the Kalash region maintain uniquely peaceful and matriarchal-leaning social structures. Despite the rugged geography, the warmth of KPK’s people, their pride in their heritage, and their sense of communal responsibility create a social fabric that visitors often describe as unforgettable.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Festivals in KPK are colorful celebrations of culture and community—each event showcasing the diverse heritage that defines the province. The Kalash Valley festivals—Chilam Joshi (spring festival in May), Uchal (harvest festival in August), and Chowmos (winter festival in December)—are among the most unique in the world, featuring dance, music, wine, and centuries-old traditions of the Kalash people, one of the oldest indigenous communities in South Asia. These festivals draw visitors from around the world seeking to experience one of humanity’s most ancient living cultures.\n\nEid gatherings, spring festivals in Swat and Kaghan, and cultural events in Peshawar showcase folk music, poetry, and the vibrant Pashtun way of life. The Shandur Polo Festival (held on the border of Chitral and Gilgit-Baltistan) brings together polo teams from both regions in a legendary sporting event on the world’s highest polo ground. The Chitral Festival celebrates the region’s unique culture with traditional games, music, and food.\n\nTraditional weddings in Pashtun communities are grand affairs featuring the Attan dance, rabab performances, elaborate feasts, and multi-day celebrations. Religious festivals like Eid-ul-Fitr and Eid-ul-Azha are observed with community prayers, generous hospitality, and family gatherings. Cultural events in Peshawar, including qawwali nights and Pashto poetry mushairas, keep the province’s literary and musical heritage alive. Independence Day, Ashura processions, and local shrine urs celebrations further add to KPK’s vibrant calendar of festivals.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Swat Valley",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "15°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Cool. Temperature around 15°C. Civic status: Normal. Road access: Normal. Great scenic drives and river stops.",
+          },
+          {
+            name: "Kalam",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "12°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "3 hours ago",
+            desc: "Moderate Risk. Weather: Cold. Temperature around 12°C. Civic status: Normal. Road access: Delays possible on hill routes.",
+          },
+          {
+            name: "Chitral",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "10°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "4 hours ago",
+            desc: "Moderate Risk. Weather: Cool. Temperature around 10°C. Civic status: Normal. Road access: Slow in sections. Great cultural experience.",
+          },
+          {
+            name: "Naran Valley",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "8°C",
+            civicStatus: "Normal",
+            risk: "High Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "5 hours ago",
+            desc: "High Risk. Weather: Cold. Temperature around 8°C. Civic status: Normal. Road access: Slow in sections. Plan for altitude conditions.",
+          },
+          {
+            name: "Peshawar",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "22°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Warm. Temperature around 22°C. Civic status: Normal. Road access: Normal. Great historic city stop.",
+          },
+          {
+            name: "Kalash Valley",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "11°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "6 hours ago",
+            desc: "Moderate Risk. Weather: Cool. Temperature around 11°C. Civic status: Normal. Road access: Slow in sections. Unique cultural experience.",
+          },
+          {
+            name: "Malam Jabba",
+            region: "Khyber Pakhtunkhwa",
+            image: heroImg,
+            temperature: "6°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "2 hours ago",
+            desc: "Moderate Risk. Weather: Snowy in season. Temperature around 6°C. Civic status: Normal. Road access: Delays possible in winter.",
+          },
+        ],
+        attractions: [
+          {
+            title: "Nature Spots",
+            text: "Forests, rivers, valleys, and cool weather travel in season.",
+          },
+          {
+            title: "Culture & Cities",
+            text: "Historic city stops, local food, and regional traditions.",
+          },
+        ],
+        faqs: [
+          {
+            q: "Best time for KPK?",
+            a: "April to September is usually best for northern valleys.",
+          },
+          {
+            q: "Is it family-friendly?",
+            a: "Yes—many areas are great for families, especially in summer.",
+          },
+          {
+            q: "What to pack?",
+            a: "Layered clothing, comfortable shoes, and seasonal rain protection.",
+          },
+        ],
+      },
+
+      "islamabad-capital-territory": {
+        name: "Islamabad Capital Territory",
+        tagline: "The Green Capital",
+        heroImage: heroImg,
+        heroImages: [heroImg, heroImg, heroImg],
+        about:
+          "Islamabad is a modern green capital with hiking trails, viewpoints, and quick access to the Margalla Hills. It’s perfect for short trips, city comfort, and nature close by.",
+        history: {
+          text: "Islamabad is a relatively young city, officially designated as the capital of Pakistan on August 14, 1967, replacing Karachi as the seat of the federal government. Designed by the renowned Greek architect Constantinos Doxiadis, it was planned as a modern, green city featuring wide roads, organized sectors labeled alphabetically, and beautiful natural surroundings integrated with urban planning. The city’s master plan was considered revolutionary at the time and remains one of the world’s most well-planned capital cities.\n\nIts location near the ancient region of Taxila—one of the oldest centers of learning in the world and a UNESCO World Heritage Site—connects Islamabad to a much deeper historical legacy that spans thousands of years. Taxila, dating back to the 6th century BCE, was a major hub of the Gandhara civilization, home to renowned universities and Buddhist monasteries visited by scholars from across Asia. The nearby city of Rawalpindi, its twin city, has a rich history of its own dating back centuries.\n\nBefore Islamabad’s construction, the area was known as Potohar Plateau and was home to villages with agricultural traditions. The site was carefully chosen for its strategic central location, moderate climate, and proximity to the Margalla Hills. Since its establishment, Islamabad has grown into a diplomatic, educational, and cultural hub—home to iconic landmarks like the Faisal Mosque (once the world’s largest mosque), the Pakistan Monument, and numerous embassies, universities, and cultural institutions that reflect Pakistan’s modern identity.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "As the capital, Islamabad reflects a modern cultural identity shaped by diversity, art, and national heritage brought together from every corner of Pakistan. From the iconic Pakistan Monument and Lok Virsa Museum to Faisal Mosque, art galleries, cultural festivals, and cuisine representing every province—the city celebrates the essence of the country in one place. As people from all provinces have made Islamabad their home, the city has become a true melting pot of Pakistani cultures.\n\nThe Lok Virsa Museum (National Institute of Folk and Traditional Heritage) is a cultural treasure that showcases traditional crafts, music, costumes, and folk arts from every region of Pakistan. The Pakistan National Council of the Arts (PNCA) hosts exhibitions, theater performances, and cultural programs that celebrate the country’s artistic diversity. Art galleries like Nomad Gallery, Tanzara, and Rohtas 2 showcase contemporary Pakistani art.\n\nIslamabad’s food scene is a delicious reflection of its diversity—featuring restaurants specializing in cuisines from Punjab, Sindh, KPK, Balochistan, and Gilgit-Baltistan, as well as international dining options. The city’s cafés, particularly in areas like F-6 (Kohsar Market), F-7, and along Margalla Road, have become cultural gathering spots for artists, intellectuals, and young professionals. Cultural festivals like the Islamabad Literature Festival, Islamabad Music Festival, and various international film screenings keep the capital’s cultural scene vibrant throughout the year.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        social: {
+          text: "Islamabad offers a modern, relaxed lifestyle backed by a strong sense of community that blends the calm of nature with the energy of a capital city. From cafés and parks to scenic hill drives and cultural centers, social life is a comfortable mix of urban convenience and outdoor charm—welcoming to locals, visitors, expats, and families alike. The city’s wide streets, green spaces, and organized sectors create an environment that feels distinctly different from Pakistan’s other major cities.\n\nWeekends in Islamabad often revolve around outdoor activities—hiking the Margalla Hills trails, brunching at cafés in F-6 or F-7, visiting Daman-e-Koh for panoramic views, or enjoying family time at Lake View Park and Rawal Lake. The Centaurus Mall and Giga Mall have become social hubs for shopping, dining, and entertainment, while the historic Saidpur Village and Monal Restaurant offer traditional dining experiences with breathtaking views.\n\nIslamabad’s population is highly diverse, with residents from all provinces of Pakistan and a significant international community due to embassies and multinational organizations. This diversity creates a cosmopolitan yet friendly atmosphere. The city is known for being safe, walkable in many areas, and family-friendly. Educational institutions like Quaid-i-Azam University and NUST attract students from across the country, adding a youthful energy to social life. Neighborhood communities are close-knit, with events, gatherings, and cultural activities regularly bringing people together throughout the year.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Islamabad hosts a variety of cultural and national festivals throughout the year that reflect Pakistan’s rich diversity. The Lok Mela at Lok Virsa is the biggest annual celebration of folk heritage from all provinces, featuring music, crafts, cuisine, folk dances, and artisans showcasing their skills from across the country. Held every autumn, it draws thousands of visitors who experience Pakistan’s cultural mosaic in one place.\n\nIndependence Day celebrations on August 14 transform the capital with parades, fireworks, cultural performances at national landmarks, and city-wide decorations in green and white. Pakistan Day on March 23 is marked with a grand military parade near the Presidential Palace, showcasing the country’s pride and heritage. Spring festivals bring flower shows, garden exhibitions, and outdoor concerts to venues like Rose and Jasmine Garden and Fatima Jinnah Park.\n\nFood carnivals like the Islamabad Eat Festival and cultural events like the Islamabad Literature Festival, Islamabad Music Festival, and international film festivals bring together diverse communities. Art exhibitions at PNCA and various private galleries feature both established and emerging Pakistani artists. Religious festivals like Eid-ul-Fitr, Eid-ul-Azha, and Muharram are observed with community prayers and gatherings. The city also hosts international events, embassy-organized cultural exchanges, and diplomatic celebrations, making Islamabad one of Pakistan’s most vibrant cultural hubs year-round.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Faisal Mosque",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "20°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 20°C. Civic status: Normal. Road access: Normal. Iconic landmark and a must-visit.",
+          },
+          {
+            name: "Daman-e-Koh",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "17°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "2 hours ago",
+            desc: "Low Risk. Weather: Cool. Temperature around 17°C. Civic status: Normal. Road access: Normal. Perfect for panoramic city views.",
+          },
+          {
+            name: "Pir Sohawa",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "15°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "3 hours ago",
+            desc: "Low Risk. Weather: Cool. Temperature around 15°C. Civic status: Normal. Road access: Normal. Great scenic drive with food stops.",
+          },
+          {
+            name: "Lake View Park",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "21°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 21°C. Civic status: Normal. Road access: Normal. Ideal for family outings.",
+          },
+          {
+            name: "Pakistan Monument",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "20°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "2 hours ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 20°C. Civic status: Normal. Road access: Normal. Cultural landmark and museum.",
+          },
+          {
+            name: "Margalla Hills",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "18°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "4 hours ago",
+            desc: "Low Risk. Weather: Cool. Temperature around 18°C. Civic status: Normal. Road access: Normal. Popular hiking trails with city views.",
+          },
+          {
+            name: "Rawal Lake",
+            region: "Islamabad",
+            image: heroImg,
+            temperature: "22°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "5 hours ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 22°C. Civic status: Normal. Road access: Normal. Peaceful lakeside spot.",
+          },
+        ],
+        attractions: [
+          {
+            title: "City & Cafés",
+            text: "Comfortable city travel with modern services and food spots.",
+          },
+          {
+            title: "Hikes & Viewpoints",
+            text: "Margalla trails, viewpoints, and scenic drives.",
+          },
+        ],
+        faqs: [
+          {
+            q: "Best time to visit Islamabad?",
+            a: "October to April is ideal for weather and outdoor activities.",
+          },
+          {
+            q: "Is it good for short trips?",
+            a: "Yes. It’s perfect for weekend trips and quick city + nature plans.",
+          },
+          {
+            q: "Are hikes beginner-friendly?",
+            a: "Many trails are beginner-friendly, but always check trail difficulty first.",
+          },
+        ],
+      },
+
+      "azad-jammu-and-kashmir": {
+        name: "Azad Jammu and Kashmir",
+        tagline: "Paradise on Earth",
+        heroImage: heroImg,
+        heroImages: [heroImg, heroImg, heroImg],
+        about:
+          "Azad Jammu and Kashmir is known for lush valleys, rivers, and scenic viewpoints. It’s a top choice for nature retreats and peaceful travel.",
+        history: {
+          text: "The history of Azad Jammu and Kashmir is deeply intertwined with the broader history of the Kashmir region, once ruled by various dynasties including the Mauryans, Kushans, Mughals, Afghans, Sikhs, and Dogras. The region has been influenced by Buddhist, Hindu, and Islamic traditions across centuries, each leaving distinct marks on its architecture, language, and cultural practices. Ancient trade routes passing through Kashmir connected it to Central Asia, contributing to its historical and cultural richness.\n\nDuring the Mughal era, Kashmir was famously described as ‘Paradise on Earth’ by Emperor Jahangir, and successive Mughal rulers built magnificent gardens, mosques, and monuments that showcased the region’s beauty. The Sikh Empire under Maharaja Ranjit Singh annexed Kashmir in 1819, and later the Dogra dynasty ruled the princely state under the British paramountcy through the 19th and 20th centuries.\n\nFollowing the partition of British India in 1947, Azad Kashmir came into existence after a popular uprising, carrying forward a rich blend of cultural, spiritual, and natural heritage that continues to shape its identity today. The region has since developed its own government, cultural institutions, and educational systems, while maintaining strong ties to the broader Kashmiri heritage. Historic sites like the Red Fort in Muzaffarabad, ancient temples, and Mughal-era structures serve as reminders of the region’s layered past that spans over two thousand years.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        cultural: {
+          text: "The culture of Azad Jammu and Kashmir is defined by folk music, poetry, traditional attire, and vibrant regional festivals that reflect the region’s rich history and mountain heritage. Handcrafted Kashmiri shawls (particularly the world-famous pashmina), wooden art, embroidered fabrics, papier-mâché crafts, and centuries-old customs continue to be preserved and celebrated across the valleys. Kashmiri handicrafts are considered among the finest in the world, admired for their intricate designs and craftsmanship.\n\nFolk instruments like the sitar, tumbaknari, rabab, and santoor bring life to gatherings, and traditional Kashmiri music—known for its soulful melodies and poetic lyrics—reflects the region’s spiritual depth. Sufi poetry, particularly the verses of Lal Ded and Nund Rishi, remains an integral part of the cultural identity, expressing themes of love, nature, and divine union.\n\nKashmiri cuisine is famously rich and elaborate, with the Wazwan being a legendary multi-course feast featuring dishes like rogan josh, gushtaba, yakhni, and rista—prepared by master chefs known as wazas. Kahwa (traditional green tea with saffron and almonds) is a beloved beverage served on almost every occasion. Traditional Kashmiri dress, including the phiran (long woolen robe) and elegant embroidered outfits, reflects both practicality for the cold climate and artistic beauty. The region’s culture also includes distinct traditions from the Pahari, Gujjar, and Bakerwal communities, adding further diversity to its cultural fabric.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        social: {
+          text: "Azad Jammu and Kashmir is home to warm, welcoming communities living close to nature, where daily life is shaped by the peaceful rhythm of mountains, rivers, and forests. Valleys, rivers, and mountain villages create a calm and connected lifestyle where tradition, hospitality, and simple joys define daily life. Guests are treated with genuine respect, and social gatherings often revolve around family meals, community events, and seasonal celebrations that bring entire villages together.\n\nCommunity bonds are extraordinarily strong in AJK, with traditional joint family systems still common in most areas. Villages function almost like extended families, where neighbors help each other during harvests, weddings, funerals, and difficult times. The concept of ‘Kashmiriyat’—a shared sense of Kashmiri identity that transcends religious and ethnic differences—remains an important social value that emphasizes tolerance, hospitality, and mutual respect.\n\nDaily life in AJK is closely tied to nature and the seasons. Agriculture, livestock rearing, and forestry are central to rural livelihoods, while cities like Muzaffarabad and Mirpur have grown into vibrant urban centers with education, commerce, and diaspora connections (particularly to the UK). Women play essential roles in preserving cultural traditions through handicrafts, cooking, and storytelling. Respect for elders is deeply valued, and traditional gatherings like ‘baithaks’ serve as spaces for community discussion, storytelling, and passing down oral history. The pace of life remains gentle and grounded, offering visitors a truly refreshing experience of authentic mountain culture.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        festivals: {
+          text: "Festivals in Azad Jammu and Kashmir celebrate the region’s seasons, spirituality, and cultural traditions—each event offering a unique glimpse into the mountain way of life. Spring festivals mark the blooming valleys as almond, cherry, and apple blossoms transform the landscape into a breathtaking canvas of colors. These blossom celebrations, particularly in areas like Neelum Valley and Leepa Valley, attract visitors from across Pakistan who come to witness nature’s spectacular display.\n\nHarvest gatherings in autumn bring communities together to celebrate the season’s bounty with traditional feasts, folk music, and communal work. Religious events like Eid-ul-Fitr and Eid-ul-Azha are observed with community prayers, family gatherings, and the sharing of meals with neighbors and the less fortunate. Urs celebrations at local shrines of Sufi saints highlight the region’s deep-rooted spiritual heritage, featuring qawwali performances, poetry recitations, and communal meals that last for several days.\n\nTraditional Kashmiri weddings are grand cultural events—lasting multiple days and featuring the elaborate Wazwan feast, folk music, traditional dances, and intricate rituals passed down through generations. Independence Day (August 14) and Kashmir Solidarity Day (February 5) are marked with special ceremonies, cultural performances, and community gatherings. Local festivals in cities like Muzaffarabad and Mirpur celebrate regional heritage with folk music, poetry, food fairs, and craft exhibitions. These celebrations preserve the region’s cultural richness while welcoming visitors to experience the authentic beauty and warmth of AJK’s traditions.",
+          collage: [
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+            [heroImg, heroImg, heroImg],
+          ],
+        },
+        places: [
+          {
+            name: "Neelum Valley",
+            region: "AJK",
+            image: heroImg,
+            temperature: "14°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "2 hours ago",
+            desc: "Moderate Risk. Weather: Cool. Temperature around 14°C. Civic status: Normal. Road access: Delays possible. Signature valley with scenic stays.",
+          },
+          {
+            name: "Muzaffarabad",
+            region: "AJK",
+            image: heroImg,
+            temperature: "18°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "1 hour ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 18°C. Civic status: Normal. Road access: Normal. Central hub for onward travel.",
+          },
+          {
+            name: "Arang Kel",
+            region: "AJK",
+            image: heroImg,
+            temperature: "12°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "5 hours ago",
+            desc: "Moderate Risk. Weather: Cool. Temperature around 12°C. Civic status: Normal. Road access: Slow in sections. Postcard village experience.",
+          },
+          {
+            name: "Sharda",
+            region: "AJK",
+            image: heroImg,
+            temperature: "13°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Delays possible",
+            updatedAgo: "4 hours ago",
+            desc: "Moderate Risk. Weather: Cool. Temperature around 13°C. Civic status: Normal. Road access: Delays possible. Great river views.",
+          },
+          {
+            name: "Banjosa Lake",
+            region: "AJK",
+            image: heroImg,
+            temperature: "16°C",
+            civicStatus: "Normal",
+            risk: "Low Risk",
+            roadStatus: "Normal",
+            updatedAgo: "3 hours ago",
+            desc: "Low Risk. Weather: Pleasant. Temperature around 16°C. Civic status: Normal. Road access: Normal. Family-friendly lake stop.",
+          },
+          {
+            name: "Toli Peer",
+            region: "AJK",
+            image: heroImg,
+            temperature: "10°C",
+            civicStatus: "Normal",
+            risk: "Moderate Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "6 hours ago",
+            desc: "Moderate Risk. Weather: Cool. Temperature around 10°C. Civic status: Normal. Road access: Slow in sections. Panoramic mountain views.",
+          },
+          {
+            name: "Ratti Gali Lake",
+            region: "AJK",
+            image: heroImg,
+            temperature: "8°C",
+            civicStatus: "Normal",
+            risk: "High Risk",
+            roadStatus: "Slow in sections",
+            updatedAgo: "7 hours ago",
+            desc: "High Risk. Weather: Cold. Temperature around 8°C. Civic status: Normal. Road access: Slow in sections. Stunning alpine lake — plan carefully.",
+          },
+        ],
+        attractions: [
+          {
+            title: "Valleys & Rivers",
+            text: "Scenic drives, forests, river views, and calm retreats.",
+          },
+          {
+            title: "Viewpoints",
+            text: "Hillside stays and photo spots in peak season.",
+          },
+        ],
+        faqs: [
+          {
+            q: "Best time for AJK?",
+            a: "April to October is usually best for valley travel.",
+          },
+          {
+            q: "Does weather affect routes?",
+            a: "Yes. Road conditions can change quickly—plan for flexibility.",
+          },
+          {
+            q: "Is it good for couples?",
+            a: "Yes—many stays and viewpoints are popular for scenic getaways.",
+          },
+        ],
+      },
+    }),
+    [],
+  );
+
+  const region = REGIONS[regionSlug];
+
+  if (!region) {
+    return (
+      <div className="container regionNotFound">
+        <h1 className="regionNotFound__title">Region not found</h1>
+        <p className="regionNotFound__text">
+          The region you’re looking for doesn’t exist yet.
+        </p>
+        <Link className="bookBtn" to="/destinations">
+          Back to Destinations <span className="bookBtn__arrow">→</span>
+        </Link>
+      </div>
+    );
+  }
+
+  const heroImages =
+    region.heroImages && region.heroImages.length > 0
+      ? region.heroImages
+      : [region.heroImage];
+
+  const aboutSlides = [
+    region.history && {
+      key: "history",
+      title: "History",
+      text: region.history.text,
+      collage: region.history.collage,
+    },
+    region.cultural && {
+      key: "cultural",
+      title: "Cultural",
+      text: region.cultural.text,
+      collage: region.cultural.collage,
+    },
+    region.social && {
+      key: "social",
+      title: "Social",
+      text: region.social.text,
+      collage: region.social.collage,
+    },
+    region.festivals && {
+      key: "festivals",
+      title: "Festivals & Events",
+      text: region.festivals.text,
+      collage: region.festivals.collage,
+    },
+  ].filter(Boolean);
+
+  return (
+    <section className="regionPage">
+      {/* HERO */}
+      <section className="regionHero" aria-label={`${region.name} hero`}>
+        <HeroSlider images={heroImages} alt={`${region.name} background`} />
+        <div className="regionHero__overlay" />
+        <div className="container regionHero__content">
+          <div className="regionHero__right">
+            <h1 className="regionHero__title">
+              {splitHeading(region.name)
+                .split("\n")
+                .map((line, idx) => (
+                  <span key={idx} className="regionHero__line">
+                    {line}
+                  </span>
+                ))}
+            </h1>
+            {region.tagline && (
+              <div className="regionHero__taglineWrap">
+                <span className="regionHero__tagline">
+                  <span className="regionHero__taglineDot" aria-hidden="true" />
+                  {region.tagline}
+                  <span className="regionHero__taglineDot" aria-hidden="true" />
+                </span>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ABOUT + CAROUSEL */}
+      <section className="regionAbout" aria-label="Explore the region">
+        <div className="container regionAbout__inner">
+          <h2 className="regionAbout__mainTitle">
+            What You Need to Know About{" "}
+            <span className="regionAbout__mainTitleAccent">{region.name}</span>
+          </h2>
+          <div className="regionAbout__kicker">Explore the Region</div>
+        </div>
+        {aboutSlides.length > 0 && (
+          <AboutProvinceCarousel slides={aboutSlides} />
+        )}
+      </section>
+
+      {/* EXPLORE THE REGION */}
+      <section className="regionExplore" aria-label={`About ${region.name}`}>
+        <div className="container regionExplore__inner">
+          <div className="regionExplore__kicker">Explore the Region</div>
+          <p className="regionExplore__text">{region.about}</p>
+        </div>
+      </section>
+
+      {/* FEATURED PLACES */}
+      <FeaturedPlacesRich
+        places={region.places}
+        regionSlug={regionSlug}
+        regionName={region.name}
+      />
+
+      {/* ATTRACTIONS */}
+      <section className="regionAttractions" aria-label="Attractions">
+        <div className="container">
+          <h2 className="regionAttractions__title">Attractions</h2>
+          <div className="regionAttractions__grid">
+            {region.attractions.map((a) => (
+              <div key={a.title} className="attractionCard">
+                <div className="attractionCard__title">{a.title}</div>
+                <div className="attractionCard__text">{a.text}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section className="regionFaq" aria-label="Frequently asked questions">
+        <div className="container">
+          <h2 className="regionFaq__title">Frequently Asked Questions</h2>
+          <div className="faqList">
+            {region.faqs.map((item, idx) => (
+              <FaqItem
+                key={item.q}
+                item={item}
+                isOpen={openFaq === idx}
+                onToggle={() => setOpenFaq((v) => (v === idx ? null : idx))}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </section>
+  );
+}

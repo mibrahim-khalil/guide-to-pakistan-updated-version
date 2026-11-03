@@ -1,0 +1,919 @@
+
+
+
+===== FILE: src\features\destinations\sections\DestinationsHeroSection.jsx =====
+
+import heroImg from "../../../assets/images/destinations/hero-gilgit-baltistan.jpeg";
+
+export default function DestinationsHeroSection() {
+  return (
+    <section
+      className="destHero"
+      style={{ backgroundImage: `url(${heroImg})` }}
+      aria-label="Destinations hero"
+    >
+      <div className="destHero__overlay" />
+
+      <div className="container destHero__content">
+        <div className="destHero__right">
+          <h1 className="destHero__title">
+            Travel Across Pakistan&apos;s
+            <br />
+            Regions
+          </h1>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+===== FILE: src\features\destinations\sections\ExploreRegionsSection.jsx =====
+
+import { useEffect, useMemo, useRef, useState } from "react";
+import { NavLink } from "react-router-dom";
+
+import heroImg from "../../../assets/images/hero/hero.jpeg";
+import destHeroImg from "../../../assets/images/destinations/hero-gilgit-baltistan.jpeg";
+
+function RegionSlide({ region, reversed = false, isAlt = false }) {
+  return (
+    <article className={isAlt ? "regionSlide isAlt" : "regionSlide"}>
+      <div className="regionSlide__panel">
+        <div
+          className={
+            reversed
+              ? "container regionRow__inner isReversed"
+              : "container regionRow__inner"
+          }
+        >
+          <div className="regionRow__text">
+            <div className="regionRow__headingRow">
+              <h2 className="regionRow__name">{region.name}</h2>
+
+              <NavLink
+                className="bookBtn regionRow__cta"
+                to={`/destinations/${region.slug}`}
+                aria-label={`Explore further in ${region.name}`}
+              >
+                Explore further <span className="bookBtn__arrow">→</span>
+              </NavLink>
+            </div>
+
+            <p className="regionRow__intro">{region.intro}</p>
+
+            <div className="regionMeta" role="list" aria-label={`${region.name} information`}>
+              {region.details.map((item) => (
+                <div className="regionMeta__item" key={item.label} role="listitem">
+                  <div className="regionMeta__label">{item.label}</div>
+                  <div className="regionMeta__value">{item.value}</div>
+                </div>
+              ))}
+            </div>
+
+            <div className="regionRow__note">
+              Note: Sample content for layout testing. Real/AI-generated data can grow later without
+              breaking the layout.
+            </div>
+          </div>
+
+          <div className="regionRow__media" aria-label={`${region.name} images`}>
+            <div className="regionCollage">
+              <div className="regionCollage__tile isA">
+                <img src={region.images[0]} alt={`${region.name} view 1`} loading="lazy" />
+              </div>
+              <div className="regionCollage__tile isB">
+                <img src={region.images[1]} alt={`${region.name} view 2`} loading="lazy" />
+              </div>
+              <div className="regionCollage__tile isC">
+                <img src={region.images[2]} alt={`${region.name} view 3`} loading="lazy" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export default function ExploreRegionsSection() {
+  const REGIONS = useMemo(
+    () => [
+      {
+        id: "balochistan",
+        name: "Balochistan",
+        slug: "balochistan",
+        intro:
+          "Raw landscapes, long scenic highways, and dramatic coastlines—ideal for travelers who love wide open views.",
+        details: [
+          { label: "Average temperature", value: "10°C – 35°C (seasonal)" },
+          { label: "Route status", value: "Plan carefully; verify local advisories before travel" },
+          { label: "Vibe", value: "Coast, deserts, highways, nature" },
+          { label: "Best time", value: "Oct – Mar" },
+        ],
+        images: [heroImg, destHeroImg, heroImg],
+      },
+      {
+        id: "gilgit-baltistan",
+        name: "Gilgit-Baltistan",
+        slug: "gilgit-baltistan",
+        intro:
+          "Home to towering peaks, glaciers, and iconic valleys—perfect for scenic drives, trekking, and mountain lakes.",
+        details: [
+          { label: "Average temperature", value: "5°C – 22°C (seasonal)" },
+          { label: "Route status", value: "Mostly safe in season (weather dependent)" },
+          { label: "Vibe", value: "Mountains, lakes, trekking, road trips" },
+          { label: "Best time", value: "May – Oct" },
+        ],
+        images: [destHeroImg, heroImg, destHeroImg],
+      },
+      {
+        id: "islamabad-capital-territory",
+        name: "Islamabad Capital Territory",
+        slug: "islamabad-capital-territory",
+        intro:
+          "A modern green capital with viewpoints, hiking trails, and quick access to the Margalla Hills and nearby valleys.",
+        details: [
+          { label: "Average temperature", value: "5°C – 38°C (seasonal)" },
+          { label: "Route status", value: "Highly accessible (urban roads + motorways)" },
+          { label: "Vibe", value: "City, nature, cafés, viewpoints" },
+          { label: "Best time", value: "Oct – Apr" },
+        ],
+        images: [heroImg, heroImg, destHeroImg],
+      },
+      {
+        id: "khyber-pakhtunkhwa",
+        name: "Khyber Pakhtunkhwa",
+        slug: "khyber-pakhtunkhwa",
+        intro:
+          "Forest valleys, rivers and cool summer towns—great for family trips, nature escapes, and waterfall views.",
+        details: [
+          { label: "Average temperature", value: "10°C – 28°C (seasonal)" },
+          { label: "Route status", value: "Generally safe; check local advisories" },
+          { label: "Vibe", value: "Forests, valleys, rivers, culture" },
+          { label: "Best time", value: "Apr – Sep" },
+        ],
+        images: [destHeroImg, destHeroImg, heroImg],
+      },
+      {
+        id: "punjab",
+        name: "Punjab",
+        slug: "punjab",
+        intro:
+          "Pakistan’s cultural heartland—heritage cities, historic architecture, food streets, and vibrant bazaars.",
+        details: [
+          { label: "Average temperature", value: "8°C – 40°C (seasonal)" },
+          { label: "Route status", value: "Highly accessible (motorways + roads)" },
+          { label: "Vibe", value: "Heritage, food, city experiences" },
+          { label: "Best time", value: "Oct – Mar" },
+        ],
+        images: [heroImg, destHeroImg, heroImg],
+      },
+      {
+        id: "sindh",
+        name: "Sindh",
+        slug: "sindh",
+        intro:
+          "Coastal drives, energetic city life, and deep history—ideal for winter travel, food lovers, and culture seekers.",
+        details: [
+          { label: "Average temperature", value: "12°C – 38°C (seasonal)" },
+          { label: "Route status", value: "Good access; coastal routes vary" },
+          { label: "Vibe", value: "City, coast, heritage, food" },
+          { label: "Best time", value: "Nov – Mar" },
+        ],
+        images: [heroImg, heroImg, destHeroImg],
+      },
+      {
+        id: "azad-jammu-and-kashmir",
+        name: "Azad Jammu and Kashmir",
+        slug: "azad-jammu-and-kashmir",
+        intro:
+          "Emerald valleys, rivers and viewpoints—famous for scenic getaways, peaceful towns, and lush landscapes.",
+        details: [
+          { label: "Average temperature", value: "2°C – 28°C (seasonal)" },
+          { label: "Route status", value: "Mostly accessible; check weather and road conditions" },
+          { label: "Vibe", value: "Valleys, rivers, viewpoints, nature" },
+          { label: "Best time", value: "Apr – Oct" },
+        ],
+        images: [destHeroImg, heroImg, destHeroImg],
+      },
+    ],
+    []
+  );
+
+  const trackRef = useRef(null);
+  const slideRefs = useRef([]);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const scrollToIndex = (idx) => {
+    const el = slideRefs.current[idx];
+    if (!el) return;
+    el.scrollIntoView({ behavior: "smooth", inline: "start", block: "nearest" });
+  };
+
+  const onPrev = () => {
+    const len = REGIONS.length;
+    scrollToIndex((activeIndex - 1 + len) % len);
+  };
+
+  const onNext = () => {
+    const len = REGIONS.length;
+    scrollToIndex((activeIndex + 1) % len);
+  };
+
+  useEffect(() => {
+    const root = trackRef.current;
+    if (!root) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => (b.intersectionRatio || 0) - (a.intersectionRatio || 0))[0];
+
+        if (visible?.target?.dataset?.index) {
+          setActiveIndex(parseInt(visible.target.dataset.index, 10));
+        }
+      },
+      { root, threshold: [0.55, 0.6, 0.7] }
+    );
+
+    slideRefs.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, [REGIONS.length]);
+
+  return (
+    <section className="regionsSection" aria-label="Explore different regions">
+      <div className="container regionsSection__head">
+        <p className="regionsSection__eyebrow">EXPLORE DIFFERENT REGIONS</p>
+        <h2 className="regionsSection__title">Travel across Pakistan, one region at a time</h2>
+        <p className="regionsSection__subtitle">
+          Swipe or use arrows to explore provinces. Built responsive so future longer data won’t break layout.
+        </p>
+      </div>
+
+      <div className="regionsCarousel" aria-label="Regions carousel">
+        <button
+          type="button"
+          className="regionsCarousel__nav regionsCarousel__nav--prev"
+          onClick={onPrev}
+          aria-label="Previous region"
+        >
+          ‹
+        </button>
+
+        <div className="regionsCarousel__track" ref={trackRef}>
+          {REGIONS.map((region, idx) => (
+            <div
+              key={region.id}
+              className="regionsCarousel__slide"
+              data-index={idx}
+              ref={(el) => {
+                slideRefs.current[idx] = el;
+              }}
+            >
+              <RegionSlide region={region} reversed={idx % 2 === 1} isAlt={idx % 2 === 1} />
+            </div>
+          ))}
+        </div>
+
+        <button
+          type="button"
+          className="regionsCarousel__nav regionsCarousel__nav--next"
+          onClick={onNext}
+          aria-label="Next region"
+        >
+          ›
+        </button>
+      </div>
+
+      <div className="regionsCarousel__meta" aria-label="Carousel progress">
+        <div className="container regionsCarousel__metaInner">
+          <span className="regionsCarousel__count">
+            {activeIndex + 1} / {REGIONS.length}
+          </span>
+
+          <div className="regionsCarousel__dots" aria-label="Jump to region">
+            {REGIONS.map((r, idx) => (
+              <button
+                key={r.id}
+                type="button"
+                className={idx === activeIndex ? "regionDot isActive" : "regionDot"}
+                onClick={() => scrollToIndex(idx)}
+                aria-label={`Go to ${r.name}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+
+===== FILE: src\features\destinations\sections\FeaturedDestinationsSection.jsx =====
+
+import FeaturedPlacesSection from "./FeaturedPlacesSection.jsx";
+
+export default function FeaturedDestinationsSection() {
+  return <FeaturedPlacesSection />;
+}
+
+
+===== FILE: src\features\destinations\region-page\components\FeaturedPlacesSection.jsx =====
+
+import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Clock3,
+  Landmark,
+  Route,
+  Thermometer,
+} from "lucide-react";
+
+import "../featuredPlaces.css";
+
+function slugify(text = "") {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[’']/g, "")
+    .replace(/&/g, "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function riskClass(risk = "") {
+  const normalizedRisk = risk.toLowerCase();
+
+  if (normalizedRisk.includes("not safe")) {
+    return "notSafe";
+  }
+
+  if (normalizedRisk.includes("high")) {
+    return "high";
+  }
+
+  if (normalizedRisk.includes("moderate")) {
+    return "moderate";
+  }
+
+  if (normalizedRisk.includes("low")) {
+    return "low";
+  }
+
+  return "unknown";
+}
+
+const RISK_ORDER = {
+  "not safe": 1,
+  "high risk": 2,
+  "moderate risk": 3,
+  "low risk": 4,
+  unknown: 5,
+};
+
+function sortByRisk(places = []) {
+  return [...places].sort((firstPlace, secondPlace) => {
+    const firstRisk =
+      RISK_ORDER[(firstPlace.risk || "unknown").toLowerCase()] || 5;
+
+    const secondRisk =
+      RISK_ORDER[(secondPlace.risk || "unknown").toLowerCase()] || 5;
+
+    return firstRisk - secondRisk;
+  });
+}
+
+function DestinationCard({ place, regionSlug, regionName }) {
+  const placeSlug = slugify(place.name);
+  const placeRiskClass = riskClass(place.risk);
+
+  return (
+    <article className="placeCard">
+      <div className="placeCard__media">
+        <img src={place.image} alt={place.name} loading="lazy" />
+
+        <span className="placeCard__namePill">{place.name}</span>
+
+        <button
+          type="button"
+          className="placeCard__save"
+          aria-label={`Save ${place.name}`}
+        >
+          <Bookmark aria-hidden="true" />
+        </button>
+      </div>
+
+      <div className="placeCard__body">
+        <div className="placeCard__row">
+          <span className="placeCard__regionPill">
+            {place.region || regionName}
+          </span>
+
+          <span className="placeCard__meta">
+            <span className="placeCard__metaIcon" aria-hidden="true">
+              <Clock3 />
+            </span>
+
+            {place.updatedAgo || "Recently updated"}
+          </span>
+        </div>
+
+        <div className="placeCard__row">
+          <span className="placeCard__temperature">
+            <span className="placeCard__metaIcon" aria-hidden="true">
+              <Thermometer />
+            </span>
+
+            {place.temperature || "—"}
+          </span>
+
+          <span className="placeCard__status">
+            <span className="placeCard__metaIcon" aria-hidden="true">
+              <Landmark />
+            </span>
+
+            {place.civicStatus || "Normal"}
+          </span>
+        </div>
+
+        <div className="placeCard__row">
+          <span
+            className={`placeCard__riskPill placeCard__riskPill--${placeRiskClass}`}
+          >
+            {place.risk || "Unknown"}
+          </span>
+
+          <span className="placeCard__status">
+            <span className="placeCard__metaIcon" aria-hidden="true">
+              <Route />
+            </span>
+
+            {place.roadStatus || "Normal"}
+          </span>
+        </div>
+
+        <p className="placeCard__desc">{place.desc}</p>
+
+        <div className="placeCard__actions">
+          <Link
+            to={`/destinations/${regionSlug}/${placeSlug}`}
+            className="placeCard__btn placeCard__btn--primary"
+          >
+            More Info
+          </Link>
+
+          <Link to="/tiss" className="placeCard__btn placeCard__btn--ghost">
+            Route Updates
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+export default function FeaturedPlacesSection({
+  places = [],
+  regionSlug = "",
+  regionName = "",
+}) {
+  const filters = [
+    "All",
+    "Not Safe",
+    "High Risk",
+    "Moderate Risk",
+    "Low Risk",
+    "Unknown",
+  ];
+
+  const cardsPerPage = 3;
+
+  const [activeFilter, setActiveFilter] = useState("All");
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const sortedPlaces = useMemo(() => sortByRisk(places), [places]);
+
+  const filteredPlaces = useMemo(() => {
+    if (activeFilter === "All") {
+      return sortedPlaces;
+    }
+
+    return sortedPlaces.filter(
+      (place) =>
+        (place.risk || "Unknown").toLowerCase() === activeFilter.toLowerCase(),
+    );
+  }, [activeFilter, sortedPlaces]);
+
+  const totalPages = Math.max(
+    1,
+    Math.ceil(filteredPlaces.length / cardsPerPage),
+  );
+
+  const firstVisibleIndex = currentPage * cardsPerPage;
+
+  const visiblePlaces = filteredPlaces.slice(
+    firstVisibleIndex,
+    firstVisibleIndex + cardsPerPage,
+  );
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [activeFilter]);
+
+  useEffect(() => {
+    if (currentPage > totalPages - 1) {
+      setCurrentPage(Math.max(0, totalPages - 1));
+    }
+  }, [currentPage, totalPages]);
+
+  const showPreviousSet = () => {
+    setCurrentPage((page) => Math.max(0, page - 1));
+  };
+
+  const showNextSet = () => {
+    setCurrentPage((page) => Math.min(totalPages - 1, page + 1));
+  };
+
+  return (
+    <section
+      className="regionPlaces"
+      aria-label={`Featured places in ${regionName}`}
+    >
+      <div className="regionPlaces__inner">
+        <div className="regionPlaces__head">
+          <h2 className="regionPlaces__title">
+            Featured Places in {regionName}
+          </h2>
+
+          <div className="regionPlaces__viewAllWrap">
+            {filteredPlaces.length > cardsPerPage && (
+              <span className="regionPlaces__more">
+                +{filteredPlaces.length - cardsPerPage} more
+              </span>
+            )}
+
+            <Link
+              to={`/destinations/${regionSlug}/all-places`}
+              className="regionPlaces__viewAll"
+            >
+              View all
+            </Link>
+          </div>
+        </div>
+
+        <div className="regionPlaces__sortBar">
+          <span className="regionPlaces__sortLabel">
+            Destinations sorted by risk (
+          </span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--notSafe">
+            Not Safe
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--high">
+            High Risk
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--moderate">
+            Moderate Risk
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--low">
+            Low Risk
+          </span>
+
+          <span className="regionPlaces__riskArrow">→</span>
+
+          <span className="regionPlaces__riskWord regionPlaces__riskWord--unknown">
+            Unknown
+          </span>
+
+          <span className="regionPlaces__sortLabel">)</span>
+        </div>
+
+        <div
+          className="regionPlaces__filters"
+          role="group"
+          aria-label="Filter destinations by risk"
+        >
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              type="button"
+              className={
+                activeFilter === filter
+                  ? "regionPlaces__chip isActive"
+                  : "regionPlaces__chip"
+              }
+              onClick={() => setActiveFilter(filter)}
+              aria-pressed={activeFilter === filter}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+
+        {filteredPlaces.length === 0 ? (
+          <div className="regionPlaces__empty">
+            No destinations match this filter yet.
+          </div>
+        ) : (
+          <>
+            <div className="placesCarousel">
+              <button
+                type="button"
+                className="placesCarousel__arrow placesCarousel__arrow--prev"
+                onClick={showPreviousSet}
+                disabled={currentPage === 0}
+                aria-label="Show previous three destinations"
+              >
+                <ChevronLeft aria-hidden="true" />
+              </button>
+
+              <div className="placesCarousel__viewport">
+                <div
+                  key={`${activeFilter}-${currentPage}`}
+                  className="placesCarousel__track"
+                >
+                  {visiblePlaces.map((place) => (
+                    <DestinationCard
+                      key={place.name}
+                      place={place}
+                      regionSlug={regionSlug}
+                      regionName={regionName}
+                    />
+                  ))}
+                </div>
+              </div>
+
+              <button
+                type="button"
+                className="placesCarousel__arrow placesCarousel__arrow--next"
+                onClick={showNextSet}
+                disabled={currentPage >= totalPages - 1}
+                aria-label="Show next three destinations"
+              >
+                <ChevronRight aria-hidden="true" />
+              </button>
+            </div>
+
+            {totalPages > 1 && (
+              <div
+                className="placesCarousel__pagination"
+                aria-label="Destination carousel pages"
+              >
+                {Array.from({ length: totalPages }).map((_, pageIndex) => (
+                  <button
+                    key={pageIndex}
+                    type="button"
+                    className={
+                      currentPage === pageIndex
+                        ? "placesCarousel__dot isActive"
+                        : "placesCarousel__dot"
+                    }
+                    onClick={() => setCurrentPage(pageIndex)}
+                    aria-label={`Show destination set ${pageIndex + 1}`}
+                    aria-current={
+                      currentPage === pageIndex ? "true" : undefined
+                    }
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </section>
+  );
+}
+
+
+
+===== FILE: src\features\destinations\components\DestinationCard.jsx =====
+
+import { Link } from "react-router-dom";
+
+import heroImg from "../../../assets/images/hero/hero.jpeg";
+import destHeroImg from "../../../assets/images/destinations/hero-gilgit-baltistan.jpeg";
+
+function pickLocalImage({ id, region }) {
+  const r = (region || "").toLowerCase();
+  const key = (id || "").toLowerCase();
+
+  // Prefer GB hero for GB related items
+  if (r.includes("gilgit") || r.includes("baltistan") || key.includes("hunza") || key.includes("skardu")) {
+    return destHeroImg;
+  }
+
+  // Otherwise use main hero
+  return heroImg;
+}
+
+export default function DestinationCard({ destination }) {
+  const { id, name, region, short, bestSeason, tags } = destination;
+
+  const imgSrc = pickLocalImage({ id, region });
+  const safeTags = Array.isArray(tags) ? tags : [];
+
+  return (
+    <article className="destCard">
+      <div className="destCard__media">
+        <img className="destCard__img" src={imgSrc} alt={name} loading="lazy" />
+        <div className="destCard__overlay" />
+        <div className="destCard__namePill">{name}</div>
+      </div>
+
+      <div className="destCard__body">
+        <div className="destCard__top">
+          <span className="destCard__region">{region}</span>
+          <span className="destCard__season">Best: {bestSeason}</span>
+        </div>
+
+        <p className="destCard__desc">{short}</p>
+
+        <div className="destCard__tags">
+          {safeTags.map((t) => (
+            <span className="destTag" key={t}>
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="destCard__actions">
+          <Link className="destBtn destBtn--primary" to={`/tours?destination=${encodeURIComponent(id)}`}>
+            View Tours
+          </Link>R
+          <Link className="destBtn destBtn--outline" to="/plan-your-trip">
+            Plan Trip
+          </Link>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+
+===== FILE: src\features\destinations\place-page\helpers\slugHelpers.js =====
+
+export function normalizeSlug(value = "") {
+  return String(value)
+    .trim()
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/['’]/g, "")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+export function toTitleCaseFromSlug(slug = "") {
+  return normalizeSlug(slug)
+    .split("-")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export function makePlaceKey(regionSlug = "", placeSlug = "") {
+  return `${normalizeSlug(regionSlug)}::${normalizeSlug(placeSlug)}`;
+}
+
+export function getRegionLabel(regionSlug = "") {
+  const normalizedRegion = normalizeSlug(regionSlug);
+
+  const regionLabels = {
+    "gilgit-baltistan": "Gilgit-Baltistan",
+
+    "khyber-pakhtunkhwa": "Khyber Pakhtunkhwa",
+
+    islamabad: "Islamabad Capital Territory",
+
+    punjab: "Punjab",
+
+    sindh: "Sindh",
+
+    balochistan: "Balochistan",
+
+    kashmir: "Azad Jammu & Kashmir",
+
+    "azad-jammu-and-kashmir": "Azad Jammu & Kashmir",
+  };
+
+  return (
+    regionLabels[normalizedRegion] || toTitleCaseFromSlug(normalizedRegion)
+  );
+}
+
+export function resolveRegionSlug(regionSlug = "") {
+  const normalizedRegion = normalizeSlug(regionSlug);
+
+  const aliases = {
+    "islamabad-capital-territory": "islamabad",
+    "islamabad-capital": "islamabad",
+    ict: "islamabad",
+    islamabad: "islamabad",
+
+    kpk: "khyber-pakhtunkhwa",
+
+    "khyber-pakhtunkhwa": "khyber-pakhtunkhwa",
+
+    gb: "gilgit-baltistan",
+
+    "gilgit-baltistan": "gilgit-baltistan",
+
+    ajk: "kashmir",
+
+    "azad-jammu-kashmir": "kashmir",
+
+    "azad-jammu-and-kashmir": "kashmir",
+
+    kashmir: "kashmir",
+
+    ict: "islamabad",
+
+    islamabad: "islamabad",
+  };
+
+  return aliases[normalizedRegion] || normalizedRegion;
+}
+
+export function resolvePlaceSlug(placeSlug = "") {
+  const normalizedPlace = normalizeSlug(placeSlug);
+
+  const aliases = {
+    kalash: "kalaash-valley",
+
+    "kalash-valley": "kalaash-valley",
+
+    kalaash: "kalaash-valley",
+
+    naran: "naraan-valley",
+
+    "naran-valley": "naraan-valley",
+
+    naraan: "naraan-valley",
+
+    "skardu-valley": "skardu-valley",
+
+    skardu: "skardu-valley",
+
+    "attabad-lake": "attabad-lake",
+
+    attabad: "attabad-lake",
+
+    "pir-sohawa": "pir-sohawa",
+
+    "peer-sohawa": "pir-sohawa",
+
+    "neela-sandh": "neela-sandh",
+
+    "neela-sand": "neela-sandh",
+
+    "toli-peer": "toli-peer",
+
+    "toli-pir": "toli-peer",
+
+    "banjosa-lake": "banjosa-lake",
+  };
+
+  return aliases[normalizedPlace] || normalizedPlace;
+}
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlaceHero.jsx =====
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlaceOverview.jsx =====
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlaceWeather.jsx =====
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlaceAdvisories.jsx =====
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlaceReviews.jsx =====
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlacesToVisit.jsx =====
+
+
+
+===== FILE: src\features\destinations\place-page\components\PlaceBreadcrumb.jsx =====
+

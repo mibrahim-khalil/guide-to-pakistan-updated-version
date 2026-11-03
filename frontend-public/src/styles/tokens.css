@@ -1,0 +1,22 @@
+:root {
+  /* ===== Fonts (Global) ===== */
+  --font-body: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  --font-heading: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+
+  /* ===== Theme Tokens ===== */
+  --color-header: #d9f0e5;        /* mint */
+  --color-border: #c7e6d8;
+
+  --color-text: #0f2a1f;
+  --color-text-muted: rgba(15, 42, 31, 0.75);
+
+  --color-pill: rgba(15, 42, 31, 0.08);
+  --color-pill-strong: rgba(15, 42, 31, 0.12);
+
+  --color-primary: #18b26a;
+  --color-primary-hover: #11985a;
+
+  /* Backwards-compatible vars (used by existing home.css etc.) */
+  --primary-green: var(--color-primary);
+  --primary-green-2: var(--color-primary-hover);
+}

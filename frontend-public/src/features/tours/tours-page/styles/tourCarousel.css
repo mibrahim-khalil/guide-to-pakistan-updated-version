@@ -1,0 +1,222 @@
+/* =========================================================
+   TOUR CAROUSEL
+========================================================= */
+
+.tourCarousel {
+  position: relative;
+  width: 100%;
+  min-width: 0;
+}
+
+/* =========================================================
+   VIEWPORT
+========================================================= */
+
+.tourCarousel__viewport {
+  width: 100%;
+  overflow: hidden;
+}
+
+/* =========================================================
+   EMBLA CONTAINER
+========================================================= */
+
+.tourCarousel__container {
+  display: flex;
+  align-items: stretch;
+
+  margin-left: -22px;
+
+  touch-action: pan-y pinch-zoom;
+}
+
+/* =========================================================
+   SLIDES
+========================================================= */
+
+.tourCarousel__slide {
+  flex: 0 0 33.333333%;
+  min-width: 0;
+
+  padding-left: 22px;
+}
+
+/* Ensure card fills its slide */
+
+.tourCarousel__slide > .tourCard {
+  width: 100%;
+}
+
+/* =========================================================
+   NAVIGATION ARROWS
+========================================================= */
+
+.tourCarousel__arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 10;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  transform: translateY(-50%);
+
+  border: 1px solid rgba(18, 56, 44, 0.14);
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.94);
+  color: #12382c;
+
+  font-size: 20px;
+  line-height: 1;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 12px 30px rgba(15, 70, 50, 0.16);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  transition:
+    transform 240ms ease,
+    background 240ms ease,
+    color 240ms ease,
+    border-color 240ms ease,
+    box-shadow 240ms ease;
+}
+
+.tourCarousel__arrow--left {
+  left: -24px;
+}
+
+.tourCarousel__arrow--right {
+  right: -24px;
+}
+
+.tourCarousel__arrow:hover {
+  background: #18b26a;
+  border-color: #18b26a;
+  color: #ffffff;
+
+  box-shadow:
+    0 16px 34px rgba(24, 178, 106, 0.3);
+}
+
+.tourCarousel__arrow--left:hover {
+  transform: translateY(-50%) translateX(-3px);
+}
+
+.tourCarousel__arrow--right:hover {
+  transform: translateY(-50%) translateX(3px);
+}
+
+/* =========================================================
+   DOT NAVIGATION
+========================================================= */
+
+.tourCarousel__dots {
+  margin-top: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+}
+
+.tourCarousel__dot {
+  width: 8px;
+  height: 8px;
+
+  padding: 0;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: rgba(18, 56, 44, 0.24);
+
+  cursor: pointer;
+
+  transition:
+    width 260ms ease,
+    background 260ms ease,
+    transform 260ms ease;
+}
+
+.tourCarousel__dot:hover {
+  transform: scale(1.15);
+}
+
+.tourCarousel__dot.isActive {
+  width: 26px;
+  background: #18b26a;
+}
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1080px) {
+  .tourCarousel__slide {
+    flex: 0 0 50%;
+  }
+
+  .tourCarousel__arrow--left {
+    left: -18px;
+  }
+
+  .tourCarousel__arrow--right {
+    right: -18px;
+  }
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 760px) {
+  .tourCarousel__container {
+    margin-left: -14px;
+  }
+
+  .tourCarousel__slide {
+    flex: 0 0 100%;
+    padding-left: 14px;
+  }
+
+  .tourCarousel__arrow {
+    width: 42px;
+    height: 42px;
+  }
+
+  .tourCarousel__arrow--left {
+    left: 8px;
+  }
+
+  .tourCarousel__arrow--right {
+    right: 8px;
+  }
+
+  .tourCarousel__dots {
+    margin-top: 18px;
+  }
+}
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .tourCarousel__arrow,
+  .tourCarousel__dot {
+    transition: none;
+  }
+}
