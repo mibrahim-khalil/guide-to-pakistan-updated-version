@@ -10,6 +10,24 @@ function parseRiskToStatus(riskString) {
   return 'unknown'
 }
 
+/* Normalize a report doc from the API for UI use */
+function normalizeReport(r) {
+  if (!r) return null
+  return {
+    ...r,
+    id: r._id || r.id,
+    week_start: r.weekStartDate,
+    week_end: r.weekEndDate,
+    published_at: r.updatedAt || r.createdAt,
+    overview_snippet: r.story?.text
+      ? r.story.text.length > 180
+        ? r.story.text.slice(0, 180) + '…'
+        : r.story.text
+      : '',
+  }
+}
+
+/* ── Live Route Scraper API (Node :5000 → Python :8000) ─────────────── */
 export async function getLiveRouteInfo({ origin, destination, message } = {}) {
   const res = await fetch(`${API_BASE_URL}/route-info/info`, {
     method: 'POST',
@@ -36,12 +54,49 @@ export async function getLiveRouteInfo({ origin, destination, message } = {}) {
   return json?.data ?? json
 }
 
+/* ── Weekly Reports ─────────────────────────────────────────────────── */
+export async function getLatestReport() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/reports/latest`)
+    const json = await res.json()
+    return normalizeReport(json?.data)
+  } catch (error) {
+    console.error('Failed to fetch latest report:', error)
+    return null
+  }
+}
+
+export async function getReportById(id) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/reports/${id}`)
+    const json = await res.json()
+    return normalizeReport(json?.data)
+  } catch (error) {
+    console.error('Failed to fetch report by ID:', error)
+    return null
+  }
+}
+
+export async function getReports({ limit = 10, offset = 0 } = {}) {
+  try {
+    const res = await fetch(`${API_BASE_URL}/reports?status=published`)
+    const json = await res.json()
+    const items = (json?.data || []).map(normalizeReport)
+    return { total: items.length, items: items.slice(offset, offset + limit), limit, offset }
+  } catch (error) {
+    console.error('Failed to fetch reports:', error)
+    return { total: 0, items: [], limit, offset }
+  }
+}
+
+/* ── TISS main page data (REAL DB) ─────────────────────────────────── */
 export async function getTravelUpdatesPageData() {
   try {
-    const [placesRes, routesRes, advisoriesRes] = await Promise.all([
+    const [placesRes, routesRes, advisoriesRes, latestReport] = await Promise.all([
       fetch(`${API_BASE_URL}/places?status=published`),
       fetch(`${API_BASE_URL}/route-conditions?isPublished=true`),
       fetch(`${API_BASE_URL}/advisories?isPublished=true&activeOnly=true`),
+      getLatestReport(),
     ])
 
     const placesJson = await placesRes.json()
@@ -87,7 +142,7 @@ export async function getTravelUpdatesPageData() {
       destinations,
       routes,
       advisories,
-      latest_report: null,
+      latest_report: latestReport,
     }
   } catch (error) {
     console.error('Failed to fetch page data:', error)
@@ -101,6 +156,7 @@ export async function getTravelUpdatesPageData() {
   }
 }
 
+/* ── Destination detail ─────────────────────────────────────────────── */
 export async function getDestinationDetailBySlug(slug) {
   try {
     const res = await fetch(`${API_BASE_URL}/places`)
@@ -127,6 +183,7 @@ export async function getDestinationDetailBySlug(slug) {
   }
 }
 
+/* ── Stubs kept for compatibility ──────────────────────────────────── */
 export async function getRouteDetailBySlug() {
   return null
 }
@@ -135,11 +192,5 @@ export async function getPublishedAdvisories() {
   return data.advisories || []
 }
 export async function getAdvisoryById() {
-  return null
-}
-export async function getReports() {
-  return { total: 0, items: [] }
-}
-export async function getReportById() {
   return null
 }

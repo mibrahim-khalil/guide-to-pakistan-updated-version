@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 from contextlib import asynccontextmanager
 
@@ -6,6 +6,7 @@ from app.core.config import settings
 from app.core.database import connect_to_mongo, close_mongo_connection
 from app.core.scheduler import start_scheduler
 from app.routers import route_info, weather, health, scraper
+from app.weekly_generator import generate_weekly_report_sync
 
 
 @asynccontextmanager
@@ -53,3 +54,13 @@ app.include_router(health.router, tags=["Health"])
 app.include_router(route_info.router, prefix=settings.API_PREFIX, tags=["Routes"])
 app.include_router(weather.router, prefix=settings.API_PREFIX, tags=["Weather"])
 app.include_router(scraper.router, prefix=settings.API_PREFIX, tags=["Scraper Control"])
+
+# ── Manual AI Triggers ────────────────────────────────────────────────────────
+@app.post(f"{settings.API_PREFIX}/reports/generate-weekly", tags=["Reports"])
+def trigger_weekly_report(background_tasks: BackgroundTasks):
+    """Manual trigger to immediately generate and save the weekly AI report to MongoDB."""
+    background_tasks.add_task(generate_weekly_report_sync)
+    return {
+        "status": "success", 
+        "message": "Weekly AI Report generation triggered in the background. It will be available in MongoDB shortly."
+    }

@@ -15,6 +15,7 @@ import userRoutes from '../modules/users/user.routes.js';
 import settingRoutes from '../modules/settings/setting.routes.js';
 import analyticsRoutes from '../modules/analytics/analytics.routes.js';
 import routeInfoRoutes from '../modules/routeInfo/routeInfo.routes.js';
+import weeklyReportRoutes from '../modules/weeklyReports/weeklyReport.routes.js';
 
 // NEW ROUTES
 import routeConditionRoutes from '../modules/routeConditions/routeCondition.routes.js';
@@ -46,5 +47,6 @@ router.use('/route-info', routeInfoRoutes);
 // MOUNT NEW ROUTES
 router.use('/route-conditions', routeConditionRoutes);
 router.use('/advisories', advisoryRoutes);
+router.use('/reports', weeklyReportRoutes);
 
 export default router;

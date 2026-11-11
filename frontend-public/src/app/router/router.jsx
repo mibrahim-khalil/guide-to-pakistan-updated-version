@@ -14,6 +14,7 @@ import HelpPage from "../../pages/HelpPage";
 import HistoryPage from "../../features/history/HistoryPage";
 import StoriesPage from "../../features/stories/StoriesPage";
 import TissPage from "../../features/tiss/TissPage";
+import WeeklyReportPage from "../../features/tiss/WeeklyReportPage";
 import NotFoundPage from "../../pages/NotFoundPage";
 
 export default function AppRouter() {
@@ -34,6 +35,9 @@ export default function AppRouter() {
         <Route path="/history" element={<HistoryPage />} />
         <Route path="/stories" element={<StoriesPage />} />
         <Route path="/tiss" element={<TissPage />} />
+        <Route path="/tiss/reports/latest" element={<WeeklyReportPage />} />
+        <Route path="/tiss/reports/:id" element={<WeeklyReportPage />} />
+        <Route path="/tiss/reports" element={<WeeklyReportPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
