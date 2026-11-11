@@ -6,6 +6,7 @@ import DestinationRegionPage from "../../features/destinations/region-page/Desti
 import RegionAllPlacesPage from "../../features/destinations/region-page/RegionAllPlacesPage";
 import DestinationPlacePage from "../../features/destinations/place-page/DestinationPlacePage";
 import ToursPage from "../../pages/ToursPage";
+import PlanYourTripPage from "../../features/tours/plan-trip-page/PlanYourTripPage";
 import ShopPage from "../../pages/ShopPage";
 import CheckoutPage from "../../pages/CheckoutPage";
 import BookNowPage from "../../features/booking/BookNowPage";
@@ -27,6 +28,11 @@ export default function AppRouter() {
         <Route path="/destinations/:regionSlug/all-places" element={<RegionAllPlacesPage />} />
         <Route path="/destinations/:regionSlug/:placeSlug" element={<DestinationPlacePage />} />
         <Route path="/tours" element={<ToursPage />} />
+        
+        {/* PLAN YOUR TRIP ROUTES (Both aliases added for safety) */}
+        <Route path="/plan-your-trip" element={<PlanYourTripPage />} />
+        <Route path="/plan-trip" element={<PlanYourTripPage />} />
+
         <Route path="/shop" element={<ShopPage />} />
         <Route path="/checkout" element={<CheckoutPage />} />
         <Route path="/book-now" element={<BookNowPage />} />
