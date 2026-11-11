@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { publicToursApi } from "../../tours/api/publicToursApi";
 
 import heroImg from "../../../assets/images/hero/hero.jpeg";
 import destHeroImg from "../../../assets/images/destinations/hero-gilgit-baltistan.jpeg";
@@ -10,7 +11,7 @@ function WeatherIcon({ type = "sun" }) {
       <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">
         <path
           fill="currentColor"
-          d="M19 18H6a4 4 0 0 1-.5-7.97A6 6 0 0 1 17.8 8.4 3.6 1 0 0 1 19 18ZM7 16h12a1.6 1.6 0 0 0-.18-3.19l-.86-.05-.27-.82A4 4 0 0 0 9 10.4l-.06.94-.93.14A2 2 0 0 0 7 16Z"
+          d="M19 18H6a4 4 0 0 1-.5-7.97A6 6 0 0 1 17.8 8.4 3.5 3.5 0 0 1 19 18ZM7 16h12a1.6 1.6 0 0 0-.18-3.19l-.86-.05-.27-.82A4 4 0 0 0 9 10.4l-.06.94-.93.14A2 2 0 0 0 7 16Z"
         />
       </svg>
     );
@@ -37,196 +38,159 @@ function WeatherIcon({ type = "sun" }) {
   );
 }
 
+function formatPrice(tour) {
+  const value = tour.discountPrice || tour.price;
+  if (value == null || value === "") return "Contact";
+  return `PKR ${Number(value).toLocaleString()}`;
+}
+
+function mapTourToCard(tour, index) {
+  const durationDays = tour.durationDays || tour.duration || tour.days;
+  const durationLabel = durationDays
+    ? `${durationDays} day${Number(durationDays) === 1 ? "" : "s"}`
+    : tour.durationText || "Multi-day";
+
+  const groupSize =
+    tour.groupSize ||
+    tour.group ||
+    (tour.minPeople && tour.maxPeople
+      ? `${tour.minPeople}–${tour.maxPeople}`
+      : tour.maxPeople
+      ? `Up to ${tour.maxPeople}`
+      : "4–12");
+
+  const tag =
+    tour.category ||
+    tour.tag ||
+    tour.type ||
+    tour.difficulty ||
+    "Tour";
+
+  const tone =
+    String(tag).toLowerCase().includes("adventure") ||
+    String(tour.difficulty || "").toLowerCase() === "challenging"
+      ? "warning"
+      : "ok";
+
+  const weatherPool = ["sun", "cloud", "snow"];
+  const weather = weatherPool[index % weatherPool.length];
+
+  return {
+    id: tour._id || tour.id || tour.slug || `tour-${index}`,
+    slug: tour.slug,
+    name: tour.title || tour.name || "Untitled Tour",
+    region: tour.regionName || tour.region || tour.location || "Pakistan",
+    duration: durationLabel,
+    group: groupSize,
+    season: tour.season || tour.bestTime || "All year",
+    price: formatPrice(tour),
+    tag,
+    tone,
+    weather,
+    imageUrl: tour.heroImage || tour.image || tour.coverImage || destHeroImg,
+    description:
+      tour.overview ||
+      tour.shortDescription ||
+      tour.description ||
+      "A curated Pakistan experience with scenic routes, trusted planning, and local expertise.",
+  };
+}
+
 export default function FeaturedDestinationsSection() {
   const navigate = useNavigate();
   const scrollerRef = useRef(null);
+  const [tours, setTours] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  // ✅ Local images only (CSP safe)
-  const tours = useMemo(
-    () => [
-      {
-        id: "k2-base-camp",
-        name: "K2 Base Camp Trek",
-        region: "Gilgit-Baltistan",
-        duration: "21 days",
-        group: "8–12",
-        season: "Jun–Sep",
-        price: "PKR 280,000",
-        tag: "Adventure",
-        tone: "warning",
-        weather: "snow",
-        imageUrl: destHeroImg,
-        description:
-          "A high-altitude trek for experienced hikers. Route and weather can affect timing—confirm conditions before departure.",
-      },
-      {
-        id: "hunza-autumn",
-        name: "Hunza Autumn Escape",
-        region: "Gilgit-Baltistan",
-        duration: "7 days",
-        group: "4–16",
-        season: "Sep–Nov",
-        price: "PKR 75,000",
-        tag: "Scenic",
-        tone: "ok",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Relaxed scenic itinerary with iconic viewpoints and comfortable stays—perfect for autumn colors and families.",
-      },
-      {
-        id: "neelum-getaway",
-        name: "Neelum Valley Getaway",
-        region: "Azad Jammu & Kashmir",
-        duration: "5 days",
-        group: "2–10",
-        season: "Apr–Oct",
-        price: "PKR 45,000",
-        tag: "Scenic",
-        tone: "ok",
-        weather: "cloud",
-        imageUrl: heroImg,
-        description:
-          "Green valleys, rivers, and viewpoints. Road conditions can change—verify updates before travel.",
-      },
-      {
-        id: "skardu-deosai",
-        name: "Skardu & Deosai Plains",
-        region: "Gilgit-Baltistan",
-        duration: "8 days",
-        group: "4–14",
-        season: "Jun–Aug",
-        price: "PKR 95,000",
-        tag: "Adventure",
-        tone: "warning",
-        weather: "sun",
-        imageUrl: destHeroImg,
-        description:
-          "Explore lakes, plains and mountain viewpoints. Great for photographers and nature lovers.",
-      },
-      {
-        id: "swat-kalam",
-        name: "Swat & Kalam Retreat",
-        region: "Khyber Pakhtunkhwa",
-        duration: "6 days",
-        group: "4–16",
-        season: "May–Sep",
-        price: "PKR 55,000",
-        tag: "Family",
-        tone: "ok",
-        weather: "cloud",
-        imageUrl: heroImg,
-        description:
-          "Comfortable scenic tour with waterfalls, valleys, and local food—easy pace and family-friendly.",
-      },
-      {
-        id: "chitral-kalash",
-        name: "Chitral & Kalash Culture",
-        region: "Khyber Pakhtunkhwa",
-        duration: "7 days",
-        group: "4–12",
-        season: "Apr–Oct",
-        price: "PKR 85,000",
-        tag: "Cultural",
-        tone: "ok",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Culture-focused journey into Kalash valleys with scenic drives and local experiences.",
-      },
-      {
-        id: "lahore-heritage",
-        name: "Lahore Heritage & Food",
-        region: "Punjab",
-        duration: "3 days",
-        group: "2–20",
-        season: "All year",
-        price: "PKR 28,000",
-        tag: "Cultural",
-        tone: "ok",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Historic sites + food streets. A quick cultural escape packed with architecture and local flavors.",
-      },
-      {
-        id: "karachi-coastal",
-        name: "Karachi Coastal Break",
-        region: "Sindh",
-        duration: "4 days",
-        group: "2–14",
-        season: "Oct–Mar",
-        price: "PKR 40,000",
-        tag: "Luxury",
-        tone: "ok",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Beach drives, city experiences and relaxed planning—best during cooler months for comfort.",
-      },
-      {
-        id: "cholistan-safari",
-        name: "Cholistan Desert Safari",
-        region: "Punjab",
-        duration: "3 days",
-        group: "4–12",
-        season: "Nov–Feb",
-        price: "PKR 60,000",
-        tag: "Adventure",
-        tone: "warning",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Desert dunes, forts and cultural stops—unique seasonal adventure with guided support.",
-      },
-      {
-        id: "fairy-meadows",
-        name: "Fairy Meadows & Nanga Parbat",
-        region: "Gilgit-Baltistan",
-        duration: "6 days",
-        group: "4–12",
-        season: "Jun–Sep",
-        price: "PKR 70,000",
-        tag: "Adventure",
-        tone: "warning",
-        weather: "cloud",
-        imageUrl: destHeroImg,
-        description:
-          "Trek to one of the world's most stunning viewpoints with Nanga Parbat in full glory. Guided camps included.",
-      },
-      {
-        id: "kaghan-babusar",
-        name: "Kaghan & Babusar Top",
-        region: "Khyber Pakhtunkhwa",
-        duration: "5 days",
-        group: "4–16",
-        season: "May–Sep",
-        price: "PKR 50,000",
-        tag: "Scenic",
-        tone: "ok",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Lush valleys, mountain passes and lake views. A classic northern road trip with comfortable stops.",
-      },
-      {
-        id: "gwadar-coastal",
-        name: "Gwadar Coastal Adventure",
-        region: "Balochistan",
-        duration: "4 days",
-        group: "2–12",
-        season: "Oct–Mar",
-        price: "PKR 65,000",
-        tag: "Luxury",
-        tone: "ok",
-        weather: "sun",
-        imageUrl: heroImg,
-        description:
-          "Coastal highways, beaches and unique rock formations. A relaxed southern escape with sea views.",
-      },
-    ],
-    []
-  );
+  useEffect(() => {
+    let alive = true;
+
+    async function load() {
+      try {
+        setLoading(true);
+
+        // Prefer featured tours; fallback to latest published tours
+        let list = [];
+        try {
+          list = await publicToursApi.getFeaturedTours();
+        } catch {
+          list = [];
+        }
+
+        if (!Array.isArray(list) || list.length === 0) {
+          list = await publicToursApi.getTours();
+        }
+
+        if (!alive) return;
+        setTours(Array.isArray(list) ? list.slice(0, 12) : []);
+      } catch (err) {
+        console.error("Featured tours load failed:", err);
+        if (alive) setTours([]);
+      } finally {
+        if (alive) setLoading(false);
+      }
+    }
+
+    load();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const cards = useMemo(() => {
+    if (!tours.length) {
+      // Safe fallback so UI never looks empty if API is down
+      return [
+        {
+          id: "fallback-1",
+          name: "K2 Base Camp Trek",
+          region: "Gilgit-Baltistan",
+          duration: "21 days",
+          group: "8–12",
+          season: "Jun–Sep",
+          price: "PKR 280,000",
+          tag: "Adventure",
+          tone: "warning",
+          weather: "snow",
+          imageUrl: destHeroImg,
+          description:
+            "A high-altitude trek for experienced hikers. Route and weather can affect timing—confirm conditions before departure.",
+        },
+        {
+          id: "fallback-2",
+          name: "Hunza Autumn Escape",
+          region: "Gilgit-Baltistan",
+          duration: "7 days",
+          group: "4–16",
+          season: "Sep–Nov",
+          price: "PKR 75,000",
+          tag: "Scenic",
+          tone: "ok",
+          weather: "sun",
+          imageUrl: heroImg,
+          description:
+            "Relaxed scenic itinerary with iconic viewpoints and comfortable stays—perfect for autumn colors and families.",
+        },
+        {
+          id: "fallback-3",
+          name: "Neelum Valley Getaway",
+          region: "Azad Jammu & Kashmir",
+          duration: "5 days",
+          group: "2–10",
+          season: "Apr–Oct",
+          price: "PKR 45,000",
+          tag: "Scenic",
+          tone: "ok",
+          weather: "cloud",
+          imageUrl: heroImg,
+          description:
+            "Green valleys, rivers, and viewpoints. Road conditions can change—verify updates before travel.",
+        },
+      ];
+    }
+
+    return tours.map(mapTourToCard);
+  }, [tours]);
 
   const scrollByPage = (direction) => {
     const el = scrollerRef.current;
@@ -236,14 +200,19 @@ export default function FeaturedDestinationsSection() {
     if (!card) return;
 
     const cardWidth = card.getBoundingClientRect().width;
-    const gap = 16; // must match CSS gap
+    const gap = 16;
     const step = cardWidth + gap;
-
     const visible = Math.max(1, Math.round(el.clientWidth / step));
+
     el.scrollBy({ left: step * visible * direction, behavior: "smooth" });
   };
 
-  const onMoreInfo = () => {
+  const onMoreInfo = (tour) => {
+    if (tour?.slug) {
+      navigate(`/tours`);
+      // If you later add tour detail route, use: navigate(`/tours/${tour.slug}`)
+      return;
+    }
     navigate("/tours");
   };
 
@@ -262,99 +231,121 @@ export default function FeaturedDestinationsSection() {
             </Link>
           </div>
 
-          <div className="carouselWrap">
-            <button
-              type="button"
-              className="carouselArrow carouselArrow--left"
-              aria-label="Previous tours"
-              onClick={() => scrollByPage(-1)}
-            >
-              ‹
-            </button>
-
-            <div className="ftRow" ref={scrollerRef}>
-              {tours.map((t) => (
-                <article className="ftCard" key={t.id}>
-                  <div className="ftCard__media">
-                    <img className="ftCard__img" src={t.imageUrl} alt={t.name} loading="lazy" />
-
-                    <div className="ftCard__namePill">{t.name}</div>
-
-                    <div className="ftCard__badge" aria-label="Weather" title="Weather">
-                      <WeatherIcon type={t.weather} />
-                    </div>
-                  </div>
-
-                  <div className="ftCard__body">
-                    <div className="ftCard__metaTop">
-                      <span className="ftCard__tag">{t.region}</span>
-                      <span className="ftCard__time">
-                        <span className="ftCard__timeIcon" aria-hidden="true">
-                          🕒
-                        </span>
-                        {t.duration}
-                      </span>
-                    </div>
-
-                    <div className="ftCard__stats">
-                      <div className="ftStat">
-                        <span className="ftStat__icon" aria-hidden="true">
-                          💰
-                        </span>
-                        <span className="ftStat__text">{t.price}</span>
-                      </div>
-
-                      <div className="ftStat ftStat--right">
-                        <span className="ftStat__icon" aria-hidden="true">
-                          👥
-                        </span>
-                        <span className="ftStat__text">{t.group}</span>
-                      </div>
-
-                      <div className="ftStat">
-                        <span className="ftStat__icon" aria-hidden="true">
-                          🗓️
-                        </span>
-                        <span className="ftStat__text">{t.season}</span>
-                      </div>
-                    </div>
-
-                    <div
-                      className={[
-                        "ftPill",
-                        t.tone === "warning" ? "ftPill--warning" : "",
-                        t.tone === "ok" ? "ftPill--ok" : "",
-                      ]
-                        .filter(Boolean)
-                        .join(" ")}
-                    >
-                      {t.tag}
-                    </div>
-
-                    <p className="ftCard__desc">{t.description}</p>
-
-                    <div className="ftCard__actions">
-                      <button type="button" className="ftBtn ftBtn--primary" onClick={onMoreInfo}>
-                        More Info
-                      </button>
-                      <Link className="ftBtn ftBtn--outline" to="/book-now">
-                        Book now!
-                      </Link>
-                    </div>
-                  </div>
-                </article>
-              ))}
+          {loading ? (
+            <div style={{ padding: "2rem", textAlign: "center", opacity: 0.7 }}>
+              Loading featured tours…
             </div>
+          ) : (
+            <div className="carouselWrap">
+              <button
+                type="button"
+                className="carouselArrow carouselArrow--left"
+                aria-label="Previous tours"
+                onClick={() => scrollByPage(-1)}
+              >
+                ‹
+              </button>
 
-            <button
-              type="button"
-              className="carouselArrow carouselArrow--right"
-              aria-label="Next tours"
-              onClick={() => scrollByPage(1)}
-            >
-              ›
-            </button>
-          </div>
+              <div className="ftRow" ref={scrollerRef}>
+                {cards.map((t) => (
+                  <article className="ftCard" key={t.id}>
+                    <div className="ftCard__media">
+                      <img
+                        className="ftCard__img"
+                        src={t.imageUrl}
+                        alt={t.name}
+                        loading="lazy"
+                        onError={(e) => {
+                          e.currentTarget.onerror = null;
+                          e.currentTarget.src = heroImg;
+                        }}
+                      />
+
+                      <div className="ftCard__namePill">{t.name}</div>
+
+                      <div className="ftCard__badge" aria-label="Weather" title="Weather">
+                        <WeatherIcon type={t.weather} />
+                      </div>
+                    </div>
+
+                    <div className="ftCard__body">
+                      <div className="ftCard__metaTop">
+                        <span className="ftCard__tag">{t.region}</span>
+                        <span className="ftCard__time">
+                          <span className="ftCard__timeIcon" aria-hidden="true">
+                            🕒
+                          </span>
+                          {t.duration}
+                        </span>
+                      </div>
+
+                      <div className="ftCard__stats">
+                        <div className="ftStat">
+                          <span className="ftStat__icon" aria-hidden="true">
+                            💰
+                          </span>
+                          <span className="ftStat__text">{t.price}</span>
+                        </div>
+
+                        <div className="ftStat ftStat--right">
+                          <span className="ftStat__icon" aria-hidden="true">
+                            👥
+                          </span>
+                          <span className="ftStat__text">{t.group}</span>
+                        </div>
+
+                        <div className="ftStat">
+                          <span className="ftStat__icon" aria-hidden="true">
+                            🗓️
+                          </span>
+                          <span className="ftStat__text">{t.season}</span>
+                        </div>
+                      </div>
+
+                      <div
+                        className={[
+                          "ftPill",
+                          t.tone === "warning" ? "ftPill--warning" : "",
+                          t.tone === "ok" ? "ftPill--ok" : "",
+                        ]
+                          .filter(Boolean)
+                          .join(" ")}
+                      >
+                        {t.tag}
+                      </div>
+
+                      <p className="ftCard__desc">{t.description}</p>
+
+                      <div className="ftCard__actions">
+                        <button
+                          type="button"
+                          className="ftBtn ftBtn--primary"
+                          onClick={() => onMoreInfo(t)}
+                        >
+                          More Info
+                        </button>
+                        <Link
+                          className="ftBtn ftBtn--outline"
+                          to={`/book-now?tour=${encodeURIComponent(t.name)}`}
+                        >
+                          Book now!
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              <button
+                type="button"
+                className="carouselArrow carouselArrow--right"
+                aria-label="Next tours"
+                onClick={() => scrollByPage(1)}
+              >
+                ›
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </section>
